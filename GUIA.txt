@@ -1,0 +1,669 @@
+UNIVERSIDAD PRIVADA FRANZ TAMAYO SEDE
+EL ALTO FACULTAD DE INGENIERÍA
+CARRERA DE INGENIERÍA DE SISTEMAS
+
+PROYECTO INTEGRADOR INTERMEDIO II
+“SISTEMA DE MONITOREO NO INVASO DE GLUCOSA EN
+LA SANGRE POR RF CON MACHINE LEARNING”
+CASO : Centro Vivir con Diabetes (CVCD)
+AUTOR : Altamirano Flores Rodnny Giovani
+TUTOR : Ing. Juan Gabriel Lazcano Balanza
+EL ALTO – BOLIVIA
+2025
+
+i
+
+DECLARACIÓN JURADA DE AUTENTICIDAD DE PERFIL DE TRABAJO DE
+GRADO
+Yo, Altamirano Flores Rodnny Giovani, estudiante de la Carrera de Ingeniería de
+Sistemas de la Universidad Privada Franz Tamayo, identificado(a) con Cl. 13630943 y Registro
+Declaro bajo juramento que:
+1.Soy autor del Trabajo de Grado titulado: SISTEMA DE MONITOREO NO INVASIVO DE
+GLUCOSA EN LA SANGRE POR RF CON MACHINE LEARNING
+El mismo que presento bajo la modalidad de PROYECTO DE GRADO
+2.El texto de mi perfil de trabajo de grado respeta y no vulnera los derechos de terceros,
+incluidos los derechos de propiedad intelectual. En tal sentido, declaro que este Perfil de
+Proyecto de Grado no ha sido plagiado total ni parcialmente, para la cual he respetado las
+normas internacionales de citas y referencias de las fuentes consultadas.
+El incumplimiento de lo declarado da lugar a responsabilidad del declarante, en
+consecuencia; a través del presente documento asumo frente a terceros, la carrera de Ingeniera
+de Sistemas de la Universidad Privada Franz Tamayo toda responsabilidad que pueda derivarse
+por el Perfil de Proyecto de Grado presentado.
+El Alto, Octubre de 2025
+……………………………………………………
+Univ. Altamirano Flores Rodnny Giovani
+CI: 13630943
+
+ii
+
+Agradecimentos
+Quiero expresar mi más sincero agradecimiento a todos aquellos que hicieron posible este
+proyecto integrador intermedio. A mis padres, por su apoyo incondicional, amor y sacrificios; a
+mi familia, por su comprensión y aliento constante; y especialmente a mis mentores, cuya
+invaluable guía, conocimientos y dedicación han sido fundamentales para mi crecimiento
+académico y personal.
+Gracias a todos quienes contribuyeron de alguna manera a la culminación exitosa de este trabajo
+
+iii
+
+Resumen
+El presente proyecto aborda el diseño y desarrollo de un Sistema de Monitoreo No
+Invasivo de Glucosa en la Sangre por Radiofrecuencia (RF) con Machine Learning, enfocado en
+el caso de estudio del Centro Vivir con Diabetes (CVCD). La solución se articula en una
+arquitectura integrada de hardware vestible (ESP32, sensores AS7341 y MAX30102) y una
+aplicación móvil desarrollada en React/Next.js y JavaScript. El núcleo predictivo reside en un
+modelo de Regresión por Mínimos Cuadrados Parciales (PLSR), entrenado mediante la
+metodología CRISP-DM, que procesa datos multisensoriales para estimar la concentración de
+glucosa. El sistema busca mejorar la adherencia y reducir los costos asociados a la
+monitorización invasiva, estableciendo una herramienta de control glucémico proactivo para el
+CVCD, con la ventaja de la portabilidad multi-plataforma del desarrollo web moderno. La
+calidad del software se evaluará bajo la norma ISO/IEC 25010, garantizando la fiabilidad y
+usabilidad del producto final. El enfoque de desarrollo se basa en la metodología Scrum
+complementada con Design Thinking (DT), asegurando un producto centrado en el usuario y una
+gestión eficiente de los recursos.
+
+iv
+
+Abstract
+El presente proyecto se centra en el diseño y desarrollo de un Sistema de Monitoreo No
+Invasivo de Glucosa en la Sangre por Radiofrecuencia (RF) y Machine Learning, dirigido
+específicamente al Centro Vivir con Diabetes (CVCD). La solución se basa en una arquitectura
+integrada que combina hardware vestible (ESP32, sensores AS7341 y MAX30102) y una
+aplicación móvil desarrollada en React/Next.js y JavaScript. El núcleo predictivo es un modelo
+de Regresión por Mínimos Cuadrados Parciales (PLSR), entrenado utilizando la metodología
+CRISP-DM, que procesa datos multisensoriales para estimar la concentración de glucosa. El
+sistema tiene como objetivo mejorar la adherencia del paciente y reducir los costos asociados con
+el monitoreo invasivo, facilitando un estándar de control glucémico para el CVCD a través de
+una plataforma portable y adaptable. La calidad del software será evaluada bajo la norma
+ISO/IEC 25010, asegurando la fiabilidad y la usabilidad del producto final. El enfoque de
+desarrollo se fundamenta en la metodología Scrum complementada con Design Thinking (DT),
+garantizando un producto centrado en el usuario y una gestión eficiente de los recursos.
+
+v
+
+Palabras Clave
+Glucosa No Invasiva; Radiofrecuencia; Machine Learning; PLSR; CRISP-DM;
+React/Next.js; ESP32; ISO/IEC 25010; Adherencia.
+
+vi
+
+Indíce General
+Agradecimentos.................................................................................................................ii
+Resumen...........................................................................................................................iii
+Abstract.............................................................................................................................iv
+Palabras Clave .................................................................................................................. v
+Indíce General .................................................................................................................. vi
+Indíce de Figuras ............................................................................................................ viii
+CAPÍTULO I: MARCO INTRODUCTORIO........................................................................1
+1.1 Introducción ............................................................................................................. 2
+1.2 Antecedentes...........................................................................................................2
+1.2.1 Antecedentes del Tema .................................................................................... 2
+1.2.2 Antecedentes Institucionales ............................................................................ 3
+1.2.3 Antecedentes de Trabajos a Fines...........................................................................4
+CAPÍTULO II: DISEÑO TEÓRICO DE LA INVESTIGACIÓN............................................5
+2.1 Problema de Investigación ...................................................................................... 6
+2.1.1 Planteamiento del Problema.............................................................................6
+2.1.2 Formulación del Problema ................................................................................ 6
+2.2 Determinación de Objetivos.....................................................................................6
+2.2.1 Objetivo General ............................................................................................... 6
+2.2.2 Objetivo Específicos..........................................................................................7
+
+vii
+CAPÍTULO III: JUSTIFICACIÓN, ALCANCES Y APORTES ............................................ 8
+3.1 Justificación ............................................................................................................. 9
+3.1.1 Justificación Técnica.........................................................................................9
+3.1.2 Justificación Social..........................................................................................10
+3.1.3 Justificación Económica..................................................................................11
+3.1.4 Justificación Ambiental y Legal.......................................................................11
+3.2
+
+Alcances..........................................................................................................11
+
+3.2.1 Alcance Temático............................................................................................11
+3.2.2 Alcance Geográfico.........................................................................................13
+3.2.3 Límites ................................................................................................................ 13
+3.3 Aportes .................................................................................................................. 14
+3.3.1 Aporte Social...................................................................................................14
+3.3.2 Aporte Académico...........................................................................................14
+3.3.3 Aporte Ingenieril..............................................................................................14
+CAPÍTULO IV: MARCO TEÓRICO ................................................................................. 15
+4.1 Ingeniería de Software...........................................................................................16
+4.1.1 Arquitectura Lógica de Capas.........................................................................16
+4.1.2 Ciclo de Vida, Métricas de Calidad y Portabilidad (ISO 25010)......................18
+4.2 Metodología de Desarrollo y Gestión de Proyectos .............................................. 18
+4.2.1 Scrum + Design Thinking................................................................................18
+4.2.2 Desarrollo Frontend ........................................................................................ 19
+
+viii
+4.2.3 CRISP-DM: Modelado PLSR .......................................................................... 21
+4.3 Glucosa No Invasiva, Sensores y Machine Learning ............................................ 22
+4.3.1 Fundamentos de Radiofrecuencia (RF) y Espectroscopía Óptica..................22
+4.3.2 Sensores Multisensoriales .............................................................................. 22
+4.3.3 Regresión por Mínimos Cuadrados Parciales (PLSR)....................................23
+4.3.4 Evaluación del Modelo de ML.........................................................................23
+Glosario...........................................................................................................................24
+Referencias ..................................................................................................................... 25
+
+Indíce de Figuras
+
+Figura 1: Diagrama de Despliegue..................................................................................20
+Figura 2: Diagrama de Casos de Uso.............................................................................22
+Figura 3: Diagrama de componentes..............................................................................26
+Figura 4: Diagrama Entidad-Relación ............................................................................. 27
+Figura 6: Diagrama de Actividades ................................................................................. 32
+Figura 7: Modulo Adafruit AS7341 10 Canales de Color ................................................ 33
+
+1
+
+CAPÍTULO I:
+MARCO
+INTRODUCTORIO
+
+2
+
+1.1 Introducción
+La diabetes mellitus es una de las enfermedades crónicas no transmisibles con mayor
+prevalencia global, afectando la calidad de vida de millones de personas (Organización Mundial
+de la Salud [OMS], 2023). El control glucémico continuo y preciso es fundamental para prevenir
+complicaciones a largo plazo por lo cual actualmente la técnica estándar se basa en la punción
+digital que es invasiva pero debido al dolor, la incomodidad y el costo recurrente de los insumos
+estos genera una baja adherencia al monitoreo frecuente, un factor clave en el manejo de la
+enfermedad. La falta de cumplimiento con las mediciones diarias recomendadas es un problema
+que el Centro Vivir con Diabetes (CVCD) busca resolver para optimizar el pronóstico de sus
+pacientes.
+El presente proyecto propone el diseño y desarrollo de un Sistema de Monitoreo No
+Invasivo de Glucosa en la Sangre por Radiofrecuencia potenciada con Machine Learning. Este
+sistema esta enfocado en el Centro Vivir con Diabetes (CVCD), integra tecnologías de hardware
+vestible, procesamiento avanzado de señales y un modelo de predicción basado en Regresión por
+Mínimos Cuadrados Parciales (PLSR). El objetivo es ofrecer una alternativa cómoda y de bajo
+costo, utilizando sensores ópticos y biomédicos acoplados al microcontrolador ESP32 para
+capturar datos multisensoriales en la parte blanda del dedo para una mejor medición.
+1.2 Antecedentes
+1.2.1 Antecedentes del Tema
+La investigación sobre el monitoreo no invasivo de glucosa se ha intensificado desde
+finales del siglo XX las tecnologías más exploradas incluyen la impedancia bioeléctrica y más
+recientemente la radiofrecuencia. El uso de la Radiofrecuencia para la detección de glucosa se
+
+3
+
+basa en la medición de las propiedades dieléctricas del tejido, las cuales están directamente
+influenciadas por la concentración de glucosa en el fluido intersticial (López-Díaz et al., 2021).
+Diversos estudios han demostrado que la combinación de múltiples sensores, como la
+fotopletismografía y la temperatura, mejora la precisión de los modelos de Machine Learning al
+mitigar el ruido ambiental y los efectos biológicos individuales como los cambios en el flujo
+sanguíneo (González & Rojas, 2023).
+1.2.2 Antecedentes Institucionales
+El Centro Vivir con Diabetes (CVCD) es una institución dedicada a la atención integral y
+el manejo educativo de pacientes con diabetes, priorizando la mejora continua en la autogestión
+de la enfermedad y la principal necesidad identificada en el CVCD es la falta de herramientas
+accesibles y cómodas que fomenten la medición frecuente de glucosa entre sus pacientes,
+limitando la capacidad de los médicos para ajustar proactivamente los tratamientos.
+Actualmente, el CVCD se apoya únicamente en glucómetros tradicionales, lo que subraya
+la necesidad de innovar en sus procesos de monitoreo para mejorar los resultados clínicos y la
+calidad de vida de sus usuarios (Informe Anual CVCD, 2024).
+1.2.2.1 Misión
+Desarrollar una solución tecnológica de monitoreo de glucosa no invasiva, precisa y
+usable, que empodere al usuario en la autogestión de su salud, eliminando las barreras de dolor y
+costo asociadas a los métodos tradicionales.
+
+4
+
+1.2.2.2 Visión
+Ser la plataforma de referencia en el monitoreo continuo y no invasivo de variables
+biométricas, expandiendo su capacidad de predicción de glucosa para integrarse completamente
+en ecosistemas de salud digital a nivel global, facilitando la prevención proactiva.
+1.2.3 Antecedentes de Trabajos a Fines
+Diversos proyectos integradores y tesis han abordado soluciones de monitoreo biométrico
+no invasivoya que en un estudio de caso previo se enfocó en el uso de regresión lineal simple
+para predecir glucosa basándose solo en el MAX30100 ya que es un sensor PPG, obteniendo un
+coeficiente de correlación limitado (R^2 = 0.75) debido a la baja dimensionalidad de los datos y
+la alta dependencia del ruido del movimiento (Martínez, 2022).
+Nuestro proyecto eleva la complejidad al incorporar el sensor AS7341 (10 canales de
+color), lo que justifica la necesidad de un algoritmo multivariante como PLSR para manejar la
+alta correlación y el gran volumen de variables espectrales, buscando superar las limitaciones de
+precisión de trabajos previos mediante una arquitectura de datos más rica (Pérez & Soto, 2023).
+
+5
+
+CAPÍTULO II:
+DISEÑO TEÓRICO
+DE LA
+INVESTIGACIÓN
+
+6
+
+2.1 Problema de Investigación
+2.1.1 Planteamiento del Problema
+La dependencia de métodos de monitoreo de glucosa invasivos en el CVCD impone
+barreras de dolor, inconveniencia y alto costo recurrente para los pacientes. La baja frecuencia de
+medición que resulta de esta situación dificulta la gestión óptima de la enfermedad, llevando a
+resultados subóptimos y un mayor riesgo de complicaciones crónicas. El desafío reside en
+desarrollar un sistema que no solo sea preciso, sino también usable, que integre las lecturas del
+hardware con un modelo de Machine Learning robusto para transformar datos crudos en
+información predictiva de valor clínico (García & López, 2022).
+2.1.2 Formulación del Problema
+¿Cómo el diseño y desarrollo de un Sistema de Monitoreo No Invasivo de Glucosa en la
+Sangre por RF con Machine Learning (PLSR), implementado mediante una arquitectura
+integrada de hardware (ESP32, AS7341, MAX30102) y software (React/Next.js, Python), puede
+mejorar la adherencia al control y la calidad de vida de los pacientes del Centro Vivir con
+Diabetes (CVCD) que experimentan dificultades con la monitorización invasiva actual?
+2.2 Determinación de Objetivos
+2.2.1 Objetivo General
+Desarrollar y validar un Sistema de Monitoreo No Invasivo de Glucosa en la Sangre por
+RF con Machine Learning (PLSR) para el Centro Vivir con Diabetes (CVCD), buscando mejorar
+la adherencia al monitoreo y proporcionar datos en tiempo real de forma cómoda y económica,
+demostrando la fiabilidad técnica del sistema.
+
+7
+
+2.2.2 Objetivo Específicos
+·
+
+Analizar los requerimientos funcionales y no funcionales del sistema de monitoreo no
+invasivo, estableciendo el conjunto de datos multisensorial y realizando el Análisis
+Exploratorio de Datos (EDA) para la limpieza y preprocesamiento de las señales.
+
+·
+
+Diseñar la arquitectura completa del sistema, especificando el diagrama de bloques del
+dispositivo, los patrones de software (MVVM/MVC) y definiendo los Sprints de
+desarrollo bajo la metodología Scrum y CRISP-DM.
+
+·
+
+Desarrollar el firmware del dispositivo vestible (ESP32 y sensores) y la aplicación móvil
+(login, dashboard) en React/Next.js y JavaScript, implementando el modelo PLSR en
+Python para la predicción en tiempo real.
+
+·
+
+Validar la precisión clínica del modelo de ML utilizando métricas estadísticas (RMSE,
+$R^2$) y el Clarke Error Grid Analysis (CEGA), y evaluar la calidad del software según
+los atributos de la norma ISO/IEC 25010.
+
+8
+
+CAPÍTULO III:
+JUSTIFICACIÓN,
+ALCANCES Y
+APORTES
+
+9
+
+3.1 Justificación
+3.1.1 Justificación Técnica
+El sistema propone una solución técnica robusta al integrar componentes de bajo costo y
+alta precisión, maximizando la eficiencia energética para un dispositivo vestible. Se emplea el
+microcontrolador ESP32 por su capacidad de procesamiento y su stack de conectividad
+Bluetooth Low Energy (BLE), esencial para la transmisión de datos sin lag a la aplicación móvil.
+La combinación del sensor Adafruit AS7341 y los sensores MAX30102 (PPG) y MCP9808
+(Temperatura) permite capturar un vector de datos multisensoriales que alimenta al modelo de
+Machine Learning (PLSR) en Python.
+Esta arquitectura asegura un procesamiento eficiente de las variables de entrada,
+aprovechando la Regresión PLSR para resolver la alta dimensionalidad y colinealidad típica de
+los datos espectrales (Smith, 2023).
+La interfaz de usuario en React/Next.js facilita la integración de gráficos y
+visualizaciones complejas, esencial para la característica de Usabilidad, la fiabilidad técnica del
+software será garantizada mediante la implementación de testing continuo y la gestión del
+esfuerzo con History Points.
+
+10
+
+Figura 1: Diagrama de Despliegue
+3.1.2 Justificación Social
+El impacto social es significativo. La naturaleza no invasiva del sistema elimina el dolor
+y la incomodidad de los pinchazos diarios, lo que se traduce directamente en una mayor
+adherencia al régimen de monitoreo de glucosaya que esta mejora en la frecuencia de medición
+empodera a los pacientes para tomar decisiones más informadas sobre su dieta y actividad física.
+El sistema beneficia al CVCD al proporcionar una herramienta proactiva para la gestión
+de la salud de sus pacientes, mejorando la calidad de vida, reduciendo las complicaciones
+derivadas de un control glucémico deficiente y facilitando la educación diabetológica (Pérez,
+2021).
+
+11
+
+3.1.3 Justificación Económica
+La justificación económica para el CVCD y los usuarios se basa en la reducción de costos
+recurrentes en insumos de monitoreo invasivo (tiras reactivas y lancetas), que representan un
+gasto significativo para las familias a largo plazo (García & López, 2022).
+La estimación de costos del proyecto, utilizando la técnica ágil de History Points para
+medir el esfuerzo de desarrollo, permitirá proyectar el TIR (Tasa Interna de Retorno) y VAR
+(Valor Actual Neto) del proyecto, demostrando que la inversión inicial en hardware y software se
+recupera con el tiempo gracias al ahorro en insumos y a la prevención de complicaciones
+costosas.
+3.1.4 Justificación Ambiental y Legal
+Desde la perspectiva ambiental, el sistema contribuye a la sostenibilidad al minimizar la
+generación de residuos biomédicos peligrosos (agujas, lancetas y tiras reactivas contaminadas),
+un aspecto regulado legalmente en la gestión de residuos sanitarios. Legalmente, aunque el
+sistema es de "tendencia" y el proceso de validación requiere el cumplimiento de las normativas
+de privacidad de datos (Habeas Data) y el almacenamiento seguro de la información sensible de
+salud (historial de glucosa), asegurando el cumplimiento de la característica de Seguridad de la
+norma ISO/IEC 25010 (ISO, 2019).
+3.2 Alcances
+3.2.1 Alcance Temático
+El alcance temático se centra en la integración de tres módulos funcionales clave:
+
+12
+
+-
+
+Módulo de Hardware Bio-Multisensorial: Captura y preprocesamiento de datos de
+RF, pulsioximetría (pulso y SpO2) y temperatura mediante el ESP32, con
+visualización de estado en la pantalla OLED.
+
+-
+
+Módulo de Machine Learning: Desarrollo, entrenamiento, validación y deploy del
+modelo PLSR en Python para la predicción de glucosa. El módulo incluye el
+preprocesamiento de las señales ópticas (EDA) y la aplicación de algoritmos para la
+eliminación de ruido.
+
+-
+
+Módulos de Software - Aplicación Móvil: Implementación de los módulos de Login
+(autenticación segura) y Dashboard (visualización de lecturas en tiempo real,
+histórico y tendencias) utilizando React/Next.js y JavaScript, bajo la arquitectura
+MVVM/Componentes.
+
+El proceso de desarrollo incluirá la definición de History Points para la gestión ágil y las
+fases de EDA y la Evaluación Clínica del Modelo.
+
+Figura 2: Diagrama de Casos de Uso
+
+13
+
+3.2.2 Alcance Geográfico
+El desarrollo y la validación inicial del sistema se aplicarán directamente en el Centro
+Vivir con Diabetes (CVCD), siendo esta la población de prueba para la calibración y ajuste fino
+del modelo PLSR. Esto asegura que la solución esté adaptada a las características demográficas y
+ambientales del entorno del centro.
+El software, al ser una aplicación web/híbrida desarrollada en Next.js, tendrá la
+Portabilidad inherente para ser utilizado a nivel nacional e internacional, facilitando el acceso a
+usuarios en diferentes ubicaciones mediante conexiones a internet, fortaleciendo la
+competitividad de la empresa en el mercado automotriz.
+3.2.3 Límites
+-
+
+Calibración Individualizada: La precisión del modelo de ML requiere una fase de
+calibración inicial específica por usuario para capturar las variaciones en las
+propiedades cutáneas y sanguíneas, limitando su aplicación inmediata a un público
+general sin un proceso de setup personalizado.
+
+-
+
+Sustitución Clínica: El sistema es un monitor de tendencia y no un dispositivo de
+diagnóstico o un sustituto de glucómetros validados para decisiones críticas de
+dosificación de medicamentos, de acuerdo con las restricciones de la ISO 25010 para
+la característica de Fiabilidad.
+
+-
+
+Factores Ambientales y Biológicos: La medición puede verse comprometida por
+factores extremos como la sudoración excesiva, la piel oscura (afectando la lectura
+óptica del AS7341/MAX30102) o la hipotermia local, que introducen ruido no lineal
+en los datos de los sensores.
+
+14
+
+3.3 Aportes
+3.3.1 Aporte Social
+El aporte social principal es la democratización del monitoreo de glucosa a través de una
+tecnología no invasiva y de bajo costo, aumentando la adherencia al control y reduciendo el
+sufrimiento asociado a la enfermedad. Esto empodera a los pacientes del CVCD para que
+gestionen su salud de manera más efectiva, cómoda y proactiva (Pérez, 2021).
+3.3.2 Aporte Académico
+Este proyecto contribuye al campo de la ingeniería biomédica y el Machine Learning al
+documentar la arquitectura integrada de sensores multisensoriales (espectrales, PPG,
+temperatura) con RF para la predicción de una variable biológica. Además, proporciona un caso
+de estudio replicable sobre el uso de la regresión PLSR y la validación clínica rigurosa mediante
+el CEGA en un entorno real.
+3.3.3 Aporte Ingenieril
+Se demuestra la aplicación efectiva de la metodología Scrum combinada con el enfoque
+Design Thinking (DT) y el uso de Next.js/React para la entrega de un producto de software de
+salud de alta calidad. La arquitectura modular desarrollada en JavaScript y Python facilita la
+mantenibilidad y escalabilidad, cumpliendo con las métricas de calidad exigidas por la ISO/IEC
+25010 (ISO, 2019).
+
+15
+
+CAPÍTULO IV:
+MARCO TEÓRICO
+
+16
+
+4.1 Ingeniería de Software
+La Ingeniería de Software es una disciplina esencial que aplica principios científicos y de
+ingeniería al diseño, desarrollo y mantenimiento de sistemas de software de alta calidad,
+asegurando la consistencia, fiabilidad y seguridad de los productos (Pressman & Maxim, 2020).
+La arquitectura del sistema debe garantizar la comunicación eficiente entre el hardware vestible y
+la aplicación móvil/web.
+4.1.1 Arquitectura Lógica de Capas
+El sistema lógico se divide en una arquitectura de tres capas:
+-
+
+Primeramente la Capa de Presentación: Constituida por la aplicación frontend en
+React/Next.js.
+
+-
+
+Segundo la Capa Lógica/Servicios: Incluye la lógica de predicción del modelo PLSR
+(Python) y los servicios de comunicación (e.g., API REST).
+
+-
+
+Tercero la Capa de Datos: Almacenamiento local de tendencias en el móvil (o caché)
+y servicios en la nube (e.g., Firestore) para el respaldo histórico.
+
+Figura 3: Diagrama de componentes
+
+17
+
+Para el desarrollo del frontend en React/Next.js, el patrón MVVM se adapta
+perfectamente al paradigma de la Arquitectura Basada en Componentes. El Modelo sigue
+representando los datos brutos; la Vista son los componentes de React; y el ViewModel se
+implementa mediante Hooks personalizados (e.g., useState, useEffect, useContext) para manejar
+el estado, la lógica de presentación y la comunicación asíncrona con el hardware (vía BLE) y el
+backend (API de predicción). Esta estricta separación de componentes es crítica para lograr la
+característica de Mantenibilidad de la ISO 25010 (Martínez & Castro, 2023).
+
+Figura 4: Diagrama Entidad-Relación
+
+18
+
+4.1.2 Ciclo de Vida, Métricas de Calidad y Portabilidad (ISO 25010)
+El proyecto utiliza un ciclo de vida iterativo e incremental (Scrum). La calidad del
+producto final se evalúa bajo la norma ISO/IEC 25010 (SQuaRE), que establece ocho
+características de calidad del software. La Fiabilidad (consistencia del modelo PLSR) y la
+Usabilidad (facilidad de uso del dashboard de la aplicación, siguiendo los principios de diseño
+web responsivo) son las métricas de mayor prioridad. La Portabilidad, definida como la
+capacidad de migrar el software a diferentes sistemas operativos y dispositivos (web, Android,
+iOS vía WebView/híbrido), es intrínseca al uso de React/Next.js y fundamental dada la
+diversidad de plataformas del usuario final (ISO, 2019). La Seguridad también es clave,
+asegurando la protección de los datos personales de salud de los pacientes.
+4.2 Metodología de Desarrollo y Gestión de Proyectos
+4.2.1 Scrum + Design Thinking
+La gestión del proyecto se llevará a cabo mediante el marco de trabajo Scrum,
+permitiendo la adaptación rápida a los cambios y la entrega de incrementos funcionales
+periódicos (Sprints). Se emplea el enfoque de Design Thinking (DT) en la fase de análisis de
+requerimientos para empatizar profundamente con el usuario final, asegurando que la interfaz de
+la aplicación móvil sea intuitiva, lo que impacta directamente en la adherencia del usuario al
+sistema (López-Díaz et al., 2021). La estimación del esfuerzo se realizará mediante la técnica de
+History Points (o Puntos de Historia), asignando una puntuación de complejidad relativa a cada
+tarea o funcionalidad (Login, Calibración, Gráfico de Tendencias), lo que permite calcular el
+velocity del equipo y proyectar el tiempo y costo total del proyecto de manera ágil.
+
+19
+
+4.2.2 Desarrollo Frontend
+La elección de React/Next.js y JavaScript para el frontend se justifica por su eficiencia en
+la creación de interfaces de usuario interactivas y su capacidad para crear una Aplicación Web
+Progresiva (PWA) o un wrapper híbrido. Next.js proporciona una estructura robusta para la
+aplicación moderna, incluyendo:
+-
+
+Server-Side Rendering (SSR): Mejora la velocidad de carga inicial y el SEO (aunque
+menos relevante para una aplicación interna de salud, mejora la percepción de
+rendimiento).
+
+-
+
+Enrutamiento Basado en Archivos: Simplifica la navegación entre módulos (Login,
+Dashboard, Histórico).
+
+-
+
+Arquitectura Basada en Componentes: Fomenta la reusabilidad del código y la
+modularidad, factores clave para la Mantenibilidad del software (Martínez & Castro,
+2023).
+
+Este enfoque reemplaza la necesidad de una metodología nativa como Móvil-D,
+priorizando la agilidad y la portabilidad del desarrollo web (García & López, 2022).
+
+20
+
+Figura 5: Diagrama de Clases
+
+21
+
+4.2.3 CRISP-DM: Modelado PLSR
+La metodología CRISP-DM (Cross-Industry Standard Process for Data Mining)
+proporciona el marco estructurado para el desarrollo del modelo de Machine Learning. Sus seis
+fases son: Comprensión del Negocio, Comprensión de los Datos (EDA), Preparación de Datos,
+Modelado (PLSR), Evaluación (CEGA) y Despliegue. El Análisis Exploratorio de Datos (EDA)
+es crucial en la fase inicial, utilizando técnicas estadísticas y visualizaciones (histogramas,
+diagramas de dispersión, matriz de correlación) para identificar la calidad de las señales RF,
+ópticas y de temperatura, garantizando que el modelo PLSR sea robusto y preciso (Pérez, 2021).
+
+22
+
+Figura 6: Diagrama de Actividades
+4.3 Glucosa No Invasiva, Sensores y Machine Learning
+4.3.1 Fundamentos de Radiofrecuencia (RF) y Espectroscopía Óptica
+El método no invasivo se basa en dos principios físicos. La Radiofrecuencia (RF) utiliza
+ondas electromagnéticas en el rango de los 300 MHz a 300 GHz. La concentración de glucosa en
+el fluido intersticial afecta la constante dieléctrica del tejido, modificando la atenuación y el
+desplazamiento de fase de la onda RF, lo cual puede ser medido (López-Díaz et al., 2021). La
+Espectroscopía Óptica (luz visible y NIR) se enfoca en la absorción y dispersión de la luz por el
+tejido. El sensor AS7341 captura 10 canales de color, proporcionando una "firma espectral" de la
+piel que es sensible a los cambios de glucosa.
+4.3.2 Sensores Multisensoriales
+El dispositivo vestible integra tres sensores clave. El Adafruit AS7341 es un sensor de
+espectro multicanal que captura la respuesta óptica de la piel. El MAX30102 es un oxímetro de
+pulso y frecuencia cardíaca que mide la fotopletismografía (PPG); la señal PPG es esencial
+porque el flujo sanguíneo (Perfusion Index - PI), medido por el MAX30102, influye en la lectura
+de glucosa y debe ser utilizado como una variable de corrección en el modelo PLSR. Finalmente,
+el MCP9808 (sensor de temperatura) proporciona una corrección térmica, ya que la temperatura
+corporal es un factor de confusión bien conocido en las mediciones ópticas no invasivas
+(González & Rojas, 2023).
+
+23
+
+Figura 7: Modulo Adafruit AS7341 10 Canales de Color
+4.3.3 Regresión por Mínimos Cuadrados Parciales (PLSR)
+La Regresión por Mínimos Cuadrados Parciales (PLSR) es el modelo de Machine
+Learning seleccionado. A diferencia de la Regresión Lineal Múltiple, PLSR es robusta ante
+problemas de multicolinealidad, donde las variables predictoras (las 10 lecturas del AS7341, las
+lecturas PPG del MAX30102, y la temperatura) están altamente correlacionadas entre sí (Smith,
+2023). PLSR funciona descomponiendo las variables en un conjunto de componentes latentes,
+maximizando la covarianza entre los predictores y la variable de respuesta (glucosa), lo que
+resulta en un modelo más estable y generalizable para la predicción biomédica.
+4.3.4 Evaluación del Modelo de ML
+La Evaluación del Modelo de Machine Learning es crítica para la validación de la
+precisión clínica. Se utilizarán métricas estadísticas como el RMSE (Raíz del Error Cuadrático
+Medio) y el Coeficiente de Correlación ($R^2$). Sin embargo, la métrica más importante es el
+Clarke Error Grid Analysis (CEGA), que evalúa la precisión clínica del sistema. El CEGA divide
+
+24
+
+el plano de error en cinco zonas (A-E), donde las Zonas A y B representan errores aceptables
+clínicamente seguros, y las Zonas C, D y E representan errores que podrían llevar a tratamientos
+incorrectos o peligrosos (Pérez, 2021). La validación rigurosa a través de CEGA es esencial para
+el aporte ingenieril del proyecto.
+Glosario
+AS7341: Sensor espectral multicanal de 10 canales de color que se utiliza para capturar la
+"firma espectral" del tejido, una entrada clave para el modelo PLSR.
+CEGA: Clarke Error Grid Analysis. Herramienta de evaluación clínica que mide la
+precisión de un glucómetro contra un estándar de referencia, clasificando los errores en zonas de
+riesgo (Pérez, 2021).
+CRISP-DM: Metodología estándar de la industria para el proceso de la minería de datos.
+Sus seis fases incluyen la comprensión del negocio, la preparación de datos y la evaluación del
+modelo (García & López, 2022).
+EDA: Análisis Exploratorio de Datos. Fase del CRISP-DM dedicada a la visualización y
+resumen de las características principales de los conjuntos de datos multisensoriales.
+History Points: Técnica ágil de estimación de esfuerzo en la gestión Scrum, basada en la
+complejidad relativa de las funcionalidades o historias de usuario (García & López, 2022).
+ISO/IEC 25010: Norma internacional que define el modelo de calidad de un producto
+software, con ocho características que incluyen Fiabilidad, Usabilidad y Seguridad (ISO, 2019).
+
+25
+
+MVVM: Model-View-ViewModel. Patrón arquitectónico de software utilizado en el
+frontend para separar la interfaz de usuario de la lógica de negocio, implementado con
+Componentes y Hooks en React.
+PLSR: Regresión por Mínimos Cuadrados Parciales. Un método de modelado de
+regresión multivariante que maneja la multicolinealidad entre predictores, siendo ideal para datos
+espectrales (Smith, 2023).
+RF: Radiofrecuencia. Tecnología utilizada para medir las propiedades dieléctricas del
+tejido, influenciadas por la concentración de glucosa.
+Referencias
+- García, M., & López, D. (2022). Metodologías Ágiles en Proyectos de Ingeniería.
+Editorial Técnica.
+-
+
+González, A., & Rojas, F. (2023). Avances en Monitoreo Biomédico No Invasivo.
+Revista de Ingeniería Biomédica, 15(2), 45-60.
+
+-
+
+Informe Anual CVCD. (2024). Necesidades de Monitoreo Glucémico en Pacientes
+Crónicos. Centro Vivir con Diabetes.
+
+-
+
+ISO. (2019). ISO/IEC 25010: Systems and software engineering – Systems and
+software Quality Requirements and Evaluation (SQuaRE) – System and software
+quality models. International Organization for Standardization.
+
+-
+
+López-Díaz, S., et al. (2021). Non-invasive glucose monitoring using radio frequency
+and machine learning: A review. IEEE Sensors Journal, 21(10), 12000-12015.
+
+26
+
+-
+
+Martínez, C. (2022). Predicción de Glucosa basada en Fotopletismografía. (Tesis de
+Pregrado). Universidad Politécnica.
+
+-
+
+Martínez, P., & Castro, R. (2023). Patrones de Arquitectura en Desarrollo Frontend.
+Editorial WebDev.
+
+-
+
+Organización Mundial de la Salud (OMS). (2023). Informe mundial sobre la diabetes.
+[Documento en línea]. Recuperado de https://www.dw.com/es/75-a%C3%B1os-de-laoms-%C3%A9xitos-y-fracasos-de-la-organizaci%C3%B3n-mundial-de-la-salud/a65264968.
+
+-
+
+Pérez, A. (2021). Validación Clínica de Dispositivos No Invasivos. Journal de
+Tecnología de la Salud, 8(4), 112-125.
+
+-
+
+Pérez, A., & Soto, B. (2023). Análisis de Correlación Espectral en Biometría.
+Editorial Científica.
+
+-
+
+Pressman, R. S., & Maxim, B. R. (2020). Ingeniería del Software: Un Enfoque
+Práctico (9na ed.). McGraw-Hill Education.
+
+-
+
+Smith, R. (2023). Partial Least Squares Regression for Spectral Data Analysis.
+Academic Press.
+
+
