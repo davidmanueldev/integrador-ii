@@ -6,11 +6,26 @@
 #import "config/apa-setup.typ": *
 #import "config/formato.typ": *
 
-// Aplicar configuración APA al documento
-#show: apa-config
+// =====================================================
+// SECCIÓN PRELIMINAR (Numeración: números romanos i, ii, iii...)
+// Según norma APA 7 para tesis/disertaciones
+// =====================================================
 
-// PORTADA (Formato APA 7 - Estudiante)
+// Configuración inicial SIN numeración para portada
+#set page(numbering: none)
+
+// PORTADA (Sin número de página visible)
 #include "preliminares/portada.typ"
+
+// Ahora activamos numeración romana para páginas preliminares
+#set page(
+  numbering: "i",
+  number-align: center + bottom,
+)
+#counter(page).update(1)
+
+// Aplicar configuración APA al documento (sin afectar numeración)
+#show: apa-config
 
 // RESUMEN (Español)
 #include "preliminares/resumen.typ"
@@ -30,6 +45,18 @@
 )
 
 #pagebreak()
+
+// =====================================================
+// CONTENIDO PRINCIPAL (Numeración: números arábigos 1, 2, 3...)
+// La página 1 comienza aquí según APA 7 para tesis
+// =====================================================
+
+// Cambiar a numeración arábiga y resetear contador a 1
+#set page(
+  numbering: "1",
+  number-align: right + top,
+)
+#counter(page).update(1)
 
 // CAPÍTULO I: MARCO INTRODUCTORIO
 #include "capitulo1/capitulo1.typ"

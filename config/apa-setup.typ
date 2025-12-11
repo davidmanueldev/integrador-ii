@@ -4,6 +4,8 @@
 // Función principal de configuración APA
 #let apa-config(doc) = {
   // Configuración de página según APA 7
+  // NOTA: La numeración se configura en index.typ para permitir
+  // números romanos en preliminares y arábigos en contenido
   set page(
     paper: "us-letter", // Tamaño carta (APA estándar)
     margin: (
@@ -12,9 +14,9 @@
       left: 2.54cm, // 1 pulgada
       right: 2.54cm, // 1 pulgada
     ),
-    numbering: "1", // Numeración arábiga
-    number-align: right + top, // Números arriba a la derecha
+    // numbering se configura en index.typ
   )
+
 
   // Configuración de texto según APA 7
   set text(
