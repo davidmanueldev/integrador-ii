@@ -1,4 +1,12 @@
-= CAPÍTULO VI: ESTUDIO DE FACTIBILIDAD
+// Portada del Capítulo VI
+#align(center + horizon)[
+  #text(size: 24pt, weight: "bold")[
+    CAPÍTULO VI: \
+    ESTUDIO DE FACTIBILIDAD
+  ]
+]
+
+#pagebreak()
 
 == 6.1 Factibilidad Técnica
 

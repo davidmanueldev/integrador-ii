@@ -1,4 +1,13 @@
-= CAPÍTULO VIII: CONCLUSIONES Y RECOMENDACIONES
+// Portada del Capítulo VIII
+#align(center + horizon)[
+  #text(size: 24pt, weight: "bold")[
+    CAPÍTULO VIII: \
+    CONCLUSIONES Y \
+    RECOMENDACIONES
+  ]
+]
+
+#pagebreak()
 
 == 8.1 Conclusiones
 

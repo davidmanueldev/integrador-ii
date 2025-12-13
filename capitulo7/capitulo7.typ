@@ -1,4 +1,12 @@
-= CAPÍTULO VII: INGENIERÍA DEL PROYECTO
+// Portada del Capítulo VII
+#align(center + horizon)[
+  #text(size: 24pt, weight: "bold")[
+    CAPÍTULO VII: \
+    INGENIERÍA DEL PROYECTO
+  ]
+]
+
+#pagebreak()
 
 #include "diagrama_flujo.typ"
 

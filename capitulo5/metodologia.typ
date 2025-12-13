@@ -1,4 +1,12 @@
-= CAPÍTULO V: DISEÑO METODOLÓGICO
+// Portada del Capítulo V
+#align(center + horizon)[
+  #text(size: 24pt, weight: "bold")[
+    CAPÍTULO V: \
+    DISEÑO METODOLÓGICO
+  ]
+]
+
+#pagebreak()
 
 == 5.1 Enfoque de Investigación
 

@@ -1,4 +1,13 @@
-= CAPÍTULO III: JUSTIFICACIÓN, ALCANCES Y APORTES
+// Portada del Capítulo III
+#align(center + horizon)[
+  #text(size: 24pt, weight: "bold")[
+    CAPÍTULO III: \
+    JUSTIFICACIÓN, ALCANCES \
+    Y APORTES
+  ]
+]
+
+#pagebreak()
 
 // 3.1 Justificación
 #include "justificacion.typ"

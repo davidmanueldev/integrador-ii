@@ -1,4 +1,12 @@
-= CAPÍTULO IV: MARCO TEÓRICO
+// Portada del Capítulo IV
+#align(center + horizon)[
+  #text(size: 24pt, weight: "bold")[
+    CAPÍTULO IV: \
+    MARCO TEÓRICO
+  ]
+]
+
+#pagebreak()
 
 // 4.1 Tecnologías Web y Arquitectura
 #include "tecnologias_web.typ"
