@@ -108,8 +108,19 @@
 
 #pagebreak()
 
+// ANEXO E: CÓDIGO FUENTE DEL PROTOTIPO
+#include "anexos/codigo_fuente.typ"
+
+#pagebreak()
+
+// ANEXO F: SEGURIDAD FÍSICA Y LÓGICA
+#include "anexos/seguridad_fisica.typ"
+
+#pagebreak()
+
 // CRONOGRAMA DE ACTIVIDADES (detallado en archivo separado)
 #include "anexos/cronograma.typ"
+
 
 
 #pagebreak()
