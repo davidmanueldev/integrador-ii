@@ -34,7 +34,9 @@
   )
 
   // Configuración de encabezados según APA 7
-  set heading(numbering: "1.1")
+  // NOTA: Numeración manual en los archivos de contenido
+  // Se desactiva la numeración automática para evitar duplicidad
+  set heading(numbering: none)
 
   // Estilo para nivel 1: Centrado, Negrita
   show heading.where(level: 1): it => {
