@@ -103,35 +103,14 @@
 
 #pagebreak()
 
-// ANEXOS
-= ANEXOS
-
-== Anexo A: Esquemas de Base de Datos
-_Ver archivos DDL en repositorio del proyecto_
-
-== Anexo B: Documentación de API
-_Disponible en /api/docs mediante Swagger UI_
-
-== Anexo C: Manual de Usuario
-_Documento separado entregado con el proyecto_
+// ANEXOS (detallados en archivo separado)
+#include "anexos/anexos.typ"
 
 #pagebreak()
 
-// CRONOGRAMA DE ACTIVIDADES
-= CRONOGRAMA DE ACTIVIDADES
+// CRONOGRAMA DE ACTIVIDADES (detallado en archivo separado)
+#include "anexos/cronograma.typ"
 
-#table(
-  columns: (auto, auto, auto, auto),
-  stroke: 0.5pt,
-  [*Actividad*], [*Inicio*], [*Fin*], [*Duración*],
-  [Análisis de Requisitos], [01/09/2025], [15/09/2025], [15 días],
-  [Diseño de Arquitectura], [16/09/2025], [30/09/2025], [15 días],
-  [Desarrollo Frontend], [01/10/2025], [31/10/2025], [31 días],
-  [Desarrollo Backend], [01/10/2025], [31/10/2025], [31 días],
-  [Integración de Pagos], [01/11/2025], [07/11/2025], [7 días],
-  [Pruebas], [08/11/2025], [18/11/2025], [11 días],
-  [Despliegue], [19/11/2025], [19/11/2025], [1 día],
-)
 
 #pagebreak()
 
