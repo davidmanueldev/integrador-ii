@@ -12,13 +12,15 @@
 // =====================================================
 
 // Configuración inicial SIN numeración para portada
-#set page(numbering: none)
+#set page(
+  paper: "us-letter", numbering: none)
 
 // PORTADA (Sin número de página visible)
 #include "preliminares/portada.typ"
 
 // Ahora activamos numeración romana para páginas preliminares
 #set page(
+  paper: "us-letter",
   numbering: "i",
   number-align: center + bottom,
 )
@@ -53,6 +55,7 @@
 
 // Cambiar a numeración arábiga y resetear contador a 1
 #set page(
+  paper: "us-letter",
   numbering: "1",
   number-align: right + top,
 )

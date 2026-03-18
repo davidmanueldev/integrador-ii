@@ -1,5 +1,5 @@
 // Portada Personalizada UNIFRANZ
-#page(
+#page(paper: "us-letter", 
   margin: (top: 3cm, bottom: 2.5cm, left: 3cm, right: 2.5cm),
   [
     #align(center)[
