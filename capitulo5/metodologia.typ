@@ -22,13 +22,14 @@ Este proyecto se clasifica como investigación aplicada y tecnológica, ya que s
 
 == 5.3 Diseño de la Investigación
 
-El diseño de investigación sigue un modelo iterativo e incremental, basado en metodologías ágiles de desarrollo:
+El diseño de investigación adopta la metodología ágil *AUP (Agile Unified Process)*, un marco de trabajo iterativo e incremental que simplifica el Proceso Unificado, ideal para desarrollos ágiles e individuales. Asimismo, la ejecución técnica se guio por un enfoque *FDD (Feature-Driven Development)* o Desarrollo Basado en Funcionalidades, permitiendo construir, probar y entregar cada módulo del sistema de manera independiente.
 
-- *Fase 1 - Análisis:* Identificación de requisitos funcionales y no funcionales, estudio del contexto regulatorio boliviano (Red Enlace, ASFI) y análisis de procesos actuales del restaurante.
-- *Fase 2 - Diseño:* Arquitectura del sistema, modelado de datos relacional, diseño de interfaces de usuario y especificación de componentes de IA.
-- *Fase 3 - Implementación:* Desarrollo de módulos (reservaciones, POS, pagos, chatbot, recomendaciones, predicción, análisis de sentimiento).
-- *Fase 4 - Pruebas:* Validación mediante diferentes niveles de testing, incluyendo evaluación de modelos de IA.
-- *Fase 5 - Despliegue:* Implementación en entorno de producción (Vercel) con monitoreo continuo.
+El ciclo de vida del proyecto se estructuró en las cuatro fases de AUP:
+
+- *Fase 1 - Incepción:* Identificación de requisitos funcionales y no funcionales, estudio del contexto regulatorio boliviano (Red Enlace, ASFI) y análisis de viabilidad técnica del sistema.
+- *Fase 2 - Elaboración:* Definición de la arquitectura del sistema, modelado de datos relacional (Prisma), diseño de interfaces de usuario y especificación de los componentes de Inteligencia Artificial.
+- *Fase 3 - Construcción:* Desarrollo iterativo guiado por funcionalidades (FDD). Implementación de módulos independientes (reservaciones, POS, pagos, chatbot, recomendaciones) y ejecución de pruebas unitarias y de integración continuas.
+- *Fase 4 - Transición:* Despliegue del sistema en entorno de producción (Vercel), validación con usuarios finales, pruebas de aceptación (E2E) y monitoreo continuo.
 
 == 5.4 Métodos de Investigación
 
