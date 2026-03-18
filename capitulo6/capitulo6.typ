@@ -1,6 +1,6 @@
 // Portada del Capítulo VI
 #set page(numbering: none)
-#counter(page).update(n => n - 1)
+#place(top, hide[= CAPÍTULO VI: ESTUDIO DE FACTIBILIDAD])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
     CAPÍTULO VI: \
@@ -10,7 +10,6 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
-#place(top, hide[= CAPÍTULO VI: ESTUDIO DE FACTIBILIDAD])
 
 
 == 6.1 Factibilidad Técnica

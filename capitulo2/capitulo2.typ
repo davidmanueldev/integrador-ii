@@ -1,6 +1,6 @@
 // Portada del Capítulo II
 #set page(numbering: none)
-#counter(page).update(n => n - 1)
+#place(top, hide[= CAPÍTULO II: DISEÑO TEÓRICO DE LA INVESTIGACIÓN])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
     CAPÍTULO II: \
@@ -11,7 +11,6 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
-#place(top, hide[= CAPÍTULO II: DISEÑO TEÓRICO DE LA INVESTIGACIÓN])
 
 
 // 2.1 Problema de Investigación

@@ -1,6 +1,6 @@
 // Portada del Capítulo V
 #set page(numbering: none)
-#counter(page).update(n => n - 1)
+#place(top, hide[= CAPÍTULO V: DISEÑO METODOLÓGICO])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
     CAPÍTULO V: \
@@ -10,7 +10,6 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
-#place(top, hide[= CAPÍTULO V: DISEÑO METODOLÓGICO])
 
 
 == 5.1 Enfoque de Investigación

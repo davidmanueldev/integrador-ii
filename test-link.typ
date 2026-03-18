@@ -1,4 +1,9 @@
-// Portada del Capítulo I
+#set heading(numbering: none)
+#set page(numbering: "1")
+
+#outline()
+
+#pagebreak()
 #set page(numbering: none)
 #place(top, hide[= CAPÍTULO I: MARCO INTRODUCTORIO])
 #align(center + horizon)[
@@ -9,13 +14,6 @@
 ]
 
 #pagebreak()
-#set page(numbering: "1", number-align: right + top)
-
-
-// 1.1 Introducción
-#include "introduccion.typ"
-
-#pagebreak()
-
-// 1.2 Antecedentes
-#include "antecedentes.typ"
+#set page(numbering: "1")
+= 1.1 Introduccion
+Texto

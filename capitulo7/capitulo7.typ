@@ -1,6 +1,6 @@
 // Portada del Capítulo VII
 #set page(numbering: none)
-#counter(page).update(n => n - 1)
+#place(top, hide[= CAPÍTULO VII: INGENIERÍA DEL PROYECTO])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
     CAPÍTULO VII: \
@@ -10,7 +10,6 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
-#place(top, hide[= CAPÍTULO VII: INGENIERÍA DEL PROYECTO])
 
 
 #include "diagrama_flujo.typ"
