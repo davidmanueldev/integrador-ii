@@ -1,4 +1,6 @@
 // Portada del Capítulo VII
+#set page(numbering: none)
+#counter(page).update(n => n - 1)
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
     CAPÍTULO VII: \
@@ -7,6 +9,8 @@
 ]
 
 #pagebreak()
+#set page(numbering: "1", number-align: right + top)
+
 
 #include "diagrama_flujo.typ"
 

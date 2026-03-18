@@ -1,4 +1,6 @@
 // Portada del Capítulo IV
+#set page(numbering: none)
+#counter(page).update(n => n - 1)
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
     CAPÍTULO IV: \
@@ -7,6 +9,8 @@
 ]
 
 #pagebreak()
+#set page(numbering: "1", number-align: right + top)
+
 
 // 4.1 Tecnologías Web y Arquitectura
 #include "tecnologias_web.typ"
