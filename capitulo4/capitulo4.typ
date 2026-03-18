@@ -10,6 +10,7 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+#place(top, hide[= CAPÍTULO IV: MARCO TEÓRICO])
 
 
 // 4.1 Tecnologías Web y Arquitectura

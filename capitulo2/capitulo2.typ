@@ -11,6 +11,7 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+#place(top, hide[= CAPÍTULO II: DISEÑO TEÓRICO DE LA INVESTIGACIÓN])
 
 
 // 2.1 Problema de Investigación

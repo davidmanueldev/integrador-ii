@@ -10,6 +10,7 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+#place(top, hide[= CAPÍTULO V: DISEÑO METODOLÓGICO])
 
 
 == 5.1 Enfoque de Investigación

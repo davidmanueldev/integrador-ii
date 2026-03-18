@@ -10,6 +10,7 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+#place(top, hide[= CAPÍTULO VI: ESTUDIO DE FACTIBILIDAD])
 
 
 == 6.1 Factibilidad Técnica

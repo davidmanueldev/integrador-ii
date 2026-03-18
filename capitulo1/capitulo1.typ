@@ -10,6 +10,7 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+#place(top, hide[= CAPÍTULO I: MARCO INTRODUCTORIO])
 
 
 // 1.1 Introducción

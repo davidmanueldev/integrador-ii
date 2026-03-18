@@ -11,6 +11,7 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+#place(top, hide[= CAPÍTULO III: JUSTIFICACIÓN, ALCANCES Y APORTES])
 
 
 // 3.1 Justificación

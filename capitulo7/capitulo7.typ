@@ -10,6 +10,7 @@
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+#place(top, hide[= CAPÍTULO VII: INGENIERÍA DEL PROYECTO])
 
 
 #include "diagrama_flujo.typ"
