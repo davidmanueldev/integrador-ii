@@ -1,5 +1,5 @@
 // Anexo E: Código Fuente del Prototipo
-// Sistema de Pedidos en Línea - Restaurante Bambú
+// Sistema Integral de Gestión - Restaurante Bambú
 // Repositorio: https://github.com/davidmanueldev/restaurante-bambu
 
 = ANEXO E: CÓDIGO FUENTE DEL PROTOTIPO
@@ -18,246 +18,345 @@ El código fuente completo del sistema está disponible en el repositorio GitHub
 
 A continuación se presentan los fragmentos más relevantes del código fuente que implementan las funcionalidades principales del sistema.
 
-== E.1 Modelo de Datos - Usuario
+== E.1 Esquema de Datos - Prisma
 
-El modelo de usuario define la estructura de datos para la autenticación:
+El esquema Prisma define la estructura de datos para PostgreSQL/Supabase:
 
-```javascript
-// src/models/User.js
-import {model, models, Schema} from "mongoose";
+```prisma
+// prisma/schema.prisma
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
 
-const UserSchema = new Schema({
-  name: {type: String},
-  email: {type: String, required: true, unique: true},
-  password: {type: String},
-  image: {type: String},
-}, {timestamps: true});
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
 
-export const User = models?.User || model('User', UserSchema);
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  nombre        String
+  rol           Rol           @default(CLIENTE)
+  telefono      String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  reservaciones Reservacion[]
+  pedidos       Pedido[]      @relation("MeseroPedidos")
+}
+
+enum Rol {
+  CLIENTE
+  MESERO
+  ADMIN
+}
+
+model Mesa {
+  id            String        @id @default(uuid())
+  numero        Int           @unique
+  capacidad     Int
+  ubicacion     String?
+  estado        EstadoMesa    @default(DISPONIBLE)
+  activa        Boolean       @default(true)
+  reservaciones Reservacion[]
+  pedidos       Pedido[]
+}
+
+enum EstadoMesa {
+  DISPONIBLE
+  OCUPADA
+  RESERVADA
+}
+
+model Producto {
+  id                 String       @id @default(uuid())
+  nombre             String
+  descripcion        String?
+  precio             Decimal      @db.Decimal(10, 2)
+  imagenUrl          String?
+  categoriaId        String
+  categoria          Categoria    @relation(fields: [categoriaId], references: [id])
+  disponible         Boolean      @default(true)
+  tiempoPreparacion  Int?
+  embedding          Unsupported("vector(1536)")?
+  pedidoItems        PedidoItem[]
+}
 ```
 
 *Características:*
-- Validación de email único a nivel de base de datos
-- Timestamps automáticos (createdAt, updatedAt)
-- Compatibilidad con Mongoose ODM
+- Soporte para pgvector mediante extensión PostgreSQL
+- Enums para estados tipados
+- Relaciones con integridad referencial
 
 #pagebreak()
 
-== E.2 Modelo de Datos - Pedidos
+== E.2 Modelo de Reservaciones
 
-El modelo Order almacena la información de cada pedido realizado:
+El modelo Reservacion gestiona las reservas de mesas:
 
-```javascript
-// src/models/Order.js
-import {model, models, Schema} from "mongoose";
+```prisma
+model Reservacion {
+  id        String             @id @default(uuid())
+  userId    String
+  user      User               @relation(fields: [userId], references: [id])
+  mesaId    String
+  mesa      Mesa               @relation(fields: [mesaId], references: [id])
+  fecha     DateTime           @db.Date
+  hora      DateTime           @db.Time
+  personas  Int
+  estado    EstadoReservacion  @default(PENDIENTE)
+  notas     String?
+  createdAt DateTime           @default(now())
+}
 
-const OrderSchema = new Schema({
-  userEmail: String,
-  phone: String,
-  streetAddress: String,
-  postalCode: String,
-  city: String,
-  country: String,
-  cartProducts: Object,
-  paid: {type: Boolean, default: false},
-}, {timestamps: true});
-
-export const Order = models?.Order || model('Order', OrderSchema);
+enum EstadoReservacion {
+  PENDIENTE
+  CONFIRMADA
+  CANCELADA
+  COMPLETADA
+}
 ```
 
 *Características:*
-- Almacena productos del carrito como objeto JSON flexible
-- Flag `paid` para control de estado de pago
-- Timestamps para auditoría
+- Tipos de fecha y hora separados para mejor manejo
+- Estados con enum para type-safety
+- Relaciones bidireccionales con User y Mesa
 
 #pagebreak()
 
-== E.3 Autenticación con NextAuth
+== E.3 Autenticación con Supabase
 
-El sistema implementa autenticación dual (credenciales y Google OAuth):
+El sistema implementa autenticación mediante Supabase Auth:
 
-```javascript
-// src/app/api/auth/[...nextauth]/route.js
-import bcrypt from "bcrypt";
-import NextAuth, {getServerSession} from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
+```typescript
+// src/lib/supabase/server.ts
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
-export const authOptions = {
-  secret: process.env.SECRET,
-  adapter: MongoDBAdapter(clientPromise),
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        username: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+export async function createClient() {
+  const cookieStore = await cookies()
+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          )
+        },
       },
-      async authorize(credentials) {
-        const email = credentials?.email;
-        const password = credentials?.password;
+    }
+  )
+}
 
-        const user = await User.findOne({email});
-        const passwordOk = user &&
-          bcrypt.compareSync(password, user.password);
-
-        if (passwordOk) return user;
-        return null;
-      }
-    })
-  ],
-};
-
-// Función helper para verificar rol Admin
-export async function isAdmin() {
-  const session = await getServerSession(authOptions);
-  const userEmail = session?.user?.email;
-  if (!userEmail) return false;
-
-  const userInfo = await UserInfo.findOne({email: userEmail});
-  return userInfo?.admin || false;
+// Función helper para verificar rol
+export async function verificarRol(rolesPermitidos: string[]) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) return false
+  
+  const { data: userData } = await supabase
+    .from('users')
+    .select('rol')
+    .eq('id', user.id)
+    .single()
+  
+  return rolesPermitidos.includes(userData?.rol)
 }
 ```
 
 *Características de Seguridad:*
-- Contraseñas hasheadas con bcrypt
-- Sesiones manejadas por NextAuth
-- Verificación de rol administrador centralizada
+- Manejo de cookies server-side
+- Verificación de roles centralizada
+- Integración con Next.js App Router
 
 #pagebreak()
 
-== E.4 Integración de Pagos con Stripe
+== E.4 Integración de Pagos con Red Enlace
 
-El checkout procesa pagos de forma segura mediante Stripe:
+El sistema procesa pagos mediante CyberSource (Red Enlace Bolivia):
 
-```javascript
-// src/app/api/checkout/route.js
-import {Order} from "@/models/Order";
-import {getServerSession} from "next-auth";
-const stripe = require('stripe')(process.env.STRIPE_SK);
+```typescript
+// src/app/api/pagos/tarjeta/route.ts
+import { NextResponse } from 'next/server'
+import CyberSource from 'cybersource-rest-client'
+import { prisma } from '@/lib/prisma'
 
-export async function POST(req) {
-  const {cartProducts, address} = await req.json();
-  const session = await getServerSession(authOptions);
-  const userEmail = session?.user?.email;
+const configObject = {
+  authenticationType: 'http_signature',
+  runEnvironment: process.env.NODE_ENV === 'production' 
+    ? 'api.cybersource.com' 
+    : 'apitest.cybersource.com',
+  merchantID: process.env.CYBERSOURCE_MERCHANT_ID,
+  merchantKeyId: process.env.CYBERSOURCE_KEY_ID,
+  merchantsecretKey: process.env.CYBERSOURCE_SECRET_KEY,
+}
 
-  // Crear orden en base de datos (estado: no pagado)
-  const orderDoc = await Order.create({
-    userEmail,
-    ...address,
-    cartProducts,
-    paid: false,
-  });
-
-  // Construir items para Stripe
-  const stripeLineItems = [];
-  for (const cartProduct of cartProducts) {
-    const productInfo = await MenuItem.findById(cartProduct._id);
-
-    let productPrice = productInfo.basePrice;
-    // Agregar precio de tamaño
-    if (cartProduct.size) {
-      const size = productInfo.sizes.find(
-        s => s._id.toString() === cartProduct.size._id.toString()
-      );
-      productPrice += size.price;
-    }
-    // Agregar precio de extras
-    if (cartProduct.extras?.length > 0) {
-      for (const extra of cartProduct.extras) {
-        const extraInfo = productInfo.extraIngredientPrices.find(
-          e => e._id.toString() === extra._id.toString()
-        );
-        productPrice += extraInfo.price;
-      }
-    }
-
-    stripeLineItems.push({
-      quantity: 1,
-      price_data: {
-        currency: 'BOB',
-        product_data: { name: cartProduct.name },
-        unit_amount: productPrice * 100,
-      },
-    });
+export async function POST(req: Request) {
+  const { pedidoId, datosTarjeta } = await req.json()
+  
+  // Obtener pedido de la base de datos
+  const pedido = await prisma.pedido.findUnique({
+    where: { id: pedidoId },
+    include: { items: true }
+  })
+  
+  if (!pedido) {
+    return NextResponse.json(
+      { error: 'Pedido no encontrado' },
+      { status: 404 }
+    )
   }
 
-  // Crear sesión de checkout en Stripe
-  const stripeSession = await stripe.checkout.sessions.create({
-    line_items: stripeLineItems,
-    mode: 'payment',
-    customer_email: userEmail,
-    success_url: process.env.NEXTAUTH_URL +
-      'orders/' + orderDoc._id.toString() + '?clear-cart=1',
-    cancel_url: process.env.NEXTAUTH_URL + 'cart?canceled=1',
-    metadata: {orderId: orderDoc._id.toString()},
-    shipping_options: [{
-      shipping_rate_data: {
-        display_name: 'Gastos de envío',
-        type: 'fixed_amount',
-        fixed_amount: {amount: 500, currency: 'BOB'},
-      },
-    }],
-  });
+  // Construir request para CyberSource
+  const requestObj = {
+    clientReferenceInformation: {
+      code: `BAMBU-${pedidoId}`
+    },
+    paymentInformation: {
+      card: {
+        number: datosTarjeta.numero,
+        expirationMonth: datosTarjeta.mesExp,
+        expirationYear: datosTarjeta.anioExp,
+        securityCode: datosTarjeta.cvv
+      }
+    },
+    orderInformation: {
+      amountDetails: {
+        totalAmount: pedido.total.toString(),
+        currency: 'BOB'
+      }
+    }
+  }
 
-  return Response.json(stripeSession.url);
+  // Procesar pago
+  const apiClient = new CyberSource.ApiClient()
+  const instance = new CyberSource.PaymentsApi(configObject, apiClient)
+  
+  const response = await instance.createPayment(requestObj)
+  
+  if (response.status === 'AUTHORIZED') {
+    // Actualizar pedido como pagado
+    await prisma.pedido.update({
+      where: { id: pedidoId },
+      data: { 
+        pagado: true, 
+        metodoPago: 'TARJETA',
+        estado: 'PAGADO'
+      }
+    })
+    
+    return NextResponse.json({ success: true, transactionId: response.id })
+  }
+  
+  return NextResponse.json(
+    { error: 'Pago rechazado' },
+    { status: 400 }
+  )
 }
 ```
 
 *Flujo de Pago:*
-1. Cliente envía carrito y dirección
-2. Sistema crea orden con `paid: false`
-3. Se calcula precio total (base + tamaño + extras)
-4. Se crea sesión de Stripe con líneas de producto
-5. Cliente es redirigido a checkout seguro de Stripe
-6. Webhook de Stripe actualiza `paid: true` tras pago exitoso
+1. Mesero solicita cobro desde POS
+2. Sistema consulta total del pedido
+3. Se envía solicitud a CyberSource/Red Enlace
+4. CyberSource procesa con el banco emisor
+5. Si es exitoso, se actualiza estado a PAGADO
+6. Se genera comprobante para el cliente
 
 #pagebreak()
 
-== E.5 Conexión a Base de Datos MongoDB
+== E.5 Chatbot con RAG y pgvector
 
-El sistema utiliza un patrón singleton para la conexión a MongoDB:
+El sistema implementa búsqueda semántica para el chatbot:
 
-```javascript
-// src/libs/mongoConnect.js
-import { MongoClient } from "mongodb";
+```typescript
+// src/app/api/chat/route.ts
+import { OpenAI } from 'openai'
+import { createClient } from '@/lib/supabase/server'
+import { streamText } from 'ai'
+import { openai } from '@ai-sdk/openai'
 
-if (!process.env.MONGO_URL) {
-  throw new Error('Invalid/Missing environment variable: "MONGO_URL"');
+const openaiClient = new OpenAI()
+
+export async function POST(req: Request) {
+  const { messages } = await req.json()
+  const ultimoMensaje = messages[messages.length - 1].content
+
+  // 1. Generar embedding de la consulta
+  const embeddingResponse = await openaiClient.embeddings.create({
+    model: 'text-embedding-3-small',
+    input: ultimoMensaje
+  })
+  const queryEmbedding = embeddingResponse.data[0].embedding
+
+  // 2. Buscar productos similares en pgvector
+  const supabase = await createClient()
+  const { data: productos } = await supabase.rpc('match_productos', {
+    query_embedding: queryEmbedding,
+    match_threshold: 0.7,
+    match_count: 5
+  })
+
+  // 3. Construir contexto para el LLM
+  const contexto = productos?.map(p => 
+    `- ${p.nombre}: ${p.descripcion} (Bs ${p.precio})`
+  ).join('\n') || 'No se encontraron productos relacionados.'
+
+  // 4. Generar respuesta con Vercel AI SDK
+  const result = await streamText({
+    model: openai('gpt-4o-mini'),
+    system: `Eres el asistente virtual del Restaurante Bambú en El Alto, Bolivia.
+Usa la siguiente información del menú para responder:
+
+${contexto}
+
+Responde de forma amable y concisa en español.
+Si te preguntan por precios, menciona que están en Bolivianos (Bs).`,
+    messages
+  })
+
+  return result.toDataStreamResponse()
 }
-
-const uri = process.env.MONGO_URL;
-const options = {};
-
-let client;
-let clientPromise;
-
-if (process.env.NODE_ENV === "development") {
-  // En desarrollo: usar variable global para preservar
-  // conexión entre recargas HMR (Hot Module Replacement)
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    global._mongoClientPromise = client.connect();
-  }
-  clientPromise = global._mongoClientPromise;
-} else {
-  // En producción: nueva instancia de cliente
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
-}
-
-export default clientPromise;
 ```
 
-*Características:*
-- Patrón singleton para reutilización de conexiones
-- Manejo específico para desarrollo (HMR) vs producción
-- Validación de variable de entorno
+*Función SQL para búsqueda vectorial:*
+```sql
+-- Crear función en Supabase
+CREATE OR REPLACE FUNCTION match_productos(
+  query_embedding vector(1536),
+  match_threshold float,
+  match_count int
+)
+RETURNS TABLE (
+  id uuid,
+  nombre text,
+  descripcion text,
+  precio decimal,
+  similarity float
+)
+LANGUAGE sql STABLE
+AS $$
+  SELECT 
+    id,
+    nombre,
+    descripcion,
+    precio,
+    1 - (embedding <=> query_embedding) as similarity
+  FROM productos
+  WHERE 1 - (embedding <=> query_embedding) > match_threshold
+  ORDER BY embedding <=> query_embedding
+  LIMIT match_count;
+$$;
+```
 
 #pagebreak()
 
@@ -269,26 +368,33 @@ export default clientPromise;
   ├── src/
   │   ├── app/                    # App Router (Next.js 14)
   │   │   ├── api/                # API Routes (Backend)
-  │   │   │   ├── auth/           # Autenticación NextAuth
-  │   │   │   ├── register/       # Registro de usuarios
-  │   │   │   ├── profile/        # Gestión de perfil
-  │   │   │   ├── categories/     # CRUD categorías
-  │   │   │   ├── menu-items/     # CRUD productos
-  │   │   │   ├── orders/         # Gestión de pedidos
-  │   │   │   ├── checkout/       # Integración Stripe
-  │   │   │   ├── webhook/        # Webhook Stripe
-  │   │   │   └── upload/         # Upload a AWS S3
-  │   │   ├── login/              # Página de login
-  │   │   ├── register/           # Página de registro
-  │   │   ├── menu/               # Catálogo público
-  │   │   ├── cart/               # Carrito de compras
-  │   │   └── orders/             # Historial de pedidos
+  │   │   │   ├── auth/           # Callbacks Supabase Auth
+  │   │   │   ├── reservaciones/  # CRUD reservaciones
+  │   │   │   ├── productos/      # CRUD productos
+  │   │   │   ├── pedidos/        # Gestión POS
+  │   │   │   ├── pagos/          # Red Enlace, QR, Efectivo
+  │   │   │   ├── chat/           # Chatbot con RAG
+  │   │   │   └── upload/         # Upload a Supabase Storage
+  │   │   ├── (public)/           # Rutas públicas
+  │   │   │   ├── menu/           # Catálogo público
+  │   │   │   └── reservar/       # Formulario reservación
+  │   │   ├── (auth)/             # Rutas autenticadas
+  │   │   │   ├── pos/            # Punto de Venta
+  │   │   │   ├── cocina/         # Vista cocina
+  │   │   │   └── mis-reservas/   # Historial cliente
+  │   │   └── admin/              # Panel administrador
   │   ├── components/             # Componentes React
-  │   ├── models/                 # Modelos Mongoose
-  │   └── libs/                   # Utilidades
-  ├── mcp-server/                 # Servidor MCP para chatbot
+  │   │   ├── ui/                 # shadcn/ui components
+  │   │   ├── chat/               # Widget chatbot
+  │   │   └── pos/                # Componentes POS
+  │   ├── lib/                    # Utilidades
+  │   │   ├── prisma.ts           # Cliente Prisma
+  │   │   └── supabase/           # Clientes Supabase
+  │   └── hooks/                  # Custom hooks
+  ├── prisma/
+  │   └── schema.prisma           # Esquema de BD
   ├── public/                     # Archivos estáticos
-  └── .env                        # Variables de entorno
+  └── .env.local                  # Variables de entorno
   ```,
   caption: [Estructura de directorios del proyecto],
 )
@@ -301,11 +407,11 @@ export default clientPromise;
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e3f2fd") } else { white },
     [*Métrica*], [*Cantidad*], [*Descripción*],
-    [Archivos JavaScript/JSX], [45+], [Componentes y lógica],
-    [API Endpoints], [10], [Rutas de backend],
-    [Modelos Mongoose], [5], [Esquemas de BD],
-    [Componentes React], [25+], [UI reutilizables],
-    [Líneas de código], [~3,500], [Excluyendo dependencias],
+    [Archivos TypeScript/TSX], [60+], [Componentes y lógica],
+    [API Endpoints], [15], [Rutas de backend],
+    [Modelos Prisma], [8], [Esquemas de BD],
+    [Componentes React], [35+], [UI reutilizables (shadcn/ui)],
+    [Líneas de código], [~5,000], [Excluyendo dependencias],
   ),
   caption: [Estadísticas del código fuente],
 )

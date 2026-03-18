@@ -2,12 +2,16 @@
 
 === 2.2.1 Objetivo General
 
-Desarrollar e implementar un sistema web integral de pedidos en línea para el Restaurante Bambú, integrando Model Context Protocol (MCPs) para proporcionar un chatbot asistente con capacidad de acceso a información en tiempo real, con el fin de mejorar la experiencia del cliente e incrementar la eficiencia operativa.
+Implementar un sistema web de gestión para el Restaurante Bambú que integre módulos de reservaciones, punto de venta y funcionalidades de inteligencia artificial, utilizando tecnologías modernas y la pasarela de pagos Red Enlace adaptada al contexto boliviano, con el fin de mejorar la experiencia del cliente, incrementar la eficiencia operativa y establecer una base tecnológica para la toma de decisiones basada en datos.
 
 === 2.2.2 Objetivos Específicos
 
-- Implementar un módulo de gestión de menú que permita la administración dinámica de productos, categorías y disponibilidad.
-- Desarrollar un carrito de compras seguro integrado con pasarela de pagos para el procesamiento automático de transacciones.
-- Diseñar servidores Model Context Protocol (MCPs) personalizados para exponer datos de menú, inventario y pedidos de forma estructurada.
-- Integrar un chatbot asistente basado en LLMs con los servidores MCP para responder consultas de clientes con información en tiempo real.
-- Validar el funcionamiento del sistema mediante pruebas integrales de software y evaluación de la precisión del asistente virtual.
+- Desarrollar un sistema de reservaciones con calendario interactivo, gestión de mesas y confirmaciones automáticas por correo electrónico.
+- Construir un módulo de punto de venta (POS) para registro de pedidos presenciales con gestión de estados de orden y control de caja.
+- Integrar la pasarela de pagos Red Enlace CyberSource para procesar transacciones con tarjeta de débito/crédito y códigos QR, cumpliendo normativas bolivianas.
+- Crear un chatbot inteligente con búsqueda semántica mediante embeddings para asistir a clientes y personal en consultas sobre menú, horarios y disponibilidad.
+- Diseñar un sistema de recomendación de platillos basado en preferencias e historial del cliente.
+- Elaborar un módulo de predicción de demanda por día y hora para optimización de recursos.
+- Incorporar un sistema de reseñas con análisis de sentimiento para identificar áreas de mejora.
+- Estructurar un panel administrativo con dashboard de métricas y reportes.
+- Ejecutar pruebas del sistema mediante evaluación integral de las funcionalidades implementadas.

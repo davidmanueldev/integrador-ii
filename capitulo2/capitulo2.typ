@@ -16,5 +16,3 @@
 
 // 2.2 Determinación de Objetivos
 #include "objetivos.typ"
-
-#pagebreak()

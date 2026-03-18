@@ -1,445 +1,315 @@
 == 2.3 Tecnologías del Stack Tecnológico
 
-El desarrollo del Sistema de Pedidos en Línea para el Restaurante Bambú se fundamenta en un stack tecnológico moderno conocido como MERN modificado (MongoDB, Express implícito en Next.js, React, Node.js). A continuación se describen las características, ventajas y justificación de cada tecnología empleada.
+El desarrollo del Sistema Integral de Gestión para el Restaurante Bambú se fundamenta en un stack tecnológico moderno basado en el ecosistema de React y servicios cloud. A continuación se describen las características, ventajas y justificación de cada tecnología empleada.
 
-=== 2.3.1 Next.js: Framework de React para Producción
+=== 2.3.1 Next.js 14: Framework de React para Producción
 
-Next.js es un framework de React desarrollado por Vercel que proporciona funcionalidades esenciales para aplicaciones web de producción, incluyendo renderizado híbrido, optimización automática y routing basado en el sistema de archivos (Vercel, 2023).
+Next.js es un framework de React desarrollado por Vercel que proporciona funcionalidades esenciales para aplicaciones web de producción, incluyendo renderizado híbrido, optimización automática y routing basado en el sistema de archivos (Vercel, 2024).
 
 *Características Principales*
 
-_Renderizado Híbrido_
+_App Router (Next.js 14)_
 
-Next.js soporta múltiples estrategias de renderizado según las necesidades de cada página:
+La versión 14 introduce el App Router como arquitectura principal:
 
-- *Static Site Generation (SSG)*: Genera HTML en tiempo de compilación, ideal para contenido que no cambia frecuentemente (páginas de información, catálogo estático)
-- *Server-Side Rendering (SSR)*: Genera HTML dinámicamente en cada petición, apropiado para contenido personalizado o que cambia frecuentemente
-- *Incremental Static Regeneration (ISR)*: Permite actualizar páginas estáticas sin reconstruir todo el sitio
-- *Client-Side Rendering (CSR)*: Renderizado en el navegador para interacciones dinámicas
+- *Server Components*: Componentes que se ejecutan en el servidor, reduciendo JavaScript enviado al cliente
+- *Streaming*: Renderizado progresivo de la página mientras se cargan datos
+- *Layouts anidados*: Estructura de UI que persiste entre navegaciones
+- *Route Handlers*: API endpoints definidos junto a las páginas
 
-*API Routes*
+*API Routes con Route Handlers*
 
-Next.js permite crear endpoints de API dentro del mismo proyecto mediante archivos en la carpeta `/pages/api` o `/app/api`:
+Next.js permite crear endpoints de API mediante archivos en la carpeta `/app/api`:
 
-```javascript
-// pages/api/productos.js
-export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    const productos = await obtenerProductos();
-    res.status(200).json(productos);
-  }
+```typescript
+// app/api/products/route.ts
+export async function GET(request: Request) {
+  const products = await prisma.product.findMany();
+  return Response.json(products);
+}
+
+export async function POST(request: Request) {
+  const data = await request.json();
+  const product = await prisma.product.create({ data });
+  return Response.json(product, { status: 201 });
 }
 ```
 
 Ventajas:
 - Backend y frontend en un mismo repositorio (monorepo)
-- Serverless functions que escalan automáticamente
-- Type-safe API routes con TypeScript
+- Serverless functions que escalan automáticamente en Vercel
+- Type-safe con TypeScript integrado
 
 *Optimizaciones Automáticas*
 
 - Compresión automática de imágenes mediante `next/image`
-- Code splitting automático (solo JavaScript necesario se carga para cada página)
-- Prefetching de páginas linkadas para navegación instantánea
+- Code splitting automático
+- Prefetching de páginas linkadas
 - Bundle optimization mediante tree-shaking
-
-*Routing Basado en Archivos*
-
-La estructura de carpetas define automáticamente las rutas:
-
-```
-pages/
-  index.js           → /
-  menu.js            → /menu
-  pedidos/
-    [id].js          → /pedidos/:id (ruta dinámica)
-  admin/
-    productos.js     → /admin/productos
-```
 
 *Justificación de Uso en el Proyecto*
 
-Next.js fue seleccionado por las siguientes razones:
+Next.js 14 fue seleccionado por:
 
-1. *SEO Optimizado*: SSR mejora indexación del catálogo de productos por motores de búsqueda
-2. *Rendimiento Superior*: Optimizaciones automáticas resultan en tiempos de carga mínimos
-3. *Developer Experience*: Hot reloading, TypeScript integrado, debugging simplificado
-4. *Despliegue Simplificado*: Integración nativa con plataformas como Vercel, fácil configuración en AWS, Azure
-5. *Escalabilidad*: API Routes serverless escalan automáticamente con demanda
+1. *Server Components*: Reducen JavaScript del cliente, mejorando rendimiento
+2. *Streaming*: Mejora percepción de velocidad en páginas con datos de IA
+3. *Vercel AI SDK*: Integración nativa para funcionalidades de IA
+4. *Despliegue Simplificado*: Integración nativa con Vercel
+5. *Escalabilidad*: Serverless functions escalan automáticamente
 
-=== 2.3.2 React: Biblioteca para Interfaces de Usuario
+=== 2.3.2 React 18: Biblioteca para Interfaces de Usuario
 
-React es una biblioteca JavaScript de código abierto desarrollada por Meta (Facebook) para construir interfaces de usuario mediante componentes reutilizables (Meta Open Source, 2023). Es la biblioteca de UI más popular actualmente con un ecosistema extenso.
+React es una biblioteca JavaScript de código abierto desarrollada por Meta para construir interfaces de usuario mediante componentes reutilizables (Meta Open Source, 2024).
 
-*Conceptos Clave de React*
+*Conceptos Clave de React 18*
 
-_Componentes_
+_Concurrent Features_
 
-React divide la interfaz en componentes independientes y reutilizables:
+React 18 introduce renderizado concurrente:
 
-```jsx
-function TarjetaProducto({ nombre, precio, imagen }) {
+- *Suspense*: Manejo declarativo de estados de carga
+- *Transitions*: Marcar actualizaciones como no urgentes
+- *Automatic Batching*: Agrupación automática de actualizaciones de estado
+
+```tsx
+function ProductList() {
   return (
-    <div className="tarjeta">
-      <img src={imagen} alt={nombre} />
-      <h3>{nombre}</h3>
-      <p>${precio}</p>
-      <button>Agregar al Carrito</button>
+    <Suspense fallback={<Loading />}>
+      <Products />
+    </Suspense>
+  );
+}
+```
+
+*Hooks Principales*
+
+```tsx
+function ShoppingCart() {
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
+  
+  useEffect(() => {
+    const newTotal = items.reduce((sum, item) => sum + item.price, 0);
+    setTotal(newTotal);
+  }, [items]);
+  
+  return <div>Total: Bs. {total}</div>;
+}
+```
+
+*Ecosistema React Utilizado*
+
+- *React Hook Form + Zod*: Formularios con validación type-safe
+- *TanStack Query*: Gestión de estado asíncrono y caché
+- *shadcn/ui*: Componentes accesibles basados en Radix UI
+
+=== 2.3.3 Supabase: Backend como Servicio
+
+Supabase es una plataforma Backend-as-a-Service (BaaS) de código abierto construida sobre PostgreSQL, que proporciona base de datos, autenticación, almacenamiento y APIs automáticas.
+
+*Características Principales*
+
+_PostgreSQL Gestionado_
+
+```sql
+-- Tabla de productos con soporte para búsqueda vectorial
+CREATE TABLE products (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  description TEXT,
+  price DECIMAL(10,2) NOT NULL,
+  category_id UUID REFERENCES categories(id),
+  embedding VECTOR(1536),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+*Supabase Auth*
+
+Sistema completo de autenticación:
+
+```typescript
+// Registro de usuario
+const { user, error } = await supabase.auth.signUp({
+  email: 'cliente@example.com',
+  password: 'securepassword'
+});
+
+// Login
+const { session } = await supabase.auth.signInWithPassword({
+  email, password
+});
+```
+
+*Row Level Security (RLS)*
+
+Políticas de seguridad a nivel de fila:
+
+```sql
+-- Usuarios solo ven sus propias reservaciones
+CREATE POLICY "Users view own reservations" ON reservations
+  FOR SELECT USING (auth.uid() = user_id);
+
+-- Solo admin puede modificar productos
+CREATE POLICY "Admin manages products" ON products
+  FOR ALL USING (
+    auth.jwt() ->> 'role' = 'admin'
+  );
+```
+
+*Justificación para el Proyecto*
+
+Supabase fue seleccionado por:
+
+1. *PostgreSQL completo*: No es una versión limitada, acceso SQL total
+2. *pgvector integrado*: Soporte nativo para embeddings sin servicios externos
+3. *Auth completo*: Autenticación lista para producción
+4. *RLS*: Seguridad robusta a nivel de base de datos
+5. *Plan gratuito generoso*: Adecuado para MVPs y proyectos de grado
+
+=== 2.3.4 Prisma: ORM Type-Safe
+
+Prisma es un ORM (Object-Relational Mapping) moderno para Node.js y TypeScript que proporciona una capa de abstracción type-safe sobre la base de datos.
+
+*Prisma Schema*
+
+```prisma
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal     @db.Decimal(10, 2)
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id])
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Reservation {
+  id          String   @id @default(cuid())
+  userId      String
+  tableId     String
+  date        DateTime
+  partySize   Int
+  status      ReservationStatus @default(PENDING)
+  table       Table    @relation(fields: [tableId], references: [id])
+}
+```
+
+*Prisma Client*
+
+```typescript
+// Consultas type-safe con autocompletado
+const products = await prisma.product.findMany({
+  where: { 
+    category: { name: 'Platos Principales' },
+    price: { lte: 50 }
+  },
+  include: { category: true },
+  orderBy: { price: 'asc' }
+});
+
+// Crear con relaciones
+const order = await prisma.order.create({
+  data: {
+    tableId: 'table-5',
+    items: {
+      create: [
+        { productId: 'prod-1', quantity: 2, unitPrice: 35 },
+        { productId: 'prod-2', quantity: 1, unitPrice: 15 }
+      ]
+    }
+  },
+  include: { items: true }
+});
+```
+
+*Ventajas de Prisma*
+
+- *Type Safety*: Errores detectados en compilación
+- *Autocompletado*: IntelliSense completo para modelos
+- *Migraciones*: Control de versiones del esquema
+- *Prevención de N+1*: APIs declarativas para eager loading
+
+=== 2.3.5 Red Enlace: Pasarela de Pagos Boliviana
+
+Red Enlace es la principal red de pagos electrónicos en Bolivia, supervisada por la Autoridad de Supervisión del Sistema Financiero (ASFI). Proporciona procesamiento de transacciones con tarjetas de débito y crédito emitidas en Bolivia.
+
+*Características Principales*
+
+_CyberSource API_
+
+Red Enlace utiliza CyberSource (Visa) como procesador:
+
+- API REST para integraciones modernas
+- Tokenización de tarjetas para pagos recurrentes
+- 3D Secure para autenticación adicional
+- Reportes y conciliación automatizada
+
+*QR Simple*
+
+Modalidad de pago mediante código QR regulada por BCB:
+
+- Estándar interoperable entre bancos bolivianos
+- Sin necesidad de tarjeta física
+- Confirmación en tiempo real
+- Comisiones menores que tarjetas
+
+*Justificación para el Proyecto*
+
+Red Enlace fue seleccionado por:
+
+1. *Contexto local*: Única opción para tarjetas bolivianas
+2. *Regulación*: Cumplimiento con normativas ASFI
+3. *QR Simple*: Modalidad popular en Bolivia
+4. *Cobertura*: Acepta todas las tarjetas bancarias del país
+
+=== 2.3.6 Vercel AI SDK
+
+El Vercel AI SDK proporciona una abstracción unificada para integrar modelos de IA en aplicaciones Next.js.
+
+*Características Principales*
+
+```typescript
+import { useChat } from 'ai/react';
+
+function Chatbot() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    api: '/api/chat'
+  });
+
+  return (
+    <div>
+      {messages.map(m => (
+        <div key={m.id}>{m.role}: {m.content}</div>
+      ))}
+      <form onSubmit={handleSubmit}>
+        <input value={input} onChange={handleInputChange} />
+      </form>
     </div>
   );
 }
 ```
 
-Beneficios:
-- Reutilización de código
-- Testing más sencillo
-- Mantenimiento simplificado
-- Separación de responsabilidades
+*Streaming de Respuestas*
 
-*Virtual DOM*
+```typescript
+// app/api/chat/route.ts
+import { streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
 
-React utiliza un Virtual DOM (representación en memoria del DOM real) para optimizar actualizaciones:
-
-1. Cuando cambia el estado, React crea un nuevo Virtual DOM
-2. Compara con la versión anterior (diffing)
-3. Calcula la forma más eficiente de actualizar el DOM real
-4. Aplica solo los cambios necesarios (reconciliation)
-
-Resultado: Actualizaciones rápidas incluso con interfaces complejas
-
-*Hooks*
-
-Los Hooks permiten usar estado y otras características de React en componentes funcionales:
-
-```jsx
-function CarritoCompras() {
-  const [productos, setProductos] = useState([]);
-  const [total, setTotal] = useState(0);
+export async function POST(req: Request) {
+  const { messages } = await req.json();
   
-  useEffect(() => {
-    // Calcular total cuando productos cambian
-    const nuevoTotal = productos.reduce((sum, p) => sum + p.precio, 0);
-    setTotal(nuevoTotal);
-  }, [productos]);
-  
-  return <div>Total: ${total}</div>;
+  const result = await streamText({
+    model: openai('gpt-4o-mini'),
+    messages,
+    system: 'Eres el asistente del Restaurante Bambú...'
+  });
+
+  return result.toDataStreamResponse();
 }
 ```
 
-Hooks principales utilizados en el proyecto:
-- `useState`: Gestión de estado local
-- `useEffect`: Efectos secundarios (llamadas a API, suscripciones)
-- `useContext`: Compartir datos entre componentes sin prop drilling
-- `useReducer`: Estado complejo con lógica de actualización definida
-
-*Flujo de Datos Unidireccional*
-
-Los datos fluyen de componentes padres a hijos mediante props, garantizando:
-- Comportamiento predecible
-- Debugging facilitado
-- Menos bugs relacionados con estado inconsistente
-
-*Ecosistema React Utilizado*
-
-_React Hook Form_
-- Gestión eficiente de formularios con validación
-- Mejor rendimiento (menos re-renders)
-- Integración con validadores como Yup o Zod
-
-*React Query / TanStack Query*
-- Gestión de estado asíncrono (fetching, caching, sync con servidor)
-- Actualizaciones optimistas
-- Retry automático en caso de errores
-
-*React Context API*
-- Gestión de estado global sin librerías externas
-- Ideal para autenticación, tema, carrito de compras
-
-=== 2.3.3 MongoDB con Mongoose
-
-MongoDB es una base de datos NoSQL documental de código abierto que almacena datos en formato JSON similar (BSON). Mongoose es una librería ODM (Object-Document Mapper) para Node.js que proporciona modelado de datos con esquemas.
-
-*Características de MongoDB*
-
-_Modelo de Documentos_
-
-Los datos se almacenan como documentos JSON flexibles:
-
-```javascript
-{
-  "_id": ObjectId("..."),
-  "nombre": "Sushi Roll California",
-  "precio": 15.99,
-  "categoria": "Sushi",
-  "ingredientes": ["cangrejo", "aguacate", "pepino"],
-  "disponible": true,
-  "valoracionPromedio": 4.7,
-  "reviews": [
-    { "usuario": "María", "rating": 5, "comentario": "Delicioso!" }
-  ]
-}
-```
-
-Ventajas:
-- Esquema flexible (agregar campos sin modificar estructura completa)
-- Documentos anidados (reviews dentro del producto)
-- Arrays nativos (ingredientes)
-
-*Consultas Expresivas*
-
-MongoDB proporciona un lenguaje de consultas rico:
-
-```javascript
-// Buscar productos de categoría "Sushi" con precio < $20
-db.productos.find({
-  categoria: "Sushi",
-  precio: { $lt: 20 },
-  disponible: true
-}).sort({ valoracionPromedio: -1 });
-
-// Agregaciones para análisis
-db.pedidos.aggregate([
-  { $match: { estado: "completado" } },
-  { $group: { _id: "$usuario", totalGastado: { $sum: "$total" } } },
-  { $sort: { totalGastado: -1 } },
-  { $limit: 10 }
-]);
-```
-
-*Índices para Rendimiento*
-
-```javascript
-// Índice para búsquedas frecuentes por categoría
-db.productos.createIndex({ categoria: 1, precio: 1 });
-```
-
-*Mongoose: ODM para Node.js*
-
-Mongoose añade estructura y validación sobre MongoDB:
-
-```javascript
-const productoSchema = new mongoose.Schema({
-  nombre: {
-    type: String,
-    required: [true, 'Nombre es requerido'],
-    trim: true,
-    maxlength: 100
-  },
-  precio: {
-    type: Number,
-    required: true,
-    min: [0, 'Precio no puede ser negativo']
-  },
-  categoria: {
-    type: String,
-    enum: ['Entradas', 'Platos Principales', 'Postres', 'Bebidas'],
-    required: true
-  },
-  ingredientes: [String],
-  disponible: { type: Boolean, default: true },
-  creadoEn: { type: Date, default: Date.now }
-});
-
-const Producto = mongoose.model('Producto', productoSchema);
-```
-
-Beneficios de Mongoose:
-- Validación de datos declarativa
-- Middleware (hooks) para lógica pre/post operaciones
-- Population para resolver referencias entre documentos
-- Virtuals para campos calculados
-
-*Justificación para el Proyecto*
-
-MongoDB + Mongoose son apropiados porque:
-
-1. *Flexibilidad*: Productos pueden tener atributos variables (información nutricional optional, variantes de tamaño)
-2. *Desarrollo Ágil*: Esquema evoluciona fácilmente sin migraciones complejas
-3. *Escalabilidad*: Crece horizontalmente conforme aumenta demanda
-4. *Integración*: JSON nativo funciona perfectamente con JavaScript/Node.js
-5. *Consultas Complejas*: Agregaciones permiten análisis de ventas, productos populares, patrones de compra
-
-=== 2.3.4 Stripe: Plataforma de Procesamiento de Pagos
-
-Stripe es una plataforma de infraestructura de pagos en línea que permite a negocios aceptar pagos, gestionar suscripciones y manejar flujos financieros complejos (Stripe, 2023).
-
-*Características Principales*
-
-_API Completa y Moderna_
-
-Stripe proporciona APIs RESTful bien documentadas para todas las operaciones:
-
-```javascript
-// Crear Payment Intent
-const paymentIntent = await stripe.paymentIntents.create({
-  amount: 2599, // En centavos (25.99 USD)
-  currency: 'usd',
-  payment_method_types: ['card'],
-  metadata: { numeroPedido: 'ORD-2025-001' }
-});
-```
-
-*Stripe Elements*
-
-Componentes de UI pre-construidos para captura segura de información de pago:
-
-```javascript
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
-function FormularioPago() {
-  const stripe = useStripe();
-  const elements = useElements();
-  
-  const manejarSubmit = async (event) => {
-    event.preventDefault();
-    const { error, paymentIntent } = await stripe.confirmCardPayment(
-      clientSecret,
-      { payment_method: { card: elements.getElement(CardElement) } }
-    );
-  };
-}
-```
-
-Ventajas:
-- Cumplimiento PCI-DSS automático (Stripe maneja datos sensibles)
-- Customizable con CSS
-- Validación integrada
-
-*Webhooks para Confirmación Segura*
-
-Los webhooks notifican al sistema cuando eventos ocurren en Stripe:
-
-```javascript
-// pages/api/webhooks/stripe.js
-export default async function handler(req, res) {
-  const sig = req.headers['stripe-signature'];
-  const event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
-  
-  if (event.type === 'payment_intent.succeeded') {
-    const paymentIntent = event.data.object;
-    await actualizarPedidoComoPagado(paymentIntent.metadata.numeroPedido);
-  }
-  
-  res.json({ received: true });
-}
-```
-
-Importancia:
-- Evita race conditions (usuario cierra navegador antes de confirmación)
-- Fuente confiable de verdad (usuario no puede falsificar confirmación)
-- Permite procesar pagos asíncronos
-
-*Dashboard Completo*
-
-Panel administrativo de Stripe proporciona:
-- Visualización de todas las transacciones
-- Reportes financieros automáticos
-- Gestión de disputas y chargebacks
-- Exportación de datos para contabilidad
-
-*Ventajas de Stripe sobre Alternativas*
-
-| Característica | Stripe | PayPal | Mercado Pago |
-|---------------|--------|---------|--------------|
-| API Developer-Friendly | Excelente | Buena | Buena |
-| Documentación | Muy completa | Moderada | Moderada |
-| Fees por Transacción | 2.9% + 0.30 | ~3.5% | ~3.4% |
-| Cumplimiento PCI | Nivel 1 | Nivel 1 | Nivel 1 |
-| Customización UI | Alta | Media | Media |
-| Cobertura Global | 135+ países | 200+ países | América Latina |
-
-*Justificación para el Proyecto*
-
-Stripe fue seleccionado por:
-
-1. *Experiencia del Desarrollador*: Documentación excepcional, SDKs modernos, sandbox de pruebas robusto
-2. *Seguridad*: Cumplimiento PCI-DSS nivel 1 sin esfuerzo adicional
-3. *Transparencia*: Fees claros, sin costos ocultos
-4. *Integración*: Librerías oficiales para React (`@stripe/react-stripe-js`)
-5. *Escalabilidad*: Maneja desde pequeñas transacciones hasta volúmenes empresariales
-
-== NextAuth.js: Autenticación para Next.js
-
-NextAuth.js es una solución completa de autenticación diseñada específicamente para aplicaciones Next.js, proporcionando soporte para múltiples proveedores y estrategias de autenticación (NextAuth.js, 2023).
-
-*Características Principales*
-
-_Múltiples Proveedores_
-
-Soporta autenticación mediante:
-- Credenciales (email/password)
-- OAuth (Google, GitHub, Facebook, etc.)
-- Email mágico (link de acceso)
-- Web3 (wallets de criptomonedas)
-
-*Configuración Simple*
-
-```javascript
-// pages/api/auth/[...nextauth].js
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-
-export default NextAuth({
-  providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        const usuario = await verificarCredenciales(credentials);
-        if (usuario) return usuario;
-        return null;
-      }
-    })
-  ],
-  session: { strategy: 'jwt' },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.rol = user.rol;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user.rol = token.rol;
-      return session;
-    }
-  }
-});
-```
-
-*Hooks y Utilidades*
-
-```jsx
-import { useSession, signIn, signOut } from 'next-auth/react';
-
-function ComponenteProtegido() {
-  const { data: session, status } = useSession();
-  
-  if (status === 'loading') return <Cargando />;
-  if (status === 'unauthenticated') return <IniciarSesion />;
-  
-  return <div>Bienvenido, {session.user.name}</div>;
-}
-```
-
-*Seguridad Integrada*
-
-- Tokens JWT firmados
-- Cookies HTTP-only (no accesibles desde JavaScript del cliente)
-- Protección CSRF automática
-- Refresh tokens para sesiones de larga duración
-
-*Justificación para el Proyecto*
-
-NextAuth.js es ideal porque:
-
-1. *Integración Nativa*: Diseñado específicamente para Next.js
-2. *Flexibilidad*: Fácil agregar nuevos proveedores de autenticación en el futuro
-3. *Seguridad*: Mejores prácticas implementadas por defecto
-4. *Simplicidad*: Menos código boilerplate comparado con implementar autenticación manualmente
-5. *Comunidad*: Ampliamente adoptado con extensa documentación y ejemplos
-
-Este conjunto de tecnologías forma un stack moderno, robusto y escalable que proporciona una base sólida para el desarrollo del Sistema de Pedidos en Línea, equilibrando rendimiento, seguridad, experiencia del desarrollador y capacidad de evolución futura.
+Este conjunto de tecnologías forma un stack moderno, robusto y escalable que proporciona una base sólida para el desarrollo del Sistema Integral de Gestión, equilibrando rendimiento, seguridad, experiencia del desarrollador y adaptación al contexto boliviano.

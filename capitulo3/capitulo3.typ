@@ -21,5 +21,3 @@
 
 // 3.3 Aportes
 #include "aportes.typ"
-
-#pagebreak()

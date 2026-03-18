@@ -13,8 +13,8 @@
 
 #pagebreak()
 
-// 4.2 Model Context Protocol (MCPs)
-#include "mcps.typ"
+// 4.2 Inteligencia Artificial Aplicada
+#include "inteligencia_artificial.typ"
 
 #pagebreak()
 
@@ -27,3 +27,6 @@
 #include "bases_datos_apis.typ"
 
 #pagebreak()
+
+// 4.5 Pasarelas de Pago en Bolivia
+#include "pagos_bolivia.typ"

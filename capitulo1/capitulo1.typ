@@ -15,5 +15,3 @@
 
 // 1.2 Antecedentes
 #include "antecedentes.typ"
-
-#pagebreak()

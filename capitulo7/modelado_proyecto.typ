@@ -2,34 +2,36 @@
 
 === 7.3.1 Arquitectura General del Sistema
 
-El proyecto implementa una arquitectura de tres capas (3-tier architecture):
+El proyecto implementa una arquitectura moderna basada en serverless y servicios cloud:
 
 *Capa de Presentación (Frontend):*
-- Framework: Next.js 14 con React
-- Rendering: Server-Side Rendering (SSR) y Static Site Generation (SSG)
-- Estado Global: Context API de React
-- Estilos: CSS Modules + TailwindCSS
+- Framework: Next.js 14 con App Router
+- Biblioteca UI: React 18 con Server Components
+- Componentes: shadcn/ui basado en Radix UI
+- Estado Global: React Context + TanStack Query
+- Estilos: TailwindCSS
 - Validación: Zod para schemas de datos
+- Chat: Vercel AI SDK para interfaz de chatbot
 
 *Capa de Lógica de Negocio (Backend):*
-- Runtime: Node.js v18+
-- Framework: Express.js
-- API: RESTful con 10 endpoints principales
-- Autenticación: JWT (JSON Web Tokens) con httpOnly cookies
-- Validación: Express-validator
-- Seguridad: Helmet, CORS, Rate Limiting
+- API Routes: Route Handlers de Next.js
+- ORM: Prisma para acceso type-safe a datos
+- Autenticación: Supabase Auth con JWT
+- IA: Vercel AI SDK + OpenAI API
+- Validación: Zod para request/response
+- Emails: Resend para notificaciones
 
 *Capa de Datos (Database):*
-- Base de Datos: MongoDB 6+ (NoSQL)
-- ODM: Mongoose para modelado de datos
-- Almacenamiento de Imágenes: AWS S3 / Cloudinary
-- Índices: Optimizados para queries frecuentes
+- Base de Datos: PostgreSQL (Supabase)
+- Extensiones: pgvector para embeddings
+- Almacenamiento: Supabase Storage para imágenes
+- Seguridad: Row Level Security (RLS)
 
 === 7.3.2 Esquema de API REST
 
 La API del sistema expone los siguientes endpoints:
 
-*Autenticación:*
+*Autenticación (Supabase Auth):*
 ```
 POST   /api/auth/register       - Registro de usuario
 POST   /api/auth/login          - Inicio de sesión
@@ -39,152 +41,221 @@ GET    /api/auth/me             - Obtener usuario actual
 
 *Productos:*
 ```
-GET    /api/products            - Listar todos los productos
+GET    /api/products            - Listar productos con filtros
 GET    /api/products/:id        - Obtener producto por ID
 POST   /api/products            - Crear producto (Admin)
 PUT    /api/products/:id        - Actualizar producto (Admin)
 DELETE /api/products/:id        - Eliminar producto (Admin)
+GET    /api/products/search     - Búsqueda semántica con embeddings
 ```
 
-*Categorías:*
+*Reservaciones:*
 ```
-GET    /api/categories          - Listar categorías
-GET    /api/categories/:id      - Obtener categoría con productos
-POST   /api/categories          - Crear categoría (Admin)
-PUT    /api/categories/:id      - Actualizar categoría (Admin)
-DELETE /api/categories/:id      - Eliminar categoría (Admin)
+GET    /api/reservations                - Listar reservaciones del usuario
+GET    /api/reservations/availability   - Consultar disponibilidad
+POST   /api/reservations                - Crear reservación
+PUT    /api/reservations/:id            - Modificar reservación
+DELETE /api/reservations/:id            - Cancelar reservación
 ```
 
-*Pedidos:*
+*Pedidos (POS):*
 ```
-GET    /api/orders              - Listar pedidos del usuario
-GET    /api/orders/all          - Listar todos (Admin)
+GET    /api/orders              - Listar pedidos
 GET    /api/orders/:id          - Obtener pedido específico
 POST   /api/orders              - Crear nuevo pedido
-PUT    /api/orders/:id/status   - Actualizar estado (Admin)
+PATCH  /api/orders/:id/status   - Actualizar estado
+GET    /api/orders/kitchen      - Pedidos para cocina
 ```
 
 *Pagos:*
 ```
-POST   /api/payments/checkout   - Crear sesión de Stripe
-POST   /api/payments/webhook    - Webhook de confirmación
+POST   /api/payments/card       - Procesar pago con tarjeta (Red Enlace)
+POST   /api/payments/qr         - Generar QR Simple
+POST   /api/payments/qr/verify  - Verificar pago QR
+POST   /api/payments/cash       - Registrar pago en efectivo
 ```
 
-=== 7.3.3 Esquema de Base de Datos
+*IA y Chatbot:*
+```
+POST   /api/chat                - Conversación con chatbot
+GET    /api/recommendations     - Obtener recomendaciones
+GET    /api/predictions         - Predicción de demanda
+POST   /api/reviews             - Crear reseña con análisis de sentimiento
+```
 
-*Colección: users*
-```javascript
-{
-  _id: ObjectId,
-  email: String (unique, required),
-  password: String (hashed, required),
-  name: String (required),
-  phone: String,
-  address: {
-    street: String,
-    city: String,
-    zipCode: String,
-    references: String
-  },
-  role: String (enum: ['client', 'admin']),
-  createdAt: Date,
-  updatedAt: Date
+=== 7.3.3 Esquema de Base de Datos (Prisma)
+
+*Modelo: User*
+```prisma
+model User {
+  id            String        @id @default(cuid())
+  email         String        @unique
+  name          String
+  phone         String?
+  role          Role          @default(CLIENT)
+  reservations  Reservation[]
+  orders        Order[]
+  reviews       Review[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+enum Role {
+  CLIENT
+  WAITER
+  KITCHEN
+  CASHIER
+  ADMIN
 }
 ```
 
-*Colección: categories*
-```javascript
-{
-  _id: ObjectId,
-  name: String (required, unique),
-  description: String,
-  image: String (URL),
-  active: Boolean (default: true),
-  createdAt: Date,
-  updatedAt: Date
+*Modelo: Category y Product*
+```prisma
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  image       String?
+  products    Product[]
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal     @db.Decimal(10, 2)
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id])
+  image       String?
+  available   Boolean     @default(true)
+  prepTime    Int?        // minutos
+  embedding   Unsupported("vector(1536)")?
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 ```
 
-*Colección: products*
-```javascript
-{
-  _id: ObjectId,
-  name: String (required),
-  description: String,
-  price: Number (required, min: 0),
-  category: ObjectId (ref: 'Category'),
-  image: String (S3 URL),
-  available: Boolean (default: true),
-  featured: Boolean (default: false),
-  createdAt: Date,
-  updatedAt: Date
+*Modelo: Table y Reservation*
+```prisma
+model Table {
+  id           String        @id @default(cuid())
+  number       Int           @unique
+  capacity     Int
+  location     String?
+  reservations Reservation[]
+  orders       Order[]
+}
+
+model Reservation {
+  id          String            @id @default(cuid())
+  userId      String
+  user        User              @relation(fields: [userId], references: [id])
+  tableId     String
+  table       Table             @relation(fields: [tableId], references: [id])
+  date        DateTime
+  partySize   Int
+  status      ReservationStatus @default(PENDING)
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
 }
 ```
 
-*Colección: orders*
-```javascript
-{
-  _id: ObjectId,
-  orderNumber: String (unique, auto-generated),
-  user: ObjectId (ref: 'User'),
-  items: [{
-    product: ObjectId (ref: 'Product'),
-    name: String,
-    price: Number,
-    quantity: Number,
-    subtotal: Number
-  }],
-  total: Number (required),
-  status: String (enum: [
-    'pending', 'confirmed', 'preparing',
-    'ready', 'delivering', 'delivered', 'cancelled'
-  ]),
-  paymentId: String (Stripe Payment Intent),
-  paymentStatus: String (enum: ['pending', 'paid', 'failed']),
-  deliveryAddress: {
-    street: String,
-    city: String,
-    zipCode: String,
-    phone: String,
-    references: String
-  },
-  notes: String,
-  createdAt: Date,
-  updatedAt: Date
+*Modelo: Order y OrderItem*
+```prisma
+model Order {
+  id          String        @id @default(cuid())
+  orderNumber String        @unique
+  userId      String?
+  user        User?         @relation(fields: [userId], references: [id])
+  tableId     String?
+  table       Table?        @relation(fields: [tableId], references: [id])
+  type        OrderType
+  status      OrderStatus   @default(PENDING)
+  items       OrderItem[]
+  subtotal    Decimal       @db.Decimal(10, 2)
+  tax         Decimal       @db.Decimal(10, 2)
+  total       Decimal       @db.Decimal(10, 2)
+  payments    Payment[]
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+enum OrderType {
+  DINE_IN
+  TAKEOUT
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  SERVED
+  PAID
+  CANCELLED
 }
 ```
 
-*Colección: sessions*
-```javascript
-{
-  _id: ObjectId,
-  userId: ObjectId (ref: 'User'),
-  token: String (hashed),
-  expiresAt: Date,
-  createdAt: Date
+*Modelo: Payment*
+```prisma
+model Payment {
+  id              String        @id @default(cuid())
+  orderId         String
+  order           Order         @relation(fields: [orderId], references: [id])
+  method          PaymentMethod
+  amount          Decimal       @db.Decimal(10, 2)
+  status          PaymentStatus @default(PENDING)
+  externalRef     String?       // Referencia Red Enlace o QR
+  createdAt       DateTime      @default(now())
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  QR_SIMPLE
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
 }
 ```
 
-=== 7.3.4 Índices de Base de Datos
+=== 7.3.4 Row Level Security (RLS)
 
-Para optimizar el rendimiento, se crean los siguientes índices:
+Políticas de seguridad implementadas en Supabase:
 
-```javascript
-// users
-db.users.createIndex({ email: 1 }, { unique: true })
+```sql
+-- Usuarios solo ven sus propias reservaciones
+CREATE POLICY "Users view own reservations" ON reservations
+  FOR SELECT USING (auth.uid() = user_id);
 
-// products
-db.products.createIndex({ category: 1 })
-db.products.createIndex({ available: 1, featured: -1 })
+-- Usuarios pueden crear sus propias reservaciones
+CREATE POLICY "Users create reservations" ON reservations
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
 
-// orders
-db.orders.createIndex({ user: 1, createdAt: -1 })
-db.orders.createIndex({ orderNumber: 1 }, { unique: true })
-db.orders.createIndex({ status: 1, createdAt: -1 })
+-- Solo staff puede ver todos los pedidos
+CREATE POLICY "Staff view all orders" ON orders
+  FOR SELECT USING (
+    auth.jwt() ->> 'role' IN ('WAITER', 'KITCHEN', 'CASHIER', 'ADMIN')
+  );
 
-// sessions
-db.sessions.createIndex({ userId: 1 })
-db.sessions.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 })
+-- Solo admin puede modificar productos
+CREATE POLICY "Admin manages products" ON products
+  FOR ALL USING (auth.jwt() ->> 'role' = 'ADMIN');
 ```
 
 === 7.3.5 Mapa de Navegación
@@ -192,22 +263,26 @@ db.sessions.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 })
 *Rutas Públicas:*
 - `/` - Página de inicio
 - `/menu` - Catálogo de productos
-- `/menu/:category` - Productos por categoría
-- `/product/:id` - Detalle de producto
+- `/reservations` - Sistema de reservaciones
 - `/login` - Inicio de sesión
 - `/register` - Registro de usuario
 
-*Rutas Protegidas (Cliente):*
-- `/cart` - Carrito de compras
-- `/checkout` - Proceso de pago
-- `/orders` - Historial de pedidos
-- `/orders/:id` - Detalle de pedido
+*Rutas de Cliente:*
+- `/my-reservations` - Mis reservaciones
 - `/profile` - Perfil de usuario
 
+*Rutas de Staff (POS):*
+- `/pos` - Punto de venta
+- `/pos/tables` - Vista de mesas
+- `/kitchen` - Pantalla de cocina
+
 *Rutas Administrativas:*
-- `/admin` - Dashboard administrativo
+- `/admin` - Dashboard con métricas
 - `/admin/products` - Gestión de productos
 - `/admin/categories` - Gestión de categorías
-- `/admin/orders` - Gestión de pedidos
+- `/admin/reservations` - Gestión de reservaciones
+- `/admin/orders` - Historial de pedidos
 - `/admin/users` - Gestión de usuarios
-- `/admin/analytics` - Reportes y estadísticas
+- `/admin/reports` - Reportes y análisis
+- `/admin/predictions` - Predicción de demanda
+- `/admin/sentiment` - Análisis de sentimiento

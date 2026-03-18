@@ -2,89 +2,98 @@
 
 === 1.3.1 Identificación de la Situación Problemática
 
-El Restaurante Bambú enfrenta un desafío estratégico crítico: la ausencia de un sistema digital de pedidos limita su capacidad de crecimiento, eficiencia operativa y competitividad en un mercado cada vez más digitalizado. Esta carencia genera múltiples consecuencias negativas que afectan tanto la experiencia del cliente como la rentabilidad del negocio.
+El Restaurante Bambú, ubicado en El Alto, La Paz, Bolivia, enfrenta un desafío estratégico crítico: la ausencia de sistemas digitales de gestión limita su capacidad de crecimiento, eficiencia operativa y competitividad en un mercado cada vez más exigente. Esta carencia genera múltiples consecuencias negativas que afectan tanto la experiencia del cliente como la rentabilidad del negocio.
 
 === 1.3.2 Problemas Secundarios
 
-=== Limitada Capacidad de Atención
+=== Gestión Ineficiente de Reservaciones
 
-El modelo actual de atención presencial y telefónica impone restricciones severas:
+El modelo actual de reservaciones presenta deficiencias significativas:
 
-- *Cobertura temporal limitada*: Los pedidos solo pueden tomarse durante horarios laborales, perdiendo oportunidades de venta fuera de estos períodos
-- *Capacidad restringida*: El personal puede atender un número limitado de llamadas simultáneas, especialmente durante horas pico (12:00-14:00 y 19:00-21:00)
-- *Pérdida de ventas*: Clientes que no logran comunicarse abandonan la compra o recurren a competidores con plataformas digitales
-- *Ineficiencia del personal*: Tiempo valioso invertido en tomar pedidos telefónicos podría destinarse a mejorar calidad de preparación y servicio
+- *Proceso manual*: Las reservaciones se gestionan mediante llamadas telefónicas o de manera presencial, sin un sistema centralizado
+- *Riesgo de sobreventa*: Sin control automatizado de disponibilidad de mesas, existe el riesgo de aceptar más reservaciones de las que el restaurante puede atender
+- *Falta de confirmaciones*: No existe un mecanismo automático para confirmar o recordar reservaciones a los clientes
+- *Pérdida de información*: Los datos de clientes y sus preferencias no se almacenan de manera estructurada
+- *Horarios limitados*: Los clientes solo pueden reservar durante horarios de atención, perdiendo oportunidades fuera de estos períodos
 
-=== Falta de Información Transparente y Accesible
+=== Proceso de Venta Presencial Deficiente
 
-Los clientes enfrentan dificultades para obtener información antes de realizar una compra:
+El sistema de ventas actual presenta múltiples fricciones:
 
-- *Menú no actualizado*: Cambios en disponibilidad, precios o nuevos productos no se comunican eficazmente
-- *Ausencia de información visual*: Los clientes no pueden ver fotografías de los platillos antes de ordenar
-- *Consultas repetitivas*: El personal debe responder las mismas preguntas sobre ingredientes, precios y tiempos de entrega constantemente
+- *Registro manual*: Los pedidos se toman en papel o memoria, aumentando el riesgo de errores
+- *Métodos de pago limitados*: Dependencia principalmente de efectivo, sin opciones de pago electrónico adaptadas al mercado boliviano
+- *Sin integración de pagos QR*: A pesar de la creciente adopción de pagos QR en Bolivia, el restaurante no ofrece esta opción
+- *Control de caja manual*: Reconciliación de ventas diarias compleja y propensa a errores
+- *Falta de historial*: Imposibilidad de consultar pedidos anteriores o generar reportes de ventas
+
+=== Falta de Información Accesible para Clientes
+
+Los clientes enfrentan dificultades para obtener información:
+
+- *Menú no disponible digitalmente*: Los clientes no pueden consultar el menú antes de visitar el restaurante
+- *Consultas repetitivas*: El personal debe responder constantemente las mismas preguntas sobre ingredientes, precios y disponibilidad
 - *Información inconsistente*: Diferentes empleados pueden proporcionar información contradictoria
-
-=== Proceso de Pago Ineficiente
-
-El sistema de pagos actual presenta fricciones significativas:
-
-- *Métodos limitados*: Dependencia de efectivo o transferencias bancarias manuales
-- *Riesgos de seguridad*: Manejo de efectivo aumenta vulnerabilidad a robos
-- *Reconciliación manual compleja*: Dificultad para cuadrar ventas diarias y generar reportes financieros
-- *Falta de comprobantes digitales*: Imposibilidad de emitir facturas electrónicas automáticamente
+- *Sin recomendaciones personalizadas*: El personal no tiene acceso a preferencias históricas del cliente para sugerir platillos
 
 === Ausencia de Análisis de Datos
 
 Sin un sistema digital, el restaurante carece de información estratégica valiosa:
 
-- *Productos más vendidos*: Desconocimiento de preferencias reales de clientes
-- *Patrones de compra*: Imposibilidad de identificar horarios pico, días de mayor demanda, combinaciones populares
-- *Comportamiento de clientes*: Falta de datos sobre frecuencia de compra, ticket promedio, retención
-- *Inventario ineficiente*: Decisiones de compra basadas en estimaciones en lugar de datos históricos
+- *Desconocimiento de demanda*: No se pueden identificar patrones de afluencia por día u hora
+- *Productos más vendidos*: Falta de datos sobre preferencias reales de clientes
+- *Satisfacción del cliente*: Sin mecanismo para recopilar y analizar feedback de manera sistemática
+- *Decisiones sin datos*: La planificación de personal e inventario se basa en estimaciones en lugar de datos históricos
 
-=== Experiencia del Cliente Deficiente
+=== Limitaciones del Personal de Atención
 
-La suma de estos problemas resulta en una experiencia de usuario subóptima:
+La carga operativa afecta la calidad del servicio:
 
-- *Incertidumbre*: Sin seguimiento de pedidos, los clientes no tienen visibilidad del estado de su orden
-- *Falta de personalización*: Imposibilidad de guardar preferencias, direcciones favoritas o métodos de pago
-- *Sin mecanismo de retroalimentación*: Ausencia de sistema para calificaciones, comentarios o sugerencias
-- *Comunicación unidireccional*: No existen notificaciones sobre promociones, nuevos productos o cambios en servicio
+- *Tiempo en tareas administrativas*: Personal valioso dedicado a tareas repetitivas que podrían automatizarse
+- *Respuestas a consultas básicas*: Empleados interrumpidos constantemente para responder preguntas sobre menú, horarios y disponibilidad
+- *Falta de herramientas*: Sin acceso a información centralizada que facilite la atención al cliente
 
-== Problema Central: Chatbot Sin Contexto Real
+== Problema Central: Falta de Integración Tecnológica con IA
 
-Adicionalmente, si se implementara un chatbot tradicional sin integración de MCPs, surgiría un problema técnico fundamental: *las respuestas del asistente virtual estarían basadas en información estática y potencialmente desactualizada*.
+El problema fundamental radica en la ausencia de un sistema integrado que aproveche las capacidades de la inteligencia artificial para mejorar la operación:
 
-=== Limitaciones de Chatbots Tradicionales
+=== Atención al Cliente Sin Asistencia Inteligente
 
-*Información Desincronizada*
-- El chatbot respondería según su base de conocimiento inicial, sin reflejar cambios en menú, precios o disponibilidad
-- Actualizaciones requerirían modificar y redesplegar el sistema completo
-- Alto riesgo de proporcionar información incorrecta (precios desactualizados, productos descontinuados)
+*Consultas No Automatizadas*
+- Los clientes no pueden obtener respuestas inmediatas sobre el menú, disponibilidad de mesas o recomendaciones
+- Cada consulta requiere intervención humana, limitando la capacidad de atención
+- No existe un asistente que comprenda consultas en lenguaje natural como "¿qué platos tienen para alguien que no come carne?"
 
-*Respuestas Genéricas*
-- Sin acceso a datos reales de pedidos, el chatbot no podría consultar el estado de una orden específica
-- Imposibilidad de verificar disponibilidad de productos en tiempo real
-- Respuestas vagas tipo "consulte con el personal" que frustran al usuario
+*Sin Personalización*
+- No se aprovechan los datos históricos para ofrecer recomendaciones personalizadas
+- Cada visita del cliente comienza "desde cero" sin considerar preferencias previas
+- Imposibilidad de sugerir platillos basados en gustos similares de otros clientes
 
-*Mantenimiento Costoso*
-- Cada cambio en el negocio requeriría intervención técnica especializada
-- Proceso lento que retrasa la actualización de información
-- Costos recurrentes de mantenimiento y actualización
+=== Gestión Sin Inteligencia Predictiva
+
+*Planificación Reactiva*
+- El restaurante reacciona a la demanda en lugar de anticiparla
+- No se pueden predecir días u horas de mayor afluencia para optimizar personal
+- Decisiones de inventario basadas en intuición en lugar de patrones históricos
+
+*Sin Análisis de Feedback*
+- Las opiniones de clientes no se analizan de manera sistemática
+- Problemas recurrentes pueden pasar desapercibidos por falta de agregación de datos
+- No se identifican tendencias en la satisfacción del cliente
 
 == Impacto en el Negocio
 
-La permanencia en el modelo tradicional sin adoptar soluciones digitales implica:
+La permanencia en el modelo tradicional sin adoptar soluciones digitales inteligentes implica:
 
-- *Pérdida de competitividad*: Clientes preferirán restaurantes con plataformas digitales más convenientes
-- *Estancamiento en ventas*: Imposibilidad de captar nuevos segmentos de mercado digitalizados
-- *Ineficiencia operativa*: Recursos humanos subutilizados en tareas administrativas repetitivas
-- *Falta de escalabilidad*: El modelo actual no permite crecer sin incrementar proporcionalmente los costos operativos
+- *Pérdida de competitividad*: Clientes preferirán restaurantes con sistemas de reservación más convenientes
+- *Ineficiencia operativa*: Recursos humanos subutilizados en tareas que podrían automatizarse
+- *Oportunidades perdidas*: Sin datos para tomar decisiones estratégicas informadas
+- *Experiencia del cliente limitada*: Falta de personalización y conveniencia en el servicio
+- *Métodos de pago obsoletos*: En un mercado donde los pagos digitales y QR crecen rápidamente, no ofrecer estas opciones es una desventaja competitiva
 
 == Formulación del Problema
 
 Con base en el análisis anterior, se formula la siguiente pregunta de investigación:
 
-*¿Cómo desarrollar e implementar un sistema web integral de pedidos en línea para el Restaurante Bambú que, mediante la integración de Model Context Protocol (MCPs), permita ofrecer un chatbot asistente con acceso a información en tiempo real, mejorando simultáneamente la experiencia del cliente y la eficiencia operativa del negocio?*
+*¿Cómo desarrollar e implementar un sistema integral de gestión para el Restaurante Bambú que integre módulos de reservaciones y punto de venta con funcionalidades de inteligencia artificial, adaptado al contexto boliviano, para mejorar simultáneamente la experiencia del cliente, la eficiencia operativa y la capacidad de toma de decisiones basada en datos?*
 
-Este problema requiere una solución tecnológica robusta que aborde tanto los aspectos funcionales del sistema de pedidos (catálogo, carrito, pagos, administración) como la innovación en asistencia al cliente mediante chatbots contextualizados con MCPs.
+Este problema requiere una solución tecnológica robusta que aborde tanto los aspectos funcionales del sistema (reservaciones, punto de venta, pagos con Red Enlace) como la innovación en asistencia al cliente e inteligencia de negocio mediante funcionalidades de IA.

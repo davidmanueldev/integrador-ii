@@ -2,89 +2,108 @@
 
 === 1.4.1 Objetivo General
 
-Desarrollar e implementar un sistema web integral de pedidos en línea para el Restaurante Bambú, integrando Model Context Protocol (MCPs) para proporcionar un chatbot asistente con capacidad de acceso a información en tiempo real, con el fin de mejorar la experiencia del cliente, incrementar la eficiencia operativa y establecer una base tecnológica escalable para el crecimiento del negocio.
+Implementar un sistema web de gestión para el Restaurante Bambú que integre módulos de reservaciones, punto de venta y funcionalidades de inteligencia artificial, utilizando tecnologías modernas y la pasarela de pagos Red Enlace adaptada al contexto boliviano, con el fin de mejorar la experiencia del cliente, incrementar la eficiencia operativa y establecer una base tecnológica escalable para la toma de decisiones basada en datos.
 
 === 1.4.2 Objetivos Específicos
 
-*OE1: Sistema de Gestión de Menú*
+*OE1: Sistema de Reservaciones*
 
-Implementar un módulo completo de gestión de menú con operaciones CRUD (Crear, Leer, Actualizar, Eliminar) que permita a los administradores mantener actualizado el catálogo de productos, incluyendo:
+Desarrollar un módulo de gestión de reservaciones que permita a los clientes reservar mesas de manera autónoma y al personal administrar la disponibilidad, incluyendo:
 
-- Registro de productos con nombre, descripción, precio, categoría e imagen
-- Organización jerárquica mediante categorías y subcategorías
-- Control de disponibilidad y destacados
-- Interfaz administrativa intuitiva para gestión sin conocimientos técnicos
+- Calendario interactivo con visualización de disponibilidad en tiempo real
+- Configuración de mesas (capacidad, ubicación, características)
+- Reservas por fecha, hora y número de personas
+- Confirmación automática de reservaciones por correo electrónico
+- Gestión de lista de espera para horarios de alta demanda
+- Cancelaciones y modificaciones por parte del cliente
+- Panel administrativo para gestionar todas las reservaciones
 
-*OE2: Carrito de Compras y Procesamiento de Pagos*
+*OE2: Punto de Venta (POS)*
 
-Desarrollar un carrito de compras funcional integrado con la pasarela de pagos Stripe para procesamiento seguro de transacciones, contemplando:
+Construir un módulo de punto de venta para la gestión de pedidos presenciales, contemplando:
 
-- Gestión de productos en carrito (agregar, modificar cantidad, eliminar)
-- Cálculo automático de subtotales, impuestos y totales
-- Integración con Stripe para pagos con tarjeta de crédito/débito
-- Confirmación de pedidos y generación de número de orden único
-- Manejo de webhooks para validación de pagos
+- Registro de pedidos asociados a mesas o clientes
+- Visualización del menú digital para meseros y cajeros
+- Gestión de estados de orden (tomada, en preparación, servida, pagada)
+- Opción de división de cuenta entre comensales
+- Generación de tickets y recibos de pago
+- Control de caja con apertura, cierre y cuadre diario
+- Historial de transacciones y reportes de ventas
 
-*OE3: Sistema de Autenticación y Autorización*
+*OE3: Integración de Pagos con Red Enlace*
 
-Integrar un sistema robusto de autenticación y autorización utilizando NextAuth para garantizar la seguridad y control de acceso, implementando:
+Integrar la pasarela de pagos Red Enlace CyberSource para procesar transacciones de manera segura y cumpliendo normativas bolivianas, contemplando:
 
-- Registro e inicio de sesión de usuarios
-- Autenticación mediante credenciales (email/contraseña)
-- Gestión de sesiones seguras con cookies HTTP-only
-- Sistema de roles (Cliente, Administrador)
-- Protección de rutas según permisos de usuario
+- Pagos con tarjeta de débito y crédito (VISA, Mastercard, American Express)
+- Pagos mediante código QR Simple de Red Enlace
+- Registro manual de pagos en efectivo con control de caja
+- Liquidación automática a cuenta bancaria boliviana
+- Cumplimiento de estándares PCI DSS y autenticación 3D Secure
+- Generación de comprobantes de pago
 
-*OE4: Panel Administrativo*
+*OE4: Chatbot Inteligente con Búsqueda Semántica*
 
-Crear un panel administrativo completo para gestión centralizada de la plataforma, incluyendo:
+Crear un chatbot asistente con capacidad de comprensión de lenguaje natural mediante embeddings y búsqueda semántica, incluyendo:
 
-- Dashboard con métricas clave (ventas, pedidos pendientes, productos más vendidos)
-- Gestión de categorías de productos
-- Administración de pedidos (visualización, actualización de estados)
-- Gestión de usuarios y permisos
+- Interfaz de chat integrada en la plataforma web
+- Procesamiento de consultas en lenguaje natural sobre menú, ingredientes y disponibilidad
+- Búsqueda semántica utilizando embeddings almacenados en Supabase pgvector
+- Respuestas contextualizadas sobre horarios, ubicación y políticas del restaurante
+- Integración con Vercel AI SDK para streaming de respuestas
+- Disponibilidad para clientes (consultas de menú) y staff (consultas operativas)
+
+*OE5: Sistema de Recomendación de Platillos*
+
+Diseñar un sistema de recomendación personalizada basado en preferencias e historial del cliente, contemplando:
+
+- Registro de preferencias del cliente (alergias, restricciones, favoritos)
+- Análisis de historial de pedidos para identificar patrones
+- Algoritmo de recomendación basado en similitud de preferencias
+- Sugerencias de platillos complementarios
+- Integración con el chatbot para recomendaciones conversacionales
+
+*OE6: Predicción de Demanda*
+
+Elaborar un módulo de predicción de demanda por día y hora para optimización de recursos, incluyendo:
+
+- Análisis de datos históricos de reservaciones y ventas
+- Modelo predictivo para estimar afluencia por día de la semana y franja horaria
+- Visualización de predicciones en dashboard administrativo
+- Alertas para días de alta demanda esperada
+- Recomendaciones para planificación de personal e inventario
+
+*OE7: Análisis de Sentimiento de Reseñas*
+
+Incorporar un sistema de recolección y análisis de feedback de clientes mediante análisis de sentimiento, contemplando:
+
+- Formulario de reseñas post-visita para clientes
+- Procesamiento de reseñas mediante análisis de sentimiento con IA
+- Clasificación automática de sentimiento (positivo, neutro, negativo)
+- Identificación de temas recurrentes en el feedback
+- Dashboard con métricas de satisfacción y tendencias
+- Alertas para reseñas negativas que requieran atención
+
+*OE8: Panel Administrativo y Dashboard*
+
+Estructurar un panel administrativo para gestión centralizada de la plataforma, incluyendo:
+
+- Dashboard con métricas clave en tiempo real (reservaciones, ventas, satisfacción)
+- Gestión de menú: productos, categorías, precios, disponibilidad e imágenes
+- Administración de mesas y configuración del restaurante
+- Gestión de usuarios y roles (administrador, cajero, mesero)
+- Reportes de ventas por período, producto y método de pago
 - Configuración general del sistema
 
-*OE5: Diseño e Implementación de Servidores MCP*
+*OE9: Pruebas y Validación del Sistema*
 
-Diseñar y desarrollar servidores Model Context Protocol personalizados para exponer datos del restaurante de forma estructurada y segura, implementando:
-
-- *MCP de Menú*: Servidor que proporciona acceso a productos disponibles con información completa (nombre, descripción, precio, imagen, categoría)
-- *MCP de Inventario*: Servidor que verifica disponibilidad en tiempo real de productos
-- *MCP de Pedidos*: Servidor que permite consultar el estado y detalles de pedidos mediante número de orden
-- *MCP de Información del Restaurante*: Servidor que provee datos operativos (horarios, ubicación, políticas, días festivos)
-
-Cada servidor MCP deberá implementar el protocolo estándar, incluyendo métodos de inicialización, listado de recursos disponibles y consultas específicas.
-
-=== OE6: Integración de MCPs con Chatbot
-
-Integrar los servidores MCP desarrollados con el chatbot asistente para habilitar respuestas contextualizadas en tiempo real, contemplando:
-
-- Configuración del cliente MCP en el sistema de chatbot
-- Conexión con todos los servidores MCP implementados
-- Lógica de ruteo de consultas al servidor MCP apropiado
-- Procesamiento de resultados y generación de respuestas naturales
-- Manejo de errores y fallbacks cuando los servidores no están disponibles
-
-=== OE7: Pruebas y Validación del Sistema
-
-Realizar pruebas funcionales exhaustivas y validación del sistema completo para garantizar calidad, confiabilidad y cumplimiento de requisitos, incluyendo:
+Ejecutar pruebas funcionales exhaustivas y validación del sistema completo para garantizar calidad, confiabilidad y cumplimiento de requisitos, incluyendo:
 
 - Pruebas unitarias de componentes críticos
 - Pruebas de integración entre módulos
-- Pruebas de flujos end-to-end (desde exploración de menú hasta confirmación de pago)
-- Validación de comunicación con servidores MCP
+- Pruebas de flujos end-to-end (reservación completa, proceso de venta completo)
+- Validación de integración con Red Enlace CyberSource
+- Pruebas de funcionalidades de IA (chatbot, recomendaciones, predicción, sentimiento)
 - Pruebas de seguridad (autenticación, autorización, validación de inputs)
 - Pruebas de usabilidad con usuarios reales
 
-=== OE8: Evaluación de Mejora con MCPs
-
-Evaluar cuantitativamente la mejora en precisión de respuestas y satisfacción del usuario comparando el chatbot con MCPs versus un chatbot sin acceso a datos en tiempo real, mediante:
-
-- Definición de métricas de evaluación (precisión de respuestas, tiempo de respuesta, tasa de resolución exitosa)
-- Aplicación de casos de prueba estandarizados
-- Recopilación de retroalimentación de usuarios
-- Análisis comparativo de resultados
-- Documentación de hallazgos y conclusiones
-
-Estos objetivos específicos abordan de manera integral tanto los aspectos funcionales del sistema de pedidos en línea como la innovación tecnológica representada por la integración de MCPs, estableciendo un camino claro para el desarrollo y validación del proyecto.
+Estos objetivos específicos abordan de manera integral tanto los aspectos funcionales del sistema de gestión (reservaciones, punto de venta, pagos) como la innovación tecnológica representada por las funcionalidades de inteligencia artificial, estableciendo un camino claro para el desarrollo y validación del proyecto en el contexto específico de Bolivia.

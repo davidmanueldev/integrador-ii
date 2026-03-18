@@ -27,5 +27,3 @@
 
 // 5.6 Métricas de Calidad
 #include "metricas_calidad.typ"
-
-#pagebreak()

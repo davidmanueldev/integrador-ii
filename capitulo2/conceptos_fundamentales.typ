@@ -10,7 +10,7 @@ Un sistema de información es un conjunto integrado de componentes para recopila
 - *Procedimientos*: Reglas y políticas que gobiernan el uso del sistema
 - *Personas*: Usuarios y administradores que interactúan con el sistema
 
-En el contexto de este proyecto, el Sistema de Pedidos en Línea constituye un sistema de información transaccional que automatiza el proceso de venta del restaurante, reemplazando métodos manuales con flujos digitales eficientes.
+En el contexto de este proyecto, el Sistema Integral de Gestión constituye un sistema de información que automatiza múltiples procesos operativos del restaurante: reservaciones, toma de pedidos, control de caja, pagos y análisis de datos.
 
 === 2.2.2 Arquitectura Cliente-Servidor
 
@@ -37,8 +37,8 @@ La arquitectura cliente-servidor es un modelo de diseño de software distribuido
 
 El sistema implementa una arquitectura cliente-servidor moderna:
 - *Cliente*: Aplicación Next.js/React ejecutándose en navegadores web
-- *Servidor*: API Routes de Next.js (serverless functions) procesando lógica de negocio
-- *Base de datos*: MongoDB actuando como capa de persistencia de datos
+- *Servidor*: API Routes de Next.js (serverless functions) y Supabase
+- *Base de datos*: PostgreSQL gestionado por Supabase con extensiones (pgvector)
 
 === 2.2.3 Aplicaciones Web Modernas
 
@@ -75,7 +75,7 @@ REST (Representational State Transfer) es un estilo arquitectónico para diseña
 === Principios REST
 
 *Recursos Identificables*
-- Cada recurso tiene una URL única (ej: `/api/productos/123`)
+- Cada recurso tiene una URL única (ej: `/api/products/123`)
 - Los recursos se representan típicamente en formato JSON
 
 *Métodos HTTP Estándar*
@@ -99,54 +99,62 @@ REST (Representational State Transfer) es un estilo arquitectónico para diseña
 
 === Ejemplo en el Proyecto
 
-El sistema implementa endpoints RESTful para gestión de productos:
+El sistema implementa endpoints RESTful para gestión de recursos:
 
 ```
-GET    /api/productos          # Listar todos los productos
-GET    /api/productos/:id      # Obtener un producto específico
-POST   /api/productos          # Crear nuevo producto
-PUT    /api/productos/:id      # Actualizar producto
-DELETE /api/productos/:id      # Eliminar producto
+GET    /api/products           # Listar todos los productos
+GET    /api/products/:id       # Obtener un producto específico
+POST   /api/products           # Crear nuevo producto
+PUT    /api/products/:id       # Actualizar producto
+DELETE /api/products/:id       # Eliminar producto
+
+GET    /api/reservations       # Listar reservaciones
+POST   /api/reservations       # Crear nueva reservación
+GET    /api/reservations/availability  # Consultar disponibilidad
+
+POST   /api/orders             # Crear nuevo pedido
+PATCH  /api/orders/:id/status  # Actualizar estado del pedido
 ```
 
-== Bases de Datos NoSQL
+== Bases de Datos Relacionales
 
-Las bases de datos NoSQL (Not Only SQL) son sistemas de gestión de datos que no utilizan el modelo relacional tradicional. MongoDB, la base de datos utilizada en este proyecto, es una base de datos orientada a documentos.
+Las bases de datos relacionales organizan datos en tablas con filas y columnas, donde las relaciones entre tablas se establecen mediante claves primarias y foráneas. PostgreSQL, utilizado en este proyecto a través de Supabase, es una de las bases de datos relacionales más avanzadas y de código abierto.
 
-=== Características de MongoDB
+=== Características de PostgreSQL
 
-*Modelo de Documentos*
-- Datos almacenados como documentos JSON/BSON
-- Estructura flexible sin esquema rígido predefinido
-- Documentos pueden tener campos diferentes dentro de la misma colección
+*Modelo Relacional con Extensiones*
+- Datos organizados en tablas normalizadas
+- Soporte completo para transacciones ACID
+- Extensiones para funcionalidades avanzadas (pgvector, PostGIS)
 
-*Escalabilidad Horizontal*
-- Diseñado para distribuirse en múltiples servidores (sharding)
-- Replicación automática para alta disponibilidad
-- Manejo eficiente de grandes volúmenes de datos
+*Integridad Referencial*
+- Claves foráneas garantizan consistencia entre tablas
+- Restricciones (constraints) previenen datos inválidos
+- Triggers para lógica de negocio en base de datos
 
-*Consultas Flexibles*
-- Lenguaje de consulta expresivo con soporte para filtros complejos
-- Índices para optimización de rendimiento
-- Agregaciones para análisis de datos
+*Consultas Avanzadas*
+- SQL estándar con extensiones PostgreSQL
+- CTEs (Common Table Expressions) para consultas complejas
+- Window functions para análisis de datos
 
-=== Comparación: SQL vs NoSQL
+=== Ventajas sobre Bases NoSQL para este Proyecto
 
-| Aspecto | SQL (Relacional) | NoSQL (Documentos) |
-|---------|------------------|-------------------|
-| Esquema | Rígido, definido previamente | Flexible, dinámico |
-| Escalabilidad | Vertical (más recursos) | Horizontal (más servidores) |
-| Relaciones | Joins entre tablas | Documentos anidados o referencias |
-| Casos de uso | Transacciones complejas, datos estructurados | Datos semi-estructurados, alta escalabilidad |
+| Aspecto | PostgreSQL (Relacional) | NoSQL (Documentos) |
+|---------|-------------------------|-------------------|
+| Integridad de datos | ACID completo | Eventual consistency |
+| Relaciones complejas | Joins eficientes | Denormalización requerida |
+| Transacciones | Soporte completo | Limitado |
+| Extensiones IA | pgvector nativo | Requiere servicios externos |
 
 === Justificación para el Proyecto
 
-MongoDB es apropiado para este sistema porque:
+PostgreSQL con Supabase es apropiado porque:
 
-- El modelo de productos puede variar (diferentes campos según categoría)
-- Los pedidos contienen arreglos de productos con cantidades variables
-- Requerimientos de escalabilidad para crecimiento futuro
-- Integración nativa con JavaScript mediante Mongoose ODM
+- Las transacciones de pago requieren consistencia ACID
+- Las relaciones entre reservaciones, mesas, pedidos y pagos son complejas
+- pgvector permite almacenar embeddings directamente en la base de datos
+- Row Level Security (RLS) proporciona seguridad granular
+- Supabase ofrece autenticación y APIs automáticas integradas
 
 == Autenticación y Autorización
 
@@ -154,19 +162,20 @@ La seguridad es fundamental en sistemas web que manejan información sensible de
 
 === Autenticación
 
-La autenticación verifica la identidad del usuario. Métodos comunes incluyen:
+La autenticación verifica la identidad del usuario. Supabase Auth proporciona:
 
-- *Credenciales*: Usuario/contraseña (hasheadas con bcrypt)
-- *OAuth*: Autenticación delegada mediante servicios externos (Google, Facebook)
-- *Multi-factor*: Combinación de múltiples métodos de verificación
+- *Credenciales*: Email/contraseña con hash bcrypt
+- *OAuth*: Autenticación delegada mediante Google, Facebook, etc.
+- *Magic Links*: Acceso mediante enlace enviado por email
+- *Multi-factor*: Verificación adicional para mayor seguridad
 
 === Autorización
 
 La autorización determina qué acciones puede realizar un usuario autenticado. Se implementa mediante:
 
-- *Roles*: Conjuntos de permisos asignados a usuarios (Cliente, Administrador)
-- *Políticas de acceso*: Reglas que definen acceso a recursos específicos
-- *Middleware*: Componentes de software que verifican permisos antes de ejecutar operaciones
+- *Roles*: Conjuntos de permisos asignados a usuarios (Cliente, Mesero, Administrador)
+- *Row Level Security (RLS)*: Políticas en PostgreSQL que controlan acceso a nivel de fila
+- *Middleware*: Verificación de permisos en API Routes antes de ejecutar operaciones
 
 === JSON Web Tokens (JWT)
 
@@ -185,4 +194,4 @@ Ventajas de JWT:
 - Escalable: Funciona eficientemente con múltiples servidores
 - Estándar: Compatible con múltiples lenguajes y frameworks
 
-Este conjunto de conceptos fundamentales establece la base técnica necesaria para comprender las decisiones arquitectónicas y de implementación del Sistema de Pedidos en Línea, que serán desarrolladas en las siguientes secciones del marco teórico.
+Este conjunto de conceptos fundamentales establece la base técnica necesaria para comprender las decisiones arquitectónicas y de implementación del Sistema Integral de Gestión, que serán desarrolladas en las siguientes secciones del marco teórico.

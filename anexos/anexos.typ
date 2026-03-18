@@ -1,4 +1,4 @@
-// Anexos del Proyecto - Sistema de Pedidos Restaurante Bambú
+// Anexos del Proyecto - Sistema Integral de Gestión Restaurante Bambú
 // Estructura según formato Lazcano
 
 #import "../config/diagramas.typ": *
@@ -7,11 +7,11 @@
 
 == Anexo A: Esquema de Base de Datos
 
-La base de datos MongoDB del sistema está compuesta por 5 colecciones principales:
+La base de datos PostgreSQL (Supabase) del sistema está compuesta por las siguientes tablas principales:
 
-=== A.1 Colección `users`
+=== A.1 Tabla `users`
 
-Almacena la información de autenticación de los usuarios.
+Almacena la información de autenticación de los usuarios (gestionada por Supabase Auth).
 
 #figure(
   table(
@@ -19,20 +19,20 @@ Almacena la información de autenticación de los usuarios.
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e3f2fd") } else { white },
     [*Campo*], [*Tipo*], [*Restricciones*], [*Descripción*],
-    [`_id`], [ObjectId], [PK, auto], [Identificador único],
-    [`name`], [String], [required], [Nombre completo],
-    [`email`], [String], [unique, required], [Correo electrónico],
-    [`password`], [String], [hashed], [Contraseña (bcrypt 10 rounds)],
-    [`image`], [String], [opcional], [URL de foto de perfil],
-    [`createdAt`], [Date], [auto], [Fecha de creación],
-    [`updatedAt`], [Date], [auto], [Última modificación],
+    [`id`], [UUID], [PK, auto], [Identificador único],
+    [`email`], [VARCHAR], [unique, not null], [Correo electrónico],
+    [`nombre`], [VARCHAR], [not null], [Nombre completo],
+    [`rol`], [ENUM], [default: 'cliente'], [cliente/mesero/admin],
+    [`telefono`], [VARCHAR], [opcional], [Teléfono de contacto],
+    [`created_at`], [TIMESTAMPTZ], [auto], [Fecha de creación],
+    [`updated_at`], [TIMESTAMPTZ], [auto], [Última modificación],
   ),
-  caption: [Esquema de la colección `users`],
+  caption: [Esquema de la tabla `users`],
 )
 
-=== A.2 Colección `userinfos`
+=== A.2 Tabla `mesas`
 
-Almacena información adicional del perfil y permisos.
+Almacena la configuración de las mesas del restaurante.
 
 #figure(
   table(
@@ -40,21 +40,19 @@ Almacena información adicional del perfil y permisos.
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e8f5e9") } else { white },
     [*Campo*], [*Tipo*], [*Restricciones*], [*Descripción*],
-    [`_id`], [ObjectId], [PK, auto], [Identificador único],
-    [`email`], [String], [FK → users.email], [Referencia al usuario],
-    [`streetAddress`], [String], [opcional], [Dirección de entrega],
-    [`postalCode`], [String], [opcional], [Código postal],
-    [`city`], [String], [opcional], [Ciudad],
-    [`country`], [String], [opcional], [País],
-    [`phone`], [String], [opcional], [Teléfono de contacto],
-    [`admin`], [Boolean], [default: false], [Rol de administrador],
+    [`id`], [UUID], [PK, auto], [Identificador único],
+    [`numero`], [INTEGER], [unique, not null], [Número de mesa],
+    [`capacidad`], [INTEGER], [not null], [Capacidad de personas],
+    [`ubicacion`], [VARCHAR], [opcional], [Interior/Terraza/VIP],
+    [`estado`], [ENUM], [default: 'disponible'], [disponible/ocupada/reservada],
+    [`activa`], [BOOLEAN], [default: true], [Mesa habilitada],
   ),
-  caption: [Esquema de la colección `userinfos`],
+  caption: [Esquema de la tabla `mesas`],
 )
 
 #pagebreak()
 
-=== A.3 Colección `categories`
+=== A.3 Tabla `categorias`
 
 Organización de productos del menú por categorías.
 
@@ -64,15 +62,16 @@ Organización de productos del menú por categorías.
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#fff3e0") } else { white },
     [*Campo*], [*Tipo*], [*Restricciones*], [*Descripción*],
-    [`_id`], [ObjectId], [PK, auto], [Identificador único],
-    [`name`], [String], [required, unique], [Nombre de la categoría],
-    [`createdAt`], [Date], [auto], [Fecha de creación],
-    [`updatedAt`], [Date], [auto], [Última modificación],
+    [`id`], [UUID], [PK, auto], [Identificador único],
+    [`nombre`], [VARCHAR], [not null, unique], [Nombre de la categoría],
+    [`descripcion`], [TEXT], [opcional], [Descripción de la categoría],
+    [`orden`], [INTEGER], [default: 0], [Orden de visualización],
+    [`activa`], [BOOLEAN], [default: true], [Categoría visible],
   ),
-  caption: [Esquema de la colección `categories`],
+  caption: [Esquema de la tabla `categorias`],
 )
 
-=== A.4 Colección `menuitems`
+=== A.4 Tabla `productos`
 
 Catálogo de productos disponibles en el menú.
 
@@ -82,36 +81,50 @@ Catálogo de productos disponibles en el menú.
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#fce4ec") } else { white },
     [*Campo*], [*Tipo*], [*Restricciones*], [*Descripción*],
-    [`_id`], [ObjectId], [PK, auto], [Identificador único],
-    [`name`], [String], [required], [Nombre del producto],
-    [`description`], [String], [opcional], [Descripción detallada],
-    [`basePrice`], [Number], [required], [Precio base en Bs],
-    [`image`], [String], [URL S3], [Imagen del producto],
-    [`category`], [ObjectId], [FK → categories], [Categoría del producto],
-    [`sizes`], [Array], [subdocumentos], [Tamaños disponibles],
-    [`extraIngredientPrices`], [Array], [subdocumentos], [Extras opcionales],
+    [`id`], [UUID], [PK, auto], [Identificador único],
+    [`nombre`], [VARCHAR], [not null], [Nombre del producto],
+    [`descripcion`], [TEXT], [opcional], [Descripción detallada],
+    [`precio`], [DECIMAL(10,2)], [not null], [Precio en Bs],
+    [`imagen_url`], [VARCHAR], [URL Storage], [Imagen del producto],
+    [`categoria_id`], [UUID], [FK → categorias], [Categoría del producto],
+    [`disponible`], [BOOLEAN], [default: true], [Disponibilidad],
+    [`tiempo_preparacion`], [INTEGER], [minutos], [Tiempo estimado],
+    [`embedding`], [VECTOR(1536)], [pgvector], [Embedding para IA],
   ),
-  caption: [Esquema de la colección `menuitems`],
+  caption: [Esquema de la tabla `productos`],
 )
 
-*Subdocumento `sizes`:*
-```json
-{ "name": "Mediano", "price": 5 }
-```
-
-*Subdocumento `extraIngredientPrices`:*
-```json
-{ "name": "Extra carne", "price": 8 }
-```
-
-*Cálculo de precio total:*
-$ "precioTotal" = "basePrice" + "size.price" + sum("extras.price") $
+*Cálculo de embedding:*
+El campo `embedding` almacena el vector de 1536 dimensiones generado por OpenAI `text-embedding-3-small` para búsquedas semánticas.
 
 #pagebreak()
 
-=== A.5 Colección `orders`
+=== A.5 Tabla `reservaciones`
 
-Registro de pedidos realizados por los clientes.
+Registro de reservaciones de mesas.
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    stroke: 0.5pt,
+    fill: (_, row) => if row == 0 { rgb("#c8e6c9") } else { white },
+    [*Campo*], [*Tipo*], [*Restricciones*], [*Descripción*],
+    [`id`], [UUID], [PK, auto], [Identificador único],
+    [`user_id`], [UUID], [FK → users], [Cliente que reserva],
+    [`mesa_id`], [UUID], [FK → mesas], [Mesa reservada],
+    [`fecha`], [DATE], [not null], [Fecha de reservación],
+    [`hora`], [TIME], [not null], [Hora de reservación],
+    [`personas`], [INTEGER], [not null], [Número de personas],
+    [`estado`], [ENUM], [default: 'pendiente'], [pendiente/confirmada/cancelada/completada],
+    [`notas`], [TEXT], [opcional], [Notas especiales],
+    [`created_at`], [TIMESTAMPTZ], [auto], [Fecha de creación],
+  ),
+  caption: [Esquema de la tabla `reservaciones`],
+)
+
+=== A.6 Tabla `pedidos`
+
+Registro de pedidos presenciales del restaurante.
 
 #figure(
   table(
@@ -119,25 +132,47 @@ Registro de pedidos realizados por los clientes.
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e1bee7") } else { white },
     [*Campo*], [*Tipo*], [*Restricciones*], [*Descripción*],
-    [`_id`], [ObjectId], [PK, auto], [Identificador único],
-    [`userEmail`], [String], [FK → users.email], [Email del cliente],
-    [`phone`], [String], [required], [Teléfono de contacto],
-    [`streetAddress`], [String], [required], [Dirección de entrega],
-    [`city`], [String], [required], [Ciudad],
-    [`cartProducts`], [Object], [JSON], [Productos del pedido],
-    [`paid`], [Boolean], [default: false], [Estado de pago],
-    [`createdAt`], [Date], [auto], [Fecha del pedido],
+    [`id`], [UUID], [PK, auto], [Identificador único],
+    [`mesa_id`], [UUID], [FK → mesas], [Mesa del pedido],
+    [`mesero_id`], [UUID], [FK → users], [Mesero que atiende],
+    [`total`], [DECIMAL(10,2)], [not null], [Total del pedido],
+    [`estado`], [ENUM], [default: 'pendiente'], [pendiente/preparacion/listo/entregado/pagado],
+    [`metodo_pago`], [ENUM], [nullable], [tarjeta/qr/efectivo],
+    [`pagado`], [BOOLEAN], [default: false], [Estado de pago],
+    [`created_at`], [TIMESTAMPTZ], [auto], [Fecha del pedido],
   ),
-  caption: [Esquema de la colección `orders`],
+  caption: [Esquema de la tabla `pedidos`],
+)
+
+#pagebreak()
+
+=== A.7 Tabla `pedido_items`
+
+Detalle de productos en cada pedido.
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    stroke: 0.5pt,
+    fill: (_, row) => if row == 0 { rgb("#b2dfdb") } else { white },
+    [*Campo*], [*Tipo*], [*Restricciones*], [*Descripción*],
+    [`id`], [UUID], [PK, auto], [Identificador único],
+    [`pedido_id`], [UUID], [FK → pedidos], [Pedido padre],
+    [`producto_id`], [UUID], [FK → productos], [Producto ordenado],
+    [`cantidad`], [INTEGER], [not null], [Cantidad solicitada],
+    [`precio_unitario`], [DECIMAL(10,2)], [not null], [Precio al momento],
+    [`notas`], [TEXT], [opcional], [Instrucciones especiales],
+  ),
+  caption: [Esquema de la tabla `pedido_items`],
 )
 
 #pagebreak()
 
 == Anexo B: Documentación de API REST
 
-El sistema expone 10 endpoints principales organizados por módulo:
+El sistema expone endpoints organizados por módulo:
 
-=== B.1 Endpoints de Autenticación
+=== B.1 Endpoints de Autenticación (Supabase Auth)
 
 #figure(
   table(
@@ -145,29 +180,32 @@ El sistema expone 10 endpoints principales organizados por módulo:
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e3f2fd") } else { white },
     [*Método*], [*Endpoint*], [*Descripción*], [*Auth*],
-    [POST], [`/api/register`], [Registro de nuevo usuario], [No],
-    [POST], [`/api/auth/[...nextauth]`], [Login (credenciales/OAuth)], [No],
+    [POST], [`/auth/signup`], [Registro de nuevo usuario], [No],
+    [POST], [`/auth/signin`], [Login con email/password], [No],
+    [POST], [`/auth/signout`], [Cerrar sesión], [Sí],
+    [GET], [`/auth/user`], [Obtener usuario actual], [Sí],
   ),
-  caption: [Endpoints de Autenticación],
+  caption: [Endpoints de Autenticación (Supabase)],
 )
 
-=== B.2 Endpoints de Perfil y Usuarios
+=== B.2 Endpoints de Reservaciones
 
 #figure(
   table(
     columns: (auto, auto, auto, auto),
     stroke: 0.5pt,
-    fill: (_, row) => if row == 0 { rgb("#e8f5e9") } else { white },
+    fill: (_, row) => if row == 0 { rgb("#c8e6c9") } else { white },
     [*Método*], [*Endpoint*], [*Descripción*], [*Auth*],
-    [GET], [`/api/profile`], [Obtener información del perfil], [Sí],
-    [PUT], [`/api/profile`], [Actualizar perfil], [Sí],
-    [GET], [`/api/users`], [Listar todos los usuarios], [Admin],
-    [PUT], [`/api/users`], [Actualizar rol de usuario], [Admin],
+    [GET], [`/api/reservaciones`], [Listar reservaciones], [Sí],
+    [POST], [`/api/reservaciones`], [Crear reservación], [Sí],
+    [PUT], [`/api/reservaciones/[id]`], [Actualizar reservación], [Sí],
+    [DELETE], [`/api/reservaciones/[id]`], [Cancelar reservación], [Sí],
+    [GET], [`/api/mesas/disponibles`], [Mesas disponibles por fecha], [No],
   ),
-  caption: [Endpoints de Perfil y Usuarios],
+  caption: [Endpoints de Reservaciones],
 )
 
-=== B.3 Endpoints de Categorías
+=== B.3 Endpoints de Productos y Categorías
 
 #figure(
   table(
@@ -175,33 +213,19 @@ El sistema expone 10 endpoints principales organizados por módulo:
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#fff3e0") } else { white },
     [*Método*], [*Endpoint*], [*Descripción*], [*Auth*],
-    [GET], [`/api/categories`], [Listar categorías], [No],
-    [POST], [`/api/categories`], [Crear categoría], [Admin],
-    [PUT], [`/api/categories`], [Actualizar categoría], [Admin],
-    [DELETE], [`/api/categories`], [Eliminar categoría], [Admin],
-  ),
-  caption: [Endpoints de Categorías],
-)
-
-#pagebreak()
-
-=== B.4 Endpoints de Productos del Menú
-
-#figure(
-  table(
-    columns: (auto, auto, auto, auto),
-    stroke: 0.5pt,
-    fill: (_, row) => if row == 0 { rgb("#fce4ec") } else { white },
-    [*Método*], [*Endpoint*], [*Descripción*], [*Auth*],
-    [GET], [`/api/menu-items`], [Listar productos], [No],
-    [POST], [`/api/menu-items`], [Crear producto], [Admin],
-    [PUT], [`/api/menu-items`], [Actualizar producto], [Admin],
-    [DELETE], [`/api/menu-items`], [Eliminar producto], [Admin],
+    [GET], [`/api/categorias`], [Listar categorías], [No],
+    [POST], [`/api/categorias`], [Crear categoría], [Admin],
+    [GET], [`/api/productos`], [Listar productos], [No],
+    [POST], [`/api/productos`], [Crear producto], [Admin],
+    [PUT], [`/api/productos/[id]`], [Actualizar producto], [Admin],
+    [DELETE], [`/api/productos/[id]`], [Eliminar producto], [Admin],
   ),
   caption: [Endpoints de Productos],
 )
 
-=== B.5 Endpoints de Checkout y Pedidos
+#pagebreak()
+
+=== B.4 Endpoints de Pedidos (POS)
 
 #figure(
   table(
@@ -209,14 +233,32 @@ El sistema expone 10 endpoints principales organizados por módulo:
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e1bee7") } else { white },
     [*Método*], [*Endpoint*], [*Descripción*], [*Auth*],
-    [POST], [`/api/checkout`], [Crear sesión de pago Stripe], [Sí],
-    [POST], [`/api/webhook`], [Webhook de confirmación Stripe], [Firma],
-    [GET], [`/api/orders`], [Listar pedidos], [Sí],
+    [GET], [`/api/pedidos`], [Listar pedidos activos], [Mesero/Admin],
+    [POST], [`/api/pedidos`], [Crear pedido], [Mesero],
+    [PUT], [`/api/pedidos/[id]`], [Actualizar estado], [Mesero/Admin],
+    [POST], [`/api/pedidos/[id]/items`], [Agregar items], [Mesero],
+    [DELETE], [`/api/pedidos/[id]/items/[itemId]`], [Quitar item], [Mesero],
   ),
-  caption: [Endpoints de Checkout y Pedidos],
+  caption: [Endpoints de Pedidos],
 )
 
-=== B.6 Endpoint de Upload
+=== B.5 Endpoints de Pagos
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    stroke: 0.5pt,
+    fill: (_, row) => if row == 0 { rgb("#f3e5f5") } else { white },
+    [*Método*], [*Endpoint*], [*Descripción*], [*Auth*],
+    [POST], [`/api/pagos/tarjeta`], [Procesar pago Red Enlace], [Mesero],
+    [POST], [`/api/pagos/qr`], [Generar QR Simple], [Mesero],
+    [POST], [`/api/pagos/efectivo`], [Registrar pago efectivo], [Mesero],
+    [POST], [`/api/pagos/webhook`], [Webhook Red Enlace], [Firma],
+  ),
+  caption: [Endpoints de Pagos],
+)
+
+=== B.6 Endpoints de IA
 
 #figure(
   table(
@@ -224,9 +266,11 @@ El sistema expone 10 endpoints principales organizados por módulo:
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#b2dfdb") } else { white },
     [*Método*], [*Endpoint*], [*Descripción*], [*Auth*],
-    [POST], [`/api/upload`], [Subir imagen a AWS S3], [Sí],
+    [POST], [`/api/chat`], [Chatbot con RAG], [No],
+    [GET], [`/api/recomendaciones`], [Recomendaciones personalizadas], [Sí],
+    [GET], [`/api/prediccion/demanda`], [Predicción de demanda], [Admin],
   ),
-  caption: [Endpoint de Upload],
+  caption: [Endpoints de IA],
 )
 
 #pagebreak()
@@ -242,8 +286,8 @@ El sistema expone 10 endpoints principales organizados por módulo:
     fill: (_, row) => if row == 0 { rgb("#e3f2fd") } else { white },
     [*Componente*], [*Versión Mínima*],
     [Node.js], [v18.0.0 o superior],
-    [npm / pnpm], [v8.0.0 / v7.0.0],
-    [MongoDB], [v6.0 o MongoDB Atlas],
+    [npm / pnpm], [v8.0.0 / v8.0.0],
+    [Cuenta Supabase], [Plan Free o superior],
     [Git], [v2.30.0],
   ),
   caption: [Requisitos del Sistema],
@@ -260,37 +304,47 @@ cd restaurante-bambu
 npm install
 
 # 3. Configurar variables de entorno
-cp .env.example .env
-# Editar .env con credenciales reales
+cp .env.example .env.local
+# Editar .env.local con credenciales reales
 
-# 4. Ejecutar en desarrollo
+# 4. Generar cliente Prisma
+npx prisma generate
+
+# 5. Aplicar migraciones a Supabase
+npx prisma db push
+
+# 6. Ejecutar en desarrollo
 npm run dev
 
-# 5. Acceder al sistema
+# 7. Acceder al sistema
 # http://localhost:3000
 ```
 
 === C.3 Variables de Entorno Requeridas
 
 ```env
-# MongoDB
-MONGO_URL="mongodb+srv://user:pass@cluster/db"
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL="https://xxx.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJ..."
+SUPABASE_SERVICE_ROLE_KEY="eyJ..."
 
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
-SECRET="nextauth-secret-key"
+# Base de datos (Prisma)
+DATABASE_URL="postgresql://postgres:pass@db.xxx.supabase.co:5432/postgres"
 
-# Google OAuth
-GOOGLE_CLIENT_ID="google-client-id"
-GOOGLE_CLIENT_SECRET="google-client-secret"
+# Red Enlace / CyberSource
+CYBERSOURCE_MERCHANT_ID="bambu_rest"
+CYBERSOURCE_KEY_ID="key-id"
+CYBERSOURCE_SECRET_KEY="secret-key"
 
-# AWS S3
-MY_AWS_ACCESS_KEY="aws-access-key"
-MY_AWS_SECRET_KEY="aws-secret-key"
+# QR Simple
+QR_SIMPLE_COMERCIO_ID="comercio-id"
+QR_SIMPLE_API_KEY="api-key"
 
-# Stripe
-STRIPE_SK="sk_test_..."
-STRIPE_PK="pk_test_..."
+# OpenAI (para embeddings y chatbot)
+OPENAI_API_KEY="sk-..."
+
+# Resend (emails)
+RESEND_API_KEY="re_..."
 ```
 
 #pagebreak()
@@ -305,51 +359,64 @@ STRIPE_PK="pk_test_..."
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e3f2fd") } else { white },
     [*Rol*], [*Email*], [*Contraseña*], [*Nombre*],
-    [Admin], [`admin@restaurantebambu.com`], [`Admin123!`], [Administrador Test],
-    [Cliente], [`cliente@example.com`], [`Cliente123!`], [Cliente Test],
+    [Admin], [`admin@restaurantebambu.com`], [`Admin123!`], [Administrador],
+    [Mesero], [`mesero@restaurantebambu.com`], [`Mesero123!`], [Carlos Mamani],
+    [Cliente], [`cliente@example.com`], [`Cliente123!`], [María López],
   ),
   caption: [Usuarios de Prueba],
 )
 
-=== D.2 Categorías de Prueba
+=== D.2 Mesas de Prueba
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    stroke: 0.5pt,
+    fill: (_, row) => if row == 0 { rgb("#e8f5e9") } else { white },
+    [*Número*], [*Capacidad*], [*Ubicación*], [*Estado*],
+    [1], [2], [Interior], [Disponible],
+    [2], [4], [Interior], [Disponible],
+    [3], [4], [Interior], [Disponible],
+    [4], [6], [Terraza], [Disponible],
+    [5], [8], [VIP], [Disponible],
+  ),
+  caption: [Mesas de Prueba],
+)
+
+=== D.3 Categorías de Prueba
 
 - Platos Principales
 - Bebidas
 - Postres
 - Entradas
 
-=== D.3 Producto de Ejemplo
+=== D.4 Producto de Ejemplo
 
 ```json
 {
-  "name": "Arroz Chaufa",
-  "description": "Arroz frito estilo chino con pollo y verduras",
-  "basePrice": 25,
-  "category": "Platos Principales",
-  "sizes": [
-    { "name": "Pequeño", "price": 0 },
-    { "name": "Mediano", "price": 5 },
-    { "name": "Grande", "price": 10 }
-  ],
-  "extraIngredientPrices": [
-    { "name": "Extra carne", "price": 8 },
-    { "name": "Extra verduras", "price": 4 }
-  ]
+  "nombre": "Arroz Chaufa",
+  "descripcion": "Arroz frito estilo chino con pollo y verduras",
+  "precio": 25.00,
+  "categoria_id": "uuid-platos-principales",
+  "disponible": true,
+  "tiempo_preparacion": 15
 }
 ```
 
-=== D.4 Tarjeta de Prueba Stripe
+=== D.5 Datos de Prueba para Pagos
 
+*Tarjeta de Prueba (Red Enlace/CyberSource):*
 #figure(
   table(
     columns: (auto, auto),
     stroke: 0.5pt,
     fill: (_, row) => if row == 0 { rgb("#e1bee7") } else { white },
     [*Campo*], [*Valor*],
-    [Número], [4242 4242 4242 4242],
+    [Número], [4111 1111 1111 1111],
     [Expiración], [12/25],
-    [CVC], [123],
-    [Código Postal], [12345],
+    [CVV], [123],
   ),
-  caption: [Tarjeta de Prueba para Stripe],
+  caption: [Tarjeta de Prueba para Red Enlace],
 )
+
+*Nota:* Los datos de prueba de QR Simple se obtienen del portal de desarrolladores.

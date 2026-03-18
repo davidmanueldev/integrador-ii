@@ -16,15 +16,17 @@ Laudon, K. C., & Laudon, J. P. (2012). _Management information systems: Managing
 
 Meta Open Source. (2023). _React: A JavaScript library for building user interfaces_. https://react.dev
 
-MongoDB. (2023). _MongoDB documentation_. https://www.mongodb.com/docs/
-
-NextAuth.js. (2023). _NextAuth.js documentation_. https://next-auth.js.org/
+OpenAI. (2024). _OpenAI API documentation_. https://platform.openai.com/docs
 
 PCI Security Standards Council. (2022). _Payment Card Industry Data Security Standard (PCI DSS) requirements and testing procedures_ (versión 4.0). https://www.pcisecuritystandards.org/
 
 Pressman, R. S., & Maxim, B. R. (2020). _Ingeniería del software: Un enfoque práctico_ (9ª ed.). McGraw-Hill Education.
 
-Stripe. (2023). _Stripe API documentation_. https://stripe.com/docs/api
+Prisma. (2024). _Prisma ORM documentation_. https://www.prisma.io/docs
+
+Red Enlace. (2024). _Documentación de integración CyberSource_. https://www.redenlace.com.bo/
+
+Supabase. (2024). _Supabase documentation_. https://supabase.com/docs
 
 Vercel. (2023). _Next.js documentation_. https://nextjs.org/docs
 

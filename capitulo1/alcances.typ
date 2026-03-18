@@ -6,213 +6,240 @@ El presente proyecto contempla el desarrollo e implementación de las siguientes
 
 === Alcance Funcional
 
-*Módulo de Catálogo y Menú*
-- Visualización pública del menú completo organizado por categorías
-- Búsqueda y filtrado de productos
-- Visualización detallada de cada producto (nombre, descripción, precio, imagen, ingredientes, información nutricional opcional)
-- Indicadores de disponibilidad y productos destacados
-- Responsive design para acceso desde dispositivos móviles y escritorio
+*Módulo de Reservaciones*
+- Calendario interactivo con visualización de disponibilidad de mesas en tiempo real
+- Configuración de mesas del restaurante (capacidad, ubicación, características especiales)
+- Proceso de reservación por fecha, hora y número de personas
+- Confirmación automática de reservaciones mediante correo electrónico
+- Gestión de lista de espera para horarios de alta demanda
+- Funcionalidad de cancelación y modificación de reservaciones por parte del cliente
+- Recordatorios automáticos previos a la reservación
+- Panel administrativo para visualización y gestión de todas las reservaciones
 
-*Módulo de Carrito y Pedidos*
-- Gestión completa de carrito de compras (agregar, modificar cantidad, eliminar productos)
-- Cálculo automático de subtotales, impuestos y total
-- Formulario de información de entrega
-- Integración con Stripe para procesamiento seguro de pagos
-- Generación de número de orden único
-- Confirmación de pedido con resumen detallado
-- Envío de notificaciones por email
+*Módulo de Punto de Venta (POS)*
+- Registro de pedidos asociados a mesas o clientes directos
+- Interfaz de menú digital optimizada para meseros y cajeros
+- Gestión de estados de orden (tomada, en preparación, servida, pagada)
+- Funcionalidad de división de cuenta entre comensales
+- Modificación de pedidos (agregar, quitar, cambiar productos)
+- Generación de tickets y comprobantes de pago
+- Control de caja con apertura, cierre y cuadre diario
+- Historial completo de transacciones
 
-*Módulo de Autenticación*
-- Registro de nuevos usuarios con validación de datos
-- Inicio de sesión seguro con credenciales
-- Recuperación de contraseña mediante email
-- Gestión de perfil de usuario (actualización de datos personales)
-- Historial de pedidos para usuarios registrados
-- Sistema de roles (Cliente, Administrador)
+*Módulo de Gestión de Menú*
+- Registro de productos con nombre, descripción, precio, categoría e imagen
+- Organización jerárquica mediante categorías y subcategorías
+- Control de disponibilidad de productos
+- Marcado de productos destacados o promocionales
+- Registro de ingredientes y alérgenos para cada producto
+- Carga de imágenes mediante drag-and-drop con almacenamiento en Supabase Storage
+- Interfaz administrativa intuitiva para gestión sin conocimientos técnicos
+
+*Módulo de Pagos - Integración Red Enlace*
+- Procesamiento de pagos con tarjeta de débito mediante Red Enlace CyberSource
+- Procesamiento de pagos con tarjeta de crédito (VISA, Mastercard, American Express)
+- Generación de códigos QR para pago mediante Red Enlace QR Simple
+- Registro manual de pagos en efectivo con control de caja
+- Cumplimiento de estándares de seguridad PCI DSS
+- Autenticación 3D Secure para transacciones con tarjeta
+- Liquidación automática a cuenta bancaria boliviana
+- Generación de comprobantes de pago
+
+*Módulo de Autenticación y Autorización*
+- Registro e inicio de sesión de usuarios mediante Supabase Auth
+- Autenticación mediante credenciales (email/contraseña)
+- Gestión de sesiones seguras
+- Sistema de roles (Administrador, Cajero, Mesero, Cliente)
+- Protección de rutas según permisos de usuario
+- Recuperación de contraseña
 
 *Panel Administrativo*
 - Dashboard con métricas en tiempo real:
-  - Total de pedidos (diario, semanal, mensual)
-  - Ingresos totales
+  - Total de reservaciones (diarias, semanales, mensuales)
+  - Total de ventas e ingresos
+  - Ocupación de mesas
   - Productos más vendidos
-  - Pedidos pendientes
-- Gestión completa de productos (CRUD):
-  - Crear nuevos productos con formulario intuitivo
-  - Editar productos existentes
-  - Eliminación lógica (soft delete) de productos
-  - Carga de imágenes mediante drag-and-drop
-- Gestión de categorías:
-  - Crear, editar y eliminar categorías
-  - Reordenar categorías
-- Gestión de pedidos:
-  - Visualización de todos los pedidos
-  - Filtrado por estado (pendiente, en preparación, enviado, completado, cancelado)
-  - Actualización manual de estados
-  - Visualización de detalles completos de cada pedido
-- Gestión básica de usuarios:
-  - Lista de usuarios registrados
-  - Modificación de roles
+  - Métricas de satisfacción del cliente
+- Gestión completa de productos y categorías
+- Administración de mesas y configuración del restaurante
+- Gestión de usuarios y asignación de roles
+- Reportes de ventas por período, producto y método de pago
+- Configuración general del sistema
 
-*Módulo de Chatbot con MCPs*
-- Interfaz de chat integrada en la plataforma
-- Procesamiento de lenguaje natural para consultas de usuarios
-- Integración con servidores MCP para acceso a datos en tiempo real:
+*Funcionalidades de Inteligencia Artificial*
 
-  *MCP de Menú*:
-  - Consulta de productos disponibles
-  - Búsqueda de productos por nombre o categoría
-  - Obtención de información detallada (precio, descripción, ingredientes)
+  *Chatbot Inteligente con Búsqueda Semántica*:
+  - Interfaz de chat integrada en la plataforma web
+  - Procesamiento de consultas en lenguaje natural
+  - Búsqueda semántica sobre el menú utilizando embeddings (pgvector)
+  - Respuestas sobre ingredientes, alérgenos y características de platillos
+  - Información sobre horarios, ubicación y políticas del restaurante
+  - Disponible para clientes y personal del restaurante
 
-  *MCP de Inventario*:
-  - Verificación de disponibilidad de productos en tiempo real
-  - Consulta de stock disponible
+  *Sistema de Recomendación de Platillos*:
+  - Registro de preferencias del cliente (alergias, restricciones, favoritos)
+  - Análisis de historial de pedidos
+  - Algoritmo de recomendación basado en similitud
+  - Sugerencias de platillos complementarios
+  - Integración con el chatbot
 
-  *MCP de Pedidos*:
-  - Consulta de estado de pedidos por número de orden
-  - Obtención de detalles de pedidos específicos
+  *Predicción de Demanda*:
+  - Análisis de datos históricos de reservaciones y ventas
+  - Modelo predictivo para estimar afluencia por día y hora
+  - Visualización de predicciones en dashboard
+  - Alertas para días de alta demanda
 
-  *MCP de Información del Restaurante*:
-  - Horarios de atención
-  - Ubicación y datos de contacto
-  - Políticas de entrega y devoluciones
-  - Información sobre días festivos y cierres especiales
+  *Análisis de Sentimiento*:
+  - Formulario de reseñas post-visita para clientes
+  - Procesamiento de reseñas mediante análisis de sentimiento
+  - Clasificación automática (positivo, neutro, negativo)
+  - Dashboard con métricas de satisfacción
+  - Alertas para reseñas negativas
 
-=== 1.6.2 Alcance Geográfico
+=== 1.6.2 Alcance Tecnológico
 
-*Tecnologías Implementadas*
-- Frontend: Next.js 14 con React 18, Tailwind CSS para estilos
+*Stack de Desarrollo*
+- Frontend: Next.js 14 con React 18, TypeScript, Tailwind CSS
+- Componentes UI: shadcn/ui
+- Formularios: React Hook Form con validación Zod
 - Backend: API Routes de Next.js (serverless functions)
-- Base de datos: MongoDB con Mongoose para ODM
-- Autenticación: NextAuth.js con JWT
-- Pagos: Stripe API con webhooks para confirmación
-- Model Context Protocol: Implementación de servidores MCP personalizados en Node.js
-- Hosting: Deployment en plataforma compatible (Vercel, AWS, u otra)
+- Base de datos: Supabase (PostgreSQL) con Prisma ORM
+- Autenticación: Supabase Auth
+- Almacenamiento: Supabase Storage para imágenes
+- Tiempo real: Supabase Realtime para notificaciones
+- Pagos: Red Enlace CyberSource API
+- IA/Embeddings: Supabase pgvector + LLM (OpenAI/Claude)
+- SDK de IA: Vercel AI SDK para streaming
+- Email: Resend para correos transaccionales
+- Hosting: Vercel (frontend) + Supabase Cloud (backend)
 
-=== 1.6.3 Límites
+=== 1.6.3 Alcance Geográfico
+
+- Implementación específica para el Restaurante Bambú en El Alto, La Paz, Bolivia
+- Integración con pasarela de pagos boliviana (Red Enlace)
+- Cumplimiento de regulaciones de ASFI
+- Moneda: Bolivianos (BOB)
+- Idioma: Español
+
+=== 1.6.4 Estándares de Calidad
+
 - Seguridad:
-  - Contraseñas hasheadas con bcrypt
-  - Sesiones con cookies HTTP-only
+  - Contraseñas hasheadas mediante Supabase Auth
+  - Sesiones seguras con tokens JWT
+  - Row Level Security (RLS) en base de datos
   - Validación de inputs en cliente y servidor
-  - Protección CSRF
   - Variables sensibles en variables de entorno
+  - Cumplimiento PCI DSS mediante Red Enlace
 - Rendimiento:
   - Optimización de imágenes con Next.js Image
   - Caching de consultas frecuentes
   - Lazy loading de componentes
+  - Server-side rendering para SEO
 - Usabilidad:
-  - Interfaz intuitiva y responsive
+  - Interfaz responsive para dispositivos móviles y escritorio
   - Feedback visual para acciones del usuario
   - Mensajes de error claros y constructivos
 
 *Pruebas y Validación*
 - Pruebas unitarias de componentes críticos
 - Pruebas de integración de flujos principales
-- Pruebas end-to-end de proceso completo de pedido
-- Validación de comunicación con servidores MCP
+- Pruebas end-to-end de proceso completo de reservación y venta
+- Validación de integración con Red Enlace CyberSource
+- Pruebas de funcionalidades de IA
 - Pruebas de seguridad básicas
-- Evaluación comparativa de chatbot con MCPs vs. sin MCPs
+- Evaluación de precisión del chatbot y sistema de recomendación
 
 *Documentación*
 - Documentación técnica del sistema (arquitectura, APIs, modelos de datos)
-- Manual de usuario para clientes (cómo realizar pedidos, usar el chatbot)
-- Manual de administrador (gestión de productos, pedidos, configuración)
-- Documentación de servidores MCP (endpoints, formatos de respuesta)
+- Manual de usuario para clientes (cómo reservar, usar el chatbot)
+- Manual de operador (gestión de POS, caja, pedidos)
+- Manual de administrador (gestión de productos, reportes, configuración)
 - Código fuente comentado siguiendo estándares de la industria
 
 == Limitaciones del Proyecto
 
 === Limitaciones de Alcance Funcional
 
-*Funcionalidades No Incluidas en el MVP*
-- Sistema de reservaciones de mesas
-- Programa de lealtad y puntos
+*Funcionalidades No Incluidas*
+- Sistema de delivery o pedidos para llevar (sin personal disponible)
 - Aplicación móvil nativa (iOS/Android)
+- Programa de lealtad y puntos
 - Sistema de cupones y descuentos promocionales
 - Integración con redes sociales para compartir
-- Sistema de calificaciones y reseñas de productos
 - Chat en vivo con soporte humano
-- Sistema de recomendaciones personalizadas mediante machine learning
-- Múltiples métodos de pago (solo Stripe en MVP)
-- Opciones de entrega en tiempo real con tracking de repartidor
-- Sistema de inventario automatizado con alertas de stock bajo
+- Múltiples sucursales (solo una ubicación)
+- Integración con sistemas POS físicos existentes
+- Integración con servicios de delivery externos (PedidosYa, etc.)
 
 *Limitaciones del Chatbot*
-- El chatbot no procesará pedidos directamente (solo proporciona información)
+- No procesa reservaciones directamente (solo proporciona información y redirige)
 - No reemplaza completamente el soporte humano para casos complejos
-- Limitado a idioma español en versión inicial
-- No incluye capacidad de procesamiento de imágenes enviadas por usuarios
-- No mantiene contexto de conversaciones entre sesiones (stateless)
+- Limitado a idioma español
+- No incluye capacidad de procesamiento de imágenes
+- Calidad de respuestas depende del proveedor de LLM seleccionado
+
+*Limitaciones del Sistema de Recomendación*
+- Requiere acumulación de datos históricos para mejorar precisión
+- Funcionalidad limitada para usuarios nuevos (cold start)
+- No considera factores externos (clima, eventos especiales)
+
+*Limitaciones de Predicción de Demanda*
+- Precisión inicial limitada hasta acumular datos históricos suficientes
+- No considera factores externos impredecibles
+- Modelo simplificado (no machine learning avanzado en MVP)
 
 === Limitaciones Técnicas
 
 *Infraestructura*
 - Diseñado para carga moderada (hasta 500 usuarios concurrentes)
-- Sin implementación de caché distribuido (Redis) en MVP
-- Sin balanceador de carga para alta disponibilidad
-- Almacenamiento de imágenes limitado por plan de hosting
+- Dependencia de servicios cloud (Supabase, Vercel)
+- Sin implementación de caché distribuido en versión inicial
+- Almacenamiento de imágenes limitado por plan de Supabase
 
 *Integraciones*
-- Stripe como única pasarela de pago (no incluye PayPal, transferencias, etc.)
-- Email mediante servicio de terceros (límites de envío según plan)
-- Sin integración con sistemas POS físicos
-- Sin integración con servicios de delivery externos (Rappi, Uber Eats)
+- Red Enlace como única pasarela de pago
+- Sin integración con otros proveedores de pago (PayPal, etc.)
+- Email mediante Resend (límites según plan)
+- Dependencia de disponibilidad de APIs externas (Red Enlace, LLM)
 
-*Servidores MCP*
-- Implementación básica sin sistema de caché avanzado para respuestas MCP
-- Sin versionamiento de API de servidores MCP
-- Tolerancia a fallos limitada (si un servidor MCP falla, esa funcionalidad no está disponible)
-- Sin métricas de rendimiento detalladas de servidores MCP
+*Inteligencia Artificial*
+- Calidad de embeddings depende del modelo seleccionado
+- Costos variables según uso de API de LLM
+- Latencia en respuestas del chatbot depende de proveedor
+- Sin entrenamiento personalizado de modelos (usa APIs existentes)
 
 === Limitaciones de Recursos
 
 *Temporales*
-- Desarrollo completado en aproximadamente 13 días (MVP)
-- Tiempo limitado para pruebas exhaustivas de todos los casos de uso
+- Desarrollo completado en período académico definido
+- Tiempo limitado para pruebas exhaustivas
 - Período de validación con usuarios reales acotado
 
-*Humanos*
-- Proyecto desarrollado por un equipo reducido
-- Conocimiento especializado en MCPs limitado (tecnología emergente)
-- Dependencia de documentación disponible de tecnologías nuevas
-
 *Económicos*
-- Presupuesto limitado para servicios cloud premium
-- Restricciones en herramientas de testing pagadas
-- Límites de transacciones en modo de prueba de Stripe
+- Uso de planes gratuitos o de bajo costo de servicios cloud
+- Límites en llamadas a APIs de IA (costos por uso)
+- Sin presupuesto para herramientas de testing pagadas
 
 === Limitaciones de Datos
 
 *Datos Históricos*
-- Sin datos históricos previos de pedidos para análisis predictivo inicial
+- Sin datos históricos previos para predicción inicial
 - Modelos de recomendación requieren acumulación de datos
 - Métricas de desempeño basadas en período inicial limitado
 
 *Privacidad y Regulaciones*
-- Cumplimiento básico de protección de datos
-- Sin certificación formal de estándares de seguridad (PCI-DSS completo)
-- Políticas de privacidad básicas (no revisadas legalmente)
-
-=== Limitaciones Geográficas y de Mercado
-
-*Alcance Geográfico*
-- Implementación inicial para una ubicación del Restaurante Bambú
-- Sin soporte para múltiples sucursales en MVP
-- Zona de entrega delimitada geográficamente
-
-*Idioma y Localización*
-- Interfaz únicamente en español
-- Formato de moneda y fechas para región específica
-- Sin adaptación cultural para mercados internacionales
+- Cumplimiento básico de protección de datos personales
+- Políticas de privacidad básicas
+- Sin certificación formal de estándares de seguridad adicionales
 
 == Consideraciones Finales de Alcance
 
-A pesar de las limitaciones mencionadas, el alcance definido constituye un MVP (Producto Mínimo Viable) robusto que:
+A pesar de las limitaciones mencionadas, el alcance definido constituye un sistema completo que:
 
-1. *Resuelve el problema central*: Proporciona un sistema funcional de pedidos en línea con chatbot inteligente
-2. *Demuestra innovación*: Integra exitosamente MCPs en un contexto real de negocio
-3. *Permite validación*: Incluye suficientes funcionalidades para evaluar viabilidad y aceptación
-4. *Establece base escalable*: Arquitectura permite expansión futura sin reescritura completa
+1. *Resuelve los problemas centrales*: Proporciona gestión digital de reservaciones y punto de venta
+2. *Incorpora innovación*: Integra funcionalidades de IA prácticas y demostrables
+3. *Se adapta al contexto local*: Diseñado específicamente para Bolivia con Red Enlace
+4. *Permite validación*: Incluye suficientes funcionalidades para evaluar viabilidad
+5. *Establece base escalable*: Arquitectura permite expansión futura
 
-Las limitaciones identificadas no comprometen los objetivos核心 del proyecto, sino que delimitan un alcance realista y ejecutable dentro de las restricciones existentes. Muchas de las funcionalidades excluidas están contempladas como trabajo futuro una vez validado el sistema基本.
-
-La estrategia de desarrollo prioriza calidad sobre cantidad, asegurando que las funcionalidades incluidas estén completamente implementadas, probadas y documentadas, en lugar de incluir un catálogo extenso de características parcialmente desarrolladas.
+Las limitaciones identificadas no comprometen los objetivos del proyecto, sino que delimitan un alcance realista y ejecutable dentro de las restricciones existentes.

@@ -11,7 +11,7 @@
   #v(1em)
   #image("logounifranz.png", width: 50%)
   #v(1em)
-  #text(weight: "bold")[PROYECTO: SISTEMA DE PEDIDOS EN LÍNEA "RESTAURANTE BAMBÚ"] \
+  #text(weight: "bold")[PROYECTO: SISTEMA WEB DE GESTIÓN PARA EL RESTAURANTE BAMBÚ] \
   #v(2em)
   AUTOR: David Manuel Mamani Huanca \
   FECHA: Noviembre de 2025 \
@@ -30,7 +30,7 @@
 
 = PLAN DE PRUEBAS
 
-El presente documento detalla la estrategia integral de aseguramiento de la calidad (QA) para el "Sistema de Pedidos en Línea del Restaurante Bambú". Este sistema, desarrollado como una aplicación web progresiva utilizando el framework Next.js, tiene como misión crítica la digitalización del proceso de ventas, desde la selección de productos hasta el procesamiento de pagos en tiempo real.
+El presente documento detalla la estrategia integral de aseguramiento de la calidad (QA) para el "Sistema Integral de Gestión del Restaurante Bambú". Este sistema, desarrollado como una aplicación web progresiva utilizando el framework Next.js, tiene como misión crítica la digitalización del proceso de ventas presenciales, desde la gestión de reservaciones hasta el procesamiento de pagos en tiempo real mediante pasarelas bolivianas.
 
 Dada la naturaleza transaccional del sistema y la sensibilidad de los datos manejados (información personal, transacciones financieras), este plan adopta un enfoque riguroso basado en estándares internacionales como ISO/IEC 25010 [1] para la calidad del producto software y metodologías ágiles adaptadas como DSDM [2].
 
@@ -41,7 +41,7 @@ El objetivo primordial es certificar que el Producto Mínimo Viable (MVP) cumple
 Los objetivos específicos incluyen:
 
 - *Validación Funcional:* Asegurar que los 24 Requisitos Funcionales (RF) operan exactamente como se describe en la documentación técnica, cubriendo el ciclo completo de vida del pedido.
-- *Integridad Transaccional:* Verificar la fiabilidad de las integraciones con pasarelas de pago (Stripe) y servicios de terceros, garantizando la consistencia de los datos financieros.
+- *Integridad Transaccional:* Verificar la fiabilidad de las integraciones con pasarelas de pago bolivianas (Red Enlace CyberSource) y servicios de terceros, garantizando la consistencia de los datos financieros.
 - *Robustez y Seguridad:* Identificar y mitigar vulnerabilidades de seguridad web comunes (OWASP Top 10) y asegurar la resiliencia del sistema bajo cargas de tráfico esperadas.
 - *Usabilidad:* Garantizar que la interfaz sea intuitiva y accesible (WCAG 2.1 AA) para una base de usuarios diversa en múltiples dispositivos.
 
@@ -51,9 +51,9 @@ El alcance de este plan abarca la verificación de todos los módulos desarrolla
 
 *Módulos Incluidos (In Scope):*
 
-- *Módulo de Cliente:* Autenticación (NextAuth), Catálogo de Productos, Carrito de Compras (Context API), Checkout (Stripe Integration), Gestión de Perfil y Historial de Pedidos.
-- *Módulo Administrativo:* Panel de Control, CRUD de Productos y Categorías, Gestión de Usuarios y Supervisión de Pedidos.
-- *Infraestructura:* API Routes de Next.js, Base de Datos MongoDB y Almacenamiento de Archivos en AWS S3.
+- *Módulo de Cliente:* Autenticación (Supabase Auth), Catálogo de Productos, Carrito de Compras (Context API), Checkout (Red Enlace Integration), Gestión de Reservaciones y Historial de Pedidos.
+- *Módulo Administrativo:* Panel de Control, CRUD de Productos y Categorías, Gestión de Usuarios, Punto de Venta (POS) y Supervisión de Pedidos.
+- *Infraestructura:* API Routes de Next.js, Base de Datos PostgreSQL (Supabase) con Prisma ORM y Almacenamiento de Archivos en Supabase Storage.
 
 *Elementos Excluidos (Out of Scope):*
 
@@ -66,7 +66,7 @@ La estrategia de pruebas sigue el modelo de la "Pirámide de Pruebas", distribuy
 
 - *Capa de Presentación (Frontend):* Se validará la interfaz de usuario construida con React, asegurando la correcta renderización de componentes, la gestión del estado global (Carrito) y la responsividad.
 - *Capa de Aplicación (Backend/API):* Se probarán los endpoints de la API RESTful de Next.js, validando la lógica de negocio, la autorización de rutas y el manejo de errores HTTP.
-- *Capa de Datos:* Se verificará la integridad referencial y la persistencia de datos en MongoDB, asegurando que las operaciones CRUD no corrompan la estructura de las colecciones.
+- *Capa de Datos:* Se verificará la integridad referencial y la persistencia de datos en PostgreSQL mediante Prisma ORM, asegurando que las operaciones CRUD mantengan la consistencia de las tablas relacionales.
 
 = TIPOS DE PRUEBAS
 
@@ -101,9 +101,9 @@ La lógica del servidor, implementada mediante API Routes en Next.js, será prob
 
 El sistema depende de servicios externos críticos. Las pruebas de integración aseguran que la comunicación con estos sistemas es fluida y maneja las excepciones correctamente.
 
-- *Stripe (Pagos):* Validación de la creación de PaymentIntents, manejo de webhooks para confirmación de pagos y escenarios de tarjetas rechazadas [10].
-- *AWS S3 (Imágenes):* Verificación de la subida de imágenes de productos, validación de tipos MIME permitidos y generación correcta de URLs públicas [11].
-- *NextAuth (Identidad):* Pruebas del flujo de OAuth con Google y credenciales propias, verificando la persistencia de la sesión [12].
+- *Red Enlace CyberSource (Pagos):* Validación de la creación de transacciones, manejo de webhooks para confirmación de pagos y escenarios de tarjetas rechazadas [10].
+- *Supabase Storage (Imágenes):* Verificación de la subida de imágenes de productos, validación de tipos MIME permitidos y generación correcta de URLs públicas [11].
+- *Supabase Auth (Identidad):* Pruebas del flujo de autenticación con email/password y verificación de sesiones mediante JWT [12].
 
 == Pruebas End-to-End (E2E) y Validación de Flujos
 
@@ -124,7 +124,7 @@ Estas pruebas simulan el comportamiento de un usuario real navegando por la apli
 
 Siguiendo la metodología de OWASP Testing Guide [3], se realizarán análisis estáticos y dinámicos para detectar vulnerabilidades.
 
-- *Inyección NoSQL:* Verificación de sanitización de entradas en consultas a MongoDB.
+- *Inyección SQL:* Verificación de que Prisma ORM previene inyecciones mediante consultas parametrizadas.
 - *Cross-Site Scripting (XSS):* Intento de inyección de scripts maliciosos en campos de comentarios o descripciones de productos.
 - *Control de Acceso:* Verificación de que usuarios normales no puedan acceder a rutas `/admin`.
 
@@ -170,9 +170,9 @@ A continuación, se presenta una muestra representativa de los casos de prueba d
   [*ID*], [*Título*], [*Precondición*], [*Pasos de Ejecución*], [*Resultado Esperado*], [*Prioridad*],
   [CP-001], [Registro de Usuario Exitoso], [Usuario no registrado, en página `/register`.], [1. Ingresar nombre válido.\ 2. Ingresar email único.\ 3. Ingresar contraseña (>6 caracteres).\ 4. Click en "Registrarse".], [Sistema crea usuario en BD, redirige a `/login` o hace auto-login, muestra mensaje de éxito.], [Alta],
   [CP-004], [Agregar Producto al Carrito], [Usuario en página de detalle de producto.], [1. Seleccionar cantidad (ej. 2).\ 2. Click en "Agregar al Carrito".], [Contador del icono de carrito se incrementa. Notificación "Producto agregado". Estado global actualizado.], [Alta],
-  [CP-008], [Procesamiento de Pago (Stripe)], [Carrito con items, usuario en `/checkout`.], [1. Ingresar dirección de envío.\ 2. Ingresar datos de tarjeta de prueba (Visa 4242...).\ 3. Click en "Pagar".], [Stripe procesa pago. Redirección a `/success`. Orden creada en BD con estado "Pagado". Carrito se vacía.], [Crítica],
-  [CP-012], [Validación de Seguridad NoSQL], [API endpoint `/api/auth/login`.], [1. Enviar payload malicioso en password: `{"$ne": null}`.], [API retorna error 400 o 401. No permite acceso (bypass) sin contraseña correcta.], [Alta],
-  [CP-024], [Carga de Imagen de Producto], [Admin logueado en `/admin/products/new`.], [1. Seleccionar archivo .jpg válido (2MB).\ 2. Completar datos.\ 3. Guardar.], [Imagen se sube a AWS S3. URL se guarda en MongoDB. Producto se visualiza con imagen correcta.], [Media]
+  [CP-008], [Procesamiento de Pago (Red Enlace)], [Carrito con items, usuario en `/checkout`.], [1. Seleccionar método de pago (tarjeta).\ 2. Ingresar datos de tarjeta de prueba.\ 3. Click en "Pagar".], [Red Enlace procesa pago. Redirección a `/success`. Orden creada en BD con estado "Pagado". Carrito se vacía.], [Crítica],
+  [CP-012], [Validación de Seguridad SQL], [API endpoint `/api/auth/login`.], [1. Enviar payload malicioso en password: `{"$or": [{}]}`.], [API retorna error 400 o 401. No permite acceso (bypass) sin contraseña correcta.], [Alta],
+  [CP-024], [Carga de Imagen de Producto], [Admin logueado en `/admin/products/new`.], [1. Seleccionar archivo .jpg válido (2MB).\ 2. Completar datos.\ 3. Guardar.], [Imagen se sube a Supabase Storage. URL se guarda en PostgreSQL. Producto se visualiza con imagen correcta.], [Media]
 )
 
 \
@@ -188,7 +188,7 @@ Esta matriz asegura que cada requisito funcional definido en la fase de análisi
   [*ID Req.*], [*Descripción Requisito*], [*ID Caso de Prueba*], [*Cobertura*],
   [RF-01], [El sistema permitirá el registro de usuarios con email/password.], [CP-001, CP-003], [100%],
   [RF-05], [El sistema debe permitir agregar productos al carrito.], [CP-004, CP-025], [100%],
-  [RF-10], [Integración con pasarela de pagos Stripe.], [CP-007, CP-008, CP-013], [100%],
+  [RF-10], [Integración con pasarela de pagos Red Enlace.], [CP-007, CP-008, CP-013], [100%],
   [RF-15], [Administrador puede crear productos con imágenes.], [CP-010, CP-024], [100%],
   [RF-20], [Sistema debe ser responsivo (Móvil/Desktop).], [CP-014, CP-015], [100%]
 )
@@ -199,7 +199,7 @@ La ejecución se realizará en un periodo de 14 días, siguiendo un flujo iterat
 
 == Cronograma de Actividades
 
-- *Fase 1: Preparación (Días 1-2):* Configuración de entornos de prueba (Testing, Staging), generación de datos de prueba (seeds) en MongoDB, configuración de pipelines de CI/CD.
+- *Fase 1: Preparación (Días 1-2):* Configuración de entornos de prueba (Testing, Staging), generación de datos de prueba (seeds) con Prisma, configuración de pipelines de CI/CD.
 - *Fase 2: Pruebas Unitarias e Integración (Días 3-8):* Desarrollo y ejecución de scripts en Jest. Foco en la lógica de backend y componentes críticos de frontend.
 - *Fase 3: Pruebas E2E y Sistema (Días 9-11):* Ejecución de suites de Playwright para flujos completos. Verificación visual.
 - *Fase 4: Pruebas No Funcionales (Días 12-13):* Ejecución de scripts de Artillery (carga) y escaneos OWASP ZAP (seguridad).
@@ -248,19 +248,19 @@ La ejecución se realizará en un periodo de 14 días, siguiendo un flujo iterat
 ]
 
 #par(hanging-indent: 1.27cm)[
-  MongoDB Inc. (2024). _Mongoose ODM v8.0.0 Documentation_. Recuperado de https://mongoosejs.com/
+  Prisma. (2024). _Prisma ORM Documentation_. Recuperado de https://www.prisma.io/docs
 ]
 
 #par(hanging-indent: 1.27cm)[
-  Stripe Inc. (2024). _Stripe API Reference_. Recuperado de https://stripe.com/docs/api
+  Red Enlace. (2024). _Documentación de Integración CyberSource_. Recuperado de https://www.redenlace.com.bo/
 ]
 
 #par(hanging-indent: 1.27cm)[
-  Amazon Web Services. (2024). _Amazon S3 Developer Guide_. Recuperado de https://docs.aws.amazon.com/s3/
+  Supabase. (2024). _Supabase Documentation: Open Source Firebase Alternative_. Recuperado de https://supabase.com/docs
 ]
 
 #par(hanging-indent: 1.27cm)[
-  Balázs, I. (2024). _NextAuth.js: Authentication for Next.js_. Recuperado de https://next-auth.js.org/
+  Supabase. (2024). _Supabase Auth: Authentication for developers_. Recuperado de https://supabase.com/docs/guides/auth
 ]
 
 #par(hanging-indent: 1.27cm)[

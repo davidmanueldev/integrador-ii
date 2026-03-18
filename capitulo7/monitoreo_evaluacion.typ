@@ -41,37 +41,37 @@ describe('calculateCartTotal', () => {
 
 *Objetivo:* Verificar la interacción entre módulos del sistema.
 
-*Herramientas:* Jest + Supertest + mongodb-memory-server
+*Herramientas:* Jest + Supertest + Prisma (testing con transacciones)
 
 *Áreas Testeadas:*
 1. *API ↔ Base de Datos:*
-  - Creación de usuarios
-  - Inserción de productos
-  - Actualización de pedidos
+  - Creación de usuarios con Supabase Auth
+  - Inserción de productos vía Prisma ORM
+  - Actualización de pedidos y reservaciones
 
 2. *API ↔ API (Internas):*
   - Auth API → Order API (verificación de usuario antes de crear orden)
-  - Product API → Category API (eliminación en cascada)
+  - Product API → Category API (eliminación en cascada con Prisma)
 
 3. *API ↔ Servicios Externos:*
-  - Integración con Stripe (modo test)
-  - Upload de imágenes a S3
+  - Integración con Red Enlace CyberSource (modo test)
+  - Upload de imágenes a Supabase Storage
 
 *Configuración de Pruebas:*
 ```javascript
 const request = require('supertest');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const { PrismaClient } = require('@prisma/client');
 const app = require('../app');
 
-let mongoServer;
+const prisma = new PrismaClient();
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  process.env.MONGODB_URI = mongoServer.getUri();
+  // Prisma usa transacciones para aislar tests
+  await prisma.$connect();
 });
 
 afterAll(async () => {
-  await mongoServer.stop();
+  await prisma.$disconnect();
 });
 
 describe('POST /api/orders', () => {
@@ -79,7 +79,7 @@ describe('POST /api/orders', () => {
     const token = await getAuthToken();
     const response = await request(app)
       .post('/api/orders')
-      .set('Cookie', `token=${token}`)
+      .set('Authorization', `Bearer ${token}`)
       .send({ items: [...], total: 100 });
 
     expect(response.status).toBe(201);
@@ -115,8 +115,8 @@ describe('Proceso de compra', () => {
     // Confirmar pedido
     cy.get('[data-test="confirm-order"]').click();
 
-    // Verificar redirección a Stripe
-    cy.url().should('include', 'stripe.com');
+    // Verificar redirección a Red Enlace
+    cy.url().should('include', 'redenlace.com.bo');
   });
 });
 ```
@@ -212,8 +212,8 @@ describe('Proceso de compra', () => {
 - ✓ Validación de inputs en servidor
 - ✓ Rate limiting en APIs críticas
 - ✓ HTTPS en producción
-- ✓ Verificación de webhooks Stripe
-- ✓ Sanitización de datos MongoDB
+- ✓ Verificación de webhooks Red Enlace CyberSource
+- ✓ Validación de queries SQL con Prisma ORM
 - ✓ Headers de seguridad (Helmet)
 - ✓ CORS configurado
 

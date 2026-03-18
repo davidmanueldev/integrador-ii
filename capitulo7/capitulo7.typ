@@ -25,5 +25,3 @@
 #pagebreak()
 
 #include "monitoreo_evaluacion.typ"
-
-#pagebreak()

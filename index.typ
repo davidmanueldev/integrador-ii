@@ -1,5 +1,5 @@
 // Archivo principal del proyecto
-// Sistema de Pedidos en Línea - Restaurante Bambú con MCPs
+// Sistema Web de Gestión para el Restaurante Bambú con Inteligencia Artificial
 // Formato APA 7ma Edición - Estructura Lazcano
 
 // Importar configuración APA
@@ -8,7 +8,7 @@
 
 // =====================================================
 // SECCIÓN PRELIMINAR (Numeración: números romanos i, ii, iii...)
-// Según norma APA 7 para tesis/disertaciones
+// Según norma APA 7 para proyecto de grado/disertaciones
 // =====================================================
 
 // Configuración inicial SIN numeración para portada
@@ -48,7 +48,7 @@
 
 // =====================================================
 // CONTENIDO PRINCIPAL (Numeración: números arábigos 1, 2, 3...)
-// La página 1 comienza aquí según APA 7 para tesis
+// La página 1 comienza aquí según APA 7 para proyecto de grado
 // =====================================================
 
 // Cambiar a numeración arábiga y resetear contador a 1

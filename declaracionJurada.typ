@@ -40,7 +40,7 @@ Declaro bajo juramento que:
   #v(0.3em)
   #align(center)[
     #text(weight: "bold")[
-      "SISTEMA DE PEDIDOS EN LÍNEA CON INTEGRACIÓN MCP PARA RESTAURANTE BAMBÚ"
+      "SISTEMA INTEGRAL DE GESTIÓN PARA RESTAURANTE CON INTELIGENCIA ARTIFICIAL - RESTAURANTE BAMBÚ"
     ]
   ]
   #v(0.3em)

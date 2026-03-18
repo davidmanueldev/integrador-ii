@@ -322,7 +322,7 @@ Esto equivale a una densidad del *0.13%*, lo cual indica que el módulo de gesti
     [3], [Eliminar del carrito], [5], [10], [10], [0], [-], [-],
     [4], [Calcular total], [5], [12], [12], [0], [-], [-],
     [5], [Proceso checkout], [5], [15], [13], [2], [Validación dirección], [Mejorar validación],
-    [6], [Integración Stripe], [4], [12], [11], [1], [Webhook], [Configurar webhook],
+    [6], [Integración Red Enlace], [4], [12], [11], [1], [Webhook], [Configurar webhook],
     [7], [Confirmación pedido], [5], [10], [10], [0], [-], [-],
     table.cell(colspan: 2)[*TOTAL*], [*35*], [*98*], [*94*], [*4*], [], [],
   ),
@@ -515,7 +515,7 @@ Para las pruebas de rendimiento se utilizó la herramienta Artillery para simula
 
 Los resultados muestran que el sistema comienza a degradarse con 500 usuarios concurrentes. Esto es aceptable considerando que el tráfico esperado en condiciones normales es de 50-100 usuarios concurrentes. Para escenarios de mayor demanda, se recomiendan las siguientes acciones:
 
-1. Implementar índices adicionales en la base de datos MongoDB
+1. Implementar índices adicionales en la base de datos PostgreSQL
 2. Configurar sistema de caché con Redis
 3. Aumentar el pool de conexiones a la base de datos
 4. Considerar escalado horizontal con balanceador de carga
@@ -559,7 +559,7 @@ Para las pruebas de seguridad se validaron las amenazas del OWASP Top 10, utiliz
 - ✓ Validación de inputs tanto en cliente como en servidor
 - ✓ Rate limiting implementado en APIs críticas (login, registro, checkout)
 - ✓ HTTPS configurado para ambiente de producción
-- ✓ Verificación de webhooks de Stripe mediante firma digital
+- ✓ Verificación de webhooks de Red Enlace CyberSource mediante firma digital
 - ✓ Sanitización de inputs para prevenir XSS
 - ✓ Tokens JWT con tiempo de expiración de 24 horas
 - ✓ Protección CORS configurada correctamente
@@ -645,7 +645,7 @@ Para las pruebas de seguridad se validaron las amenazas del OWASP Top 10, utiliz
     ),
     [Licencias de desarrollo], [2000],
     [Hosting y dominio (1 año)], [1500],
-    [Servidor MongoDB Atlas], [800],
+    [Servidor PostgreSQL (Supabase)], [600],
     [Servicio de email (SendGrid)], [500],
     [Servicio de almacenamiento (Cloudinary)], [600],
     [GitHub Pro], [400],
@@ -669,7 +669,7 @@ Para las pruebas de seguridad se validaron las amenazas del OWASP Top 10, utiliz
       [*Concepto*], [*Monto Mensual (Bs.)*],
     ),
     [Hosting y servidor (Vercel/Railway)], [500],
-    [Base de datos MongoDB Atlas], [300],
+    [Base de datos PostgreSQL (Supabase)], [200],
     [Servicios de terceros (email, storage)], [200],
     [*TOTAL INFRAESTRUCTURA*], [*Bs. 1000*],
   ),
@@ -747,7 +747,7 @@ Para el cálculo del VAN y TIR, se consideran los siguientes costos operacionale
     [Infraestructura (hosting, BD, servicios)], [1000],
     [Marketing digital], [2000],
     [Mantenimiento y soporte técnico], [1500],
-    [Comisiones Stripe (3.5% sobre ventas)], [Variable],
+    [Comisiones Red Enlace (2.5% sobre ventas)], [Variable],
     [*TOTAL FIJO*], [*Bs. 4500*],
   ),
   caption: [Costos operacionales mensuales para proyección],
