@@ -73,7 +73,7 @@ En el repositorio institucional de UNIFRANZ se identificaron proyectos relaciona
 El presente proyecto se diferencia de los antecedentes identificados al integrar en una solución unificada:
 
 #table(
-  columns: (2fr, 1fr, 1fr, 1fr, 1fr),
+  columns: (auto, auto, auto, auto, auto),
   inset: 6pt,
   align: center,
   [*Funcionalidad*], [*Broaster California*], [*Georreferenciación*], [*POS Básicos*], [*Este Proyecto*],
