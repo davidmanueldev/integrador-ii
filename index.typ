@@ -1,6 +1,6 @@
 // Archivo principal del proyecto
 // Sistema Web de Gestión para el Restaurante Bambú con Inteligencia Artificial
-// Formato APA 7ma Edición - Estructura Lazcano
+// Formato APA 7ma Edición - Estructura Hito 3
 
 // Importar configuración APA
 #import "config/apa-setup.typ": *
@@ -8,17 +8,13 @@
 
 // =====================================================
 // SECCIÓN PRELIMINAR (Numeración: números romanos i, ii, iii...)
-// Según norma APA 7 para proyecto de grado/disertaciones
 // =====================================================
 
-// Configuración inicial SIN numeración para portada
-#set page(
-  paper: "us-letter", numbering: none)
+#set page(paper: "us-letter", numbering: none)
 
-// PORTADA (Sin número de página visible)
+// PORTADA
 #include "preliminares/portada.typ"
 
-// Ahora activamos numeración romana para páginas preliminares
 #set page(
   paper: "us-letter",
   numbering: "i",
@@ -26,34 +22,27 @@
 )
 #counter(page).update(1)
 
-// Aplicar configuración APA al documento (sin afectar numeración)
 #show: apa-config
 
-// RESUMEN (Español)
-#include "preliminares/resumen.typ"
+// Declaración Jurada, Dedicatoria y Agradecimientos (que estaban dentro de este archivo)
+#include "declaracionJurada.typ"
+#pagebreak()
 
-// ABSTRACT (Inglés)
+// RESUMEN Y ABSTRACT
+#include "preliminares/resumen.typ"
 #include "preliminares/abstract.typ"
 
-// Declaración jurada
-#include "declaracionJurada.typ"
-
-#pagebreak()
-
-// ÍNDICE (se genera automáticamente con outline())
+// ÍNDICE
 #outline(
-  title: [Índice General],
+  title: [Índice],
   indent: auto,
 )
-
 #pagebreak()
 
 // =====================================================
-// CONTENIDO PRINCIPAL (Numeración: números arábigos 1, 2, 3...)
-// La página 1 comienza aquí según APA 7 para proyecto de grado
+// CONTENIDO PRINCIPAL
 // =====================================================
 
-// Cambiar a numeración arábiga y resetear contador a 1
 #set page(
   paper: "us-letter",
   numbering: "1",
@@ -61,72 +50,32 @@
 )
 #counter(page).update(1)
 
-// CAPÍTULO I: MARCO INTRODUCTORIO
+// I. Capítulo I. Generalidades
 #include "capitulo1/capitulo1.typ"
-
 #pagebreak()
 
-// CAPÍTULO II: DISEÑO TEÓRICO DE LA INVESTIGACIÓN
-#include "capitulo2/capitulo2.typ"
-
-#pagebreak()
-
-// CAPÍTULO III: JUSTIFICACIÓN, ALCANCES Y APORTES
-#include "capitulo3/capitulo3.typ"
-
-#pagebreak()
-
-// CAPÍTULO IV: MARCO TEÓRICO
+// II. Capítulo II. Marco Teórico.
 #include "capitulo4/capitulo4.typ"
-
 #pagebreak()
 
-// CAPÍTULO V: DISEÑO METODOLÓGICO
-#include "capitulo5/metodologia.typ"
-
-#pagebreak()
-
-// CAPÍTULO VI: ESTUDIO DE FACTIBILIDAD
-#include "capitulo6/capitulo6.typ"
-
-#pagebreak()
-
-// CAPÍTULO VII: INGENIERÍA DEL PROYECTO
+// III. Capítulo III. Marco Práctico.
 #include "capitulo7/capitulo7.typ"
-
 #pagebreak()
 
-// CAPÍTULO VIII: CONCLUSIONES Y RECOMENDACIONES
+// IV. Capítulo IV. Factibilidad Técnica, Económica y Social
+#include "capitulo6/capitulo6.typ"
+#pagebreak()
+
+// V. Capítulo V. Conclusiones y Recomendaciones
 #include "capitulo8/capitulo8.typ"
-
 #pagebreak()
 
-// BIBLIOGRAFÍA
-#include "referencias/bibliografia.typ"
-
-#pagebreak()
-
-// ANEXOS (detallados en archivo separado)
+// Anexos
 #include "anexos/anexos.typ"
-
-#pagebreak()
-
-// ANEXO E: CÓDIGO FUENTE DEL PROTOTIPO
 #include "anexos/codigo_fuente.typ"
-
-#pagebreak()
-
-// ANEXO F: SEGURIDAD FÍSICA Y LÓGICA
 #include "anexos/seguridad_fisica.typ"
-
-#pagebreak()
-
-// CRONOGRAMA DE ACTIVIDADES (detallado en archivo separado)
 #include "anexos/cronograma.typ"
-
-
-
 #pagebreak()
 
-// Glosario
-#include "Glosario.typ"
+// Bibliografía
+#include "referencias/bibliografia.typ"

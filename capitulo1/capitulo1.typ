@@ -1,21 +1,36 @@
 // Portada del Capítulo I
 #set page(numbering: none)
-#place(top, hide[= CAPÍTULO I: MARCO INTRODUCTORIO])
+#place(top, hide[= CAPÍTULO I: GENERALIDADES])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
     CAPÍTULO I: \
-    MARCO INTRODUCTORIO
+    GENERALIDADES
   ]
 ]
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
 
+// 1. Resumen ejecutivo
+#include "resumen.typ"
 
-// 1.1 Introducción
-#include "introduccion.typ"
-
-#pagebreak()
-
-// 1.2 Antecedentes
+// 2. Antecedentes
 #include "antecedentes.typ"
+
+// 3. Descripción del objeto de estudio
+#include "descripcion_objeto.typ"
+
+// 4. Planteamiento del problema
+#include "planteamiento.typ"
+
+// 5. Objetivos
+#include "objetivos.typ"
+
+// 6. Justificación de la investigación
+#include "justificacion.typ"
+
+// 7. Metodología y Técnicas de Investigación
+#include "metodologia.typ"
+
+// 8. Alcances y aportes
+#include "alcances.typ"

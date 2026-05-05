@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Completa Asana – E-commerce ShopFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #ffffff;
+  --off: #FAFAFA;
+  --gray-100: #F4F4F5;
+  --gray-200: #E4E4E7;
+  --gray-400: #A1A1AA;
+  --gray-600: #52525B;
+  --gray-900: #09090B;
+  --asana-red: #F06A6A;
+  --asana-orange: #FF8C42;
+  --asana-teal: #2DD4BF;
+  --asana-blue: #3B82F6;
+  --asana-violet: #8B5CF6;
+  --asana-green: #22C55E;
+  --asana-yellow: #F59E0B;
+  --accent: #F06A6A;
+}
+
+@page { size: A4; margin: 15mm; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { font-size: 10pt; }
+  .page-break { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  .portada { min-height: auto; padding: 40px; }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #ffffff;
+  color: var(--gray-900);
+  line-height: 1.65;
+}
+
+/* ============ BOTÓN IMPRIMIR ============ */
+.fab {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: var(--gray-900);
+  color: white;
+  border: none;
+  padding: 14px 26px;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+  z-index: 9999;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.fab:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.22); }
+.fab svg { width: 18px; height: 18px; }
+
+/* ============ PORTADA ============ */
+.portada {
+  min-height: 100vh;
+  background: var(--white);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.portada-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 56px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.portada-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+  letter-spacing: 0.5px;
+}
+
+.logo-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--asana-red);
+}
+
+.portada-meta {
+  font-size: 12px;
+  color: var(--gray-400);
+  font-family: 'DM Mono', monospace;
+}
+
+.portada-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 56px;
+  position: relative;
+}
+
+.portada-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 100px;
+  padding: 5px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--asana-red);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 32px;
+}
+
+.portada-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--asana-red);
+}
+
+.portada h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(44px, 6vw, 80px);
+  font-weight: 900;
+  line-height: 1.0;
+  color: var(--gray-900);
+  max-width: 780px;
+  margin-bottom: 8px;
+}
+
+.portada h1 .italic {
+  font-style: italic;
+  color: var(--asana-red);
+}
+
+.portada h1 .thin {
+  font-weight: 400;
+  color: var(--gray-400);
+}
+
+.portada-sub {
+  font-size: 17px;
+  color: var(--gray-600);
+  font-weight: 300;
+  max-width: 560px;
+  margin-top: 20px;
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+
+.portada-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 60px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border: 1px solid var(--gray-200);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+  background: white;
+}
+
+.pill span { font-size: 15px; }
+
+.portada-stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 0;
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.stat {
+  padding: 24px 36px;
+  border-right: 1px solid var(--gray-200);
+  text-align: center;
+}
+
+.stat:last-child { border-right: none; }
+
+.stat .n {
+  font-family: 'Fraunces', serif;
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--asana-red);
+  display: block;
+  line-height: 1;
+}
+
+.stat .l {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 6px;
+  display: block;
+}
+
+/* Decorative element */
+.portada-deco {
+  position: absolute;
+  top: 0; right: 0;
+  width: 380px; height: 380px;
+  opacity: 0.06;
+  background: conic-gradient(from 0deg, #F06A6A, #FF8C42, #2DD4BF, #3B82F6, #8B5CF6, #F06A6A);
+  border-radius: 50%;
+  transform: translate(30%, -30%);
+}
+
+.portada-footer {
+  padding: 24px 56px;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--gray-400);
+  font-family: 'DM Mono', monospace;
+}
+
+/* ============ LAYOUT ============ */
+.doc {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px 80px;
+}
+
+/* ============ ÍNDICE ============ */
+.indice {
+  margin: 60px 0;
+  border: 1px solid var(--gray-200);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.indice-header {
+  background: var(--gray-900);
+  color: white;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.indice-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.indice-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.indice-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--gray-200);
+  text-decoration: none;
+  color: var(--gray-600);
+  font-size: 14px;
+  transition: background 0.15s;
+}
+
+.indice-item:hover { background: var(--gray-100); }
+.indice-item:nth-child(odd) { border-right: 1px solid var(--gray-200); }
+.indice-item:last-child, .indice-item:nth-last-child(2) { border-bottom: none; }
+
+.indice-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  background: var(--asana-red);
+  padding: 3px 9px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ============ SECCIÓN HEADING ============ */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 72px 0 32px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.sec-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.sec-icon.red    { background: #FEF2F2; }
+.sec-icon.orange { background: #FFF7ED; }
+.sec-icon.teal   { background: #F0FDFA; }
+.sec-icon.blue   { background: #EFF6FF; }
+.sec-icon.violet { background: #F5F3FF; }
+.sec-icon.green  { background: #F0FDF4; }
+.sec-icon.yellow { background: #FFFBEB; }
+.sec-icon.dark   { background: var(--gray-900); }
+
+.sec-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sec-label .eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
+.sec-label h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1.1;
+}
+
+/* ============ PASO ============ */
+.paso {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  margin-bottom: 36px;
+  align-items: start;
+}
+
+.paso-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 0;
+  border: 2px solid var(--gray-200);
+  color: var(--gray-600);
+  background: white;
+}
+
+.paso-num.filled {
+  background: var(--asana-red);
+  border-color: var(--asana-red);
+  color: white;
+}
+
+.paso-body h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+.paso-body > p {
+  font-size: 14.5px;
+  color: var(--gray-600);
+  margin-bottom: 14px;
+}
+
+/* ============ ACTION LIST ============ */
+.action-list {
+  background: var(--gray-100);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+}
+
+.action-list .al-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--asana-red);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 12px;
+}
+
+.action-list ol, .action-list ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+
+.action-list ol li {
+  counter-increment: step-counter;
+  font-size: 13.5px;
+  color: #3F3F46;
+  padding-left: 28px;
+  position: relative;
+}
+
+.action-list ol { counter-reset: step-counter; }
+
+.action-list ol li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  width: 18px; height: 18px;
+  background: var(--asana-red);
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 1px;
+  font-family: 'DM Mono', monospace;
+}
+
+.action-list ul li {
+  font-size: 13.5px;
+  color: #3F3F46;
+  padding-left: 22px;
+  position: relative;
+}
+
+.action-list ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--asana-teal);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* ============ TIP / ALERT ============ */
+.tip {
+  display: flex;
+  gap: 12px;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  align-items: flex-start;
+  font-size: 13.5px;
+}
+
+.tip.yellow { background: #FFFBEB; border: 1px solid #FDE68A; color: #78350F; }
+.tip.blue   { background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; }
+.tip.green  { background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; }
+.tip.red    { background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; }
+
+.tip-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.tip p { margin: 0; line-height: 1.6; }
+.tip strong { font-weight: 700; }
+
+/* ============ TABLA ============ */
+.tbl-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  margin: 16px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+table thead { background: var(--gray-900); color: white; }
+table th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; }
+table td { padding: 11px 16px; border-bottom: 1px solid var(--gray-200); color: var(--gray-600); vertical-align: top; line-height: 1.5; }
+table tr:last-child td { border-bottom: none; }
+table tr:nth-child(even) td { background: var(--gray-100); }
+
+/* ============ CHIPS ============ */
+.chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+}
+.chip.red    { background: #FEF2F2; color: var(--asana-red); }
+.chip.orange { background: #FFF7ED; color: var(--asana-orange); }
+.chip.green  { background: #F0FDF4; color: #16A34A; }
+.chip.blue   { background: #EFF6FF; color: var(--asana-blue); }
+.chip.violet { background: #F5F3FF; color: var(--asana-violet); }
+.chip.teal   { background: #F0FDFA; color: #0D9488; }
+
+/* ============ KANBAN VISUAL ============ */
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.col-board { border-radius: 12px; overflow: hidden; border: 1px solid var(--gray-200); }
+.col-header { padding: 10px 14px; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+.col-header.backlog   { background: #F4F4F5; color: #71717A; }
+.col-header.progress  { background: #EFF6FF; color: #2563EB; }
+.col-header.review    { background: #FFF7ED; color: #C2410C; }
+.col-header.done      { background: #F0FDF4; color: #15803D; }
+.col-body { padding: 10px; display: flex; flex-direction: column; gap: 7px; background: white; }
+
+.kcard {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 12px;
+  color: #3F3F46;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.kcard-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 7px; }
+.avatar { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: white; flex-shrink: 0; }
+.av-r { background: var(--asana-red); }
+.av-b { background: var(--asana-blue); }
+.av-t { background: var(--asana-teal); }
+.av-v { background: var(--asana-violet); }
+.av-o { background: var(--asana-orange); }
+.kdate { font-size: 10px; color: var(--gray-400); font-family: 'DM Mono', monospace; }
+
+/* ============ GUÍA RÁPIDA ============ */
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.quick-card {
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.quick-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+.qc-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qc-icon { font-size: 22px; }
+
+.qc-header-text h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+.qc-header-text p {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin: 0;
+}
+
+.qc-header.c1 { background: #FEF2F2; }
+.qc-header.c2 { background: #FFF7ED; }
+.qc-header.c3 { background: #F0FDFA; }
+.qc-header.c4 { background: #EFF6FF; }
+.qc-header.c5 { background: #F5F3FF; }
+.qc-header.c6 { background: #F0FDF4; }
+
+.qc-body {
+  padding: 14px 20px;
+}
+
+.qc-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 13px;
+  color: var(--gray-600);
+}
+
+.qc-step:last-child { border-bottom: none; }
+.qc-step-num { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; color: white; padding: 2px 6px; border-radius: 4px; margin-top: 1px; flex-shrink: 0; }
+
+.qc-step-num.n1 { background: var(--asana-red); }
+.qc-step-num.n2 { background: var(--asana-orange); }
+.qc-step-num.n3 { background: var(--asana-teal); }
+.qc-step-num.n4 { background: var(--asana-blue); }
+.qc-step-num.n5 { background: var(--asana-violet); }
+.qc-step-num.n6 { background: var(--asana-green); }
+
+/* ============ RÚBRICA ============ */
+.rubrica-intro {
+  background: var(--gray-900);
+  color: white;
+  border-radius: 16px;
+  padding: 32px 36px;
+  margin: 20px 0 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+}
+
+.rubrica-intro h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.rubrica-intro p { font-size: 14px; color: #A1A1AA; line-height: 1.6; }
+.rubrica-score { text-align: center; }
+.rubrica-score .big { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 900; color: var(--asana-red); line-height: 1; }
+.rubrica-score .lbl { font-size: 11px; color: #71717A; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+
+.rubrica-leyenda {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.rub-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+.rub-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.d-exc  { background: #15803D; }
+.d-bien { background: #2563EB; }
+.d-suf  { background: #D97706; }
+.d-ins  { background: #DC2626; }
+
+.rub-table-wrap {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--gray-200);
+  margin-bottom: 20px;
+}
+
+.rub-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 700px; }
+.rub-table thead { background: var(--gray-900); color: white; }
+.rub-table th { padding: 13px 16px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+.rub-table th.criteria { min-width: 160px; }
+.rub-table th.pts { min-width: 60px; text-align: center; }
+.rub-table td { padding: 12px 16px; border-bottom: 1px solid var(--gray-200); vertical-align: top; line-height: 1.5; }
+.rub-table td.crit-name { font-weight: 700; color: var(--gray-900); font-size: 13px; }
+.rub-table td.crit-name small { display: block; font-weight: 400; color: var(--gray-400); font-size: 11px; margin-top: 2px; }
+.rub-table td.pts-cell { text-align: center; font-family: 'DM Mono', monospace; font-weight: 700; font-size: 13px; color: var(--gray-900); }
+.rub-table tr:last-child td { border-bottom: none; }
+.rub-table tr:nth-child(even) td { background: var(--gray-100); }
+
+.exc-cell  { background: #F0FDF4 !important; }
+.bien-cell { background: #EFF6FF !important; }
+.suf-cell  { background: #FFFBEB !important; }
+.ins-cell  { background: #FEF2F2 !important; }
+
+.level-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 4px;
+}
+.lb-exc  { background: #DCFCE7; color: #15803D; }
+.lb-bien { background: #DBEAFE; color: #1D4ED8; }
+.lb-suf  { background: #FEF3C7; color: #B45309; }
+.lb-ins  { background: #FEE2E2; color: #B91C1C; }
+
+.rub-total {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rub-total-box {
+  background: var(--gray-900);
+  color: white;
+  border-radius: 12px;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.rub-total-box span { font-size: 13px; color: #A1A1AA; }
+.rub-total-box strong { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 900; color: var(--asana-red); }
+
+/* ============ ESCALA ============ */
+.escala-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.escala-item {
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+}
+
+.escala-item .grade { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 900; display: block; }
+.escala-item .pts   { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; display: block; margin: 4px 0; }
+.escala-item .lbl   { font-size: 12px; font-weight: 600; display: block; }
+
+.esc-exc  { background: #F0FDF4; }
+.esc-exc .grade { color: #15803D; }
+.esc-exc .lbl   { color: #166534; }
+
+.esc-bien { background: #EFF6FF; }
+.esc-bien .grade { color: #1D4ED8; }
+.esc-bien .lbl   { color: #1E40AF; }
+
+.esc-suf  { background: #FFFBEB; }
+.esc-suf .grade { color: #D97706; }
+.esc-suf .lbl   { color: #92400E; }
+
+.esc-ins  { background: #FEF2F2; }
+.esc-ins .grade { color: #DC2626; }
+.esc-ins .lbl   { color: #991B1B; }
+
+/* ============ HRULE ============ */
+hr.divider { border: none; border-top: 1px dashed var(--gray-200); margin: 48px 0; }
+
+/* ============ CALLOUT ============ */
+.callout {
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 24px 0;
+}
+
+.callout.blue   { background: #EFF6FF; border-left: 4px solid var(--asana-blue); }
+.callout.teal   { background: #F0FDFA; border-left: 4px solid var(--asana-teal); }
+.callout.red    { background: #FEF2F2; border-left: 4px solid var(--asana-red); }
+
+.callout h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900); }
+.callout p  { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+.callout p + p { margin-top: 8px; }
+
+/* ============ FOOTER ============ */
+.footer {
+  border-top: 1px solid var(--gray-200);
+  padding: 36px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--gray-400);
+  font-family: 'DM Mono', monospace;
+}
+
+.footer strong { color: var(--asana-red); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 680px) {
+  .portada-body { padding: 40px 24px; }
+  .doc { padding: 0 20px 60px; }
+  .board { grid-template-columns: 1fr 1fr; }
+  .quick-grid { grid-template-columns: 1fr; }
+  .escala-grid { grid-template-columns: 1fr 1fr; }
+  .portada-stats { grid-template-columns: 1fr 1fr; }
+  .stat { border-bottom: 1px solid var(--gray-200); }
+  .indice-body { grid-template-columns: 1fr; }
+  .indice-item:nth-child(odd) { border-right: none; }
+  .rubrica-intro { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<button class="fab no-print" onclick="window.print()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+  Descargar PDF
+</button>
+
+<!-- ================= PORTADA ================= -->
+<div class="portada">
+  <div class="portada-header">
+    <div class="portada-logo">
+      <div class="logo-dot"></div>
+      ShopFlow · Guía Práctica
+    </div>
+    <div class="portada-meta">E-commerce Software · 2025</div>
+  </div>
+
+  <div class="portada-body">
+    <div class="portada-deco"></div>
+    <div class="portada-eyebrow">Guía rápida + Práctica + Rúbrica</div>
+    <h1>
+      Domina <span class="italic">Asana</span><br>
+      <span class="thin">para proyectos de</span><br>
+      E-commerce
+    </h1>
+    <p class="portada-sub">Una guía completa paso a paso para aprender a gestionar proyectos de software con Asana, aplicada al proyecto ShopFlow — tienda online de moda.</p>
+    <div class="portada-pills">
+      <div class="pill"><span>🚀</span> Introducción a Asana</div>
+      <div class="pill"><span>📋</span> Proyectos y Tareas</div>
+      <div class="pill"><span>🧭</span> Navegación</div>
+      <div class="pill"><span>🗂️</span> Trabajo Personal</div>
+      <div class="pill"><span>🤝</span> Colaboración en equipo</div>
+      <div class="pill"><span>📊</span> Rúbrica de evaluación</div>
+    </div>
+    <div class="portada-stats">
+      <div class="stat"><span class="n">7</span><span class="l">Módulos</span></div>
+      <div class="stat"><span class="n">40+</span><span class="l">Pasos</span></div>
+      <div class="stat"><span class="n">100</span><span class="l">Pts máx.</span></div>
+      <div class="stat"><span class="n">~4h</span><span class="l">Duración</span></div>
+    </div>
+  </div>
+
+  <div class="portada-footer">
+    <span>Proyecto: <strong>ShopFlow E-commerce MVP</strong></span>
+    <span>Versión 2.0 · Abril 2025</span>
+  </div>
+</div>
+
+<!-- ================= CONTENIDO ================= -->
+<div class="doc">
+
+  <!-- ÍNDICE -->
+  <div class="indice">
+    <div class="indice-header">
+      <div class="sec-icon dark" style="width:32px;height:32px;border-radius:8px;font-size:15px;">📑</div>
+      <h2>Contenido de la guía</h2>
+    </div>
+    <div class="indice-body">
+      <a class="indice-item" href="#intro"><span class="indice-num">01</span> Introducción a Asana</a>
+      <a class="indice-item" href="#crear"><span class="indice-num">02</span> Crear proyectos y tareas</a>
+      <a class="indice-item" href="#efectivos"><span class="indice-num">03</span> Crear proyectos efectivos</a>
+      <a class="indice-item" href="#tareas"><span class="indice-num">04</span> Asignar tareas claras</a>
+      <a class="indice-item" href="#navegar"><span class="indice-num">05</span> Navegar por Asana</a>
+      <a class="indice-item" href="#personal"><span class="indice-num">06</span> Organizar tu trabajo personal</a>
+      <a class="indice-item" href="#equipo"><span class="indice-num">07</span> Colaborar con tu equipo</a>
+      <a class="indice-item" href="#rubrica"><span class="indice-num">08</span> Rúbrica de evaluación</a>
+    </div>
+  </div>
+
+  <!-- ===================== GUÍA RÁPIDA ===================== -->
+  <div class="sec-head">
+    <div class="sec-icon red">⚡</div>
+    <div class="sec-label">
+      <span class="eyebrow">Para empezar</span>
+      <h2>Guía rápida — Los 6 pasos clave</h2>
+    </div>
+  </div>
+
+  <p style="font-size:15px;color:var(--gray-600);margin-bottom:24px;line-height:1.7;">Antes de entrar en cada módulo, revisa esta guía rápida de referencia. Te dará una visión general de todo lo que aprenderás y cómo cada tema se conecta con el siguiente.</p>
+
+  <div class="quick-grid">
+
+    <div class="quick-card">
+      <div class="qc-header c1">
+        <span class="qc-icon">🌐</span>
+        <div class="qc-header-text">
+          <h4>Introducción a Asana</h4>
+          <p>Configura tu entorno base</p>
+        </div>
+      </div>
+      <div class="qc-body">
+        <div class="qc-step"><span class="qc-step-num n1">1</span>Crea tu cuenta en asana.com con correo corporativo.</div>
+        <div class="qc-step"><span class="qc-step-num n1">2</span>Configura tu perfil: nombre, foto, zona horaria.</div>
+        <div class="qc-step"><span class="qc-step-num n1">3</span>Crea el Workspace "ShopFlow Dev".</div>
+        <div class="qc-step"><span class="qc-step-num n1">4</span>Invita a los miembros del equipo por correo.</div>
+        <div class="qc-step"><span class="qc-step-num n1">5</span>Explora el tour guiado de Asana (aparece al inicio).</div>
+      </div>
+    </div>
+
+    <div class="quick-card">
+      <div class="qc-header c2">
+        <span class="qc-icon">📁</span>
+        <div class="qc-header-text">
+          <h4>Crear proyectos y tareas</h4>
+          <p>Tu primer proyecto en Asana</p>
+        </div>
+      </div>
+      <div class="qc-body">
+        <div class="qc-step"><span class="qc-step-num n2">1</span>Clic en "+ Nuevo proyecto" en la barra lateral.</div>
+        <div class="qc-step"><span class="qc-step-num n2">2</span>Elige el nombre y la vista inicial (Tablero / Lista).</div>
+        <div class="qc-step"><span class="qc-step-num n2">3</span>Agrega las secciones (épicas): Catálogo, Carrito, Auth…</div>
+        <div class="qc-step"><span class="qc-step-num n2">4</span>Dentro de cada sección crea tus primeras 3 tareas.</div>
+        <div class="qc-step"><span class="qc-step-num n2">5</span>Completa los campos básicos de cada tarea.</div>
+      </div>
+    </div>
+
+    <div class="quick-card">
+      <div class="qc-header c3">
+        <span class="qc-icon">🎯</span>
+        <div class="qc-header-text">
+          <h4>Proyectos efectivos</h4>
+          <p>Estructura que funciona</p>
+        </div>
+      </div>
+      <div class="qc-body">
+        <div class="qc-step"><span class="qc-step-num n3">1</span>Define el objetivo del proyecto en la descripción.</div>
+        <div class="qc-step"><span class="qc-step-num n3">2</span>Usa plantillas de Asana como punto de partida.</div>
+        <div class="qc-step"><span class="qc-step-num n3">3</span>Establece fechas de inicio y fin del proyecto.</div>
+        <div class="qc-step"><span class="qc-step-num n3">4</span>Configura campos personalizados (Prioridad, Sprint, Módulo).</div>
+        <div class="qc-step"><span class="qc-step-num n3">5</span>Añade un responsable de proyecto (Project Owner).</div>
+      </div>
+    </div>
+
+    <div class="quick-card">
+      <div class="qc-header c4">
+        <span class="qc-icon">✅</span>
+        <div class="qc-header-text">
+          <h4>Asignar tareas claras</h4>
+          <p>Responsabilidades sin ambigüedad</p>
+        </div>
+      </div>
+      <div class="qc-body">
+        <div class="qc-step"><span class="qc-step-num n4">1</span>Cada tarea tiene UN solo responsable asignado.</div>
+        <div class="qc-step"><span class="qc-step-num n4">2</span>Escribe una descripción con criterios de aceptación.</div>
+        <div class="qc-step"><span class="qc-step-num n4">3</span>Establece fecha límite realista para cada tarea.</div>
+        <div class="qc-step"><span class="qc-step-num n4">4</span>Añade etiquetas: Sprint-1, Frontend, Backend, QA.</div>
+        <div class="qc-step"><span class="qc-step-num n4">5</span>Crea subtareas para desglosar el trabajo grande.</div>
+      </div>
+    </div>
+
+    <div class="quick-card">
+      <div class="qc-header c5">
+        <span class="qc-icon">🧭</span>
+        <div class="qc-header-text">
+          <h4>Navegar por Asana</h4>
+          <p>Encuentra todo en segundos</p>
+        </div>
+      </div>
+      <div class="qc-body">
+        <div class="qc-step"><span class="qc-step-num n5">1</span>Usa la barra lateral para acceder a proyectos y equipos.</div>
+        <div class="qc-step"><span class="qc-step-num n5">2</span>El buscador (Ctrl+K) encuentra cualquier tarea al instante.</div>
+        <div class="qc-step"><span class="qc-step-num n5">3</span>Cambia entre vistas: Lista, Tablero, Timeline, Calendario.</div>
+        <div class="qc-step"><span class="qc-step-num n5">4</span>Usa filtros para ver solo tus tareas o las de un sprint.</div>
+        <div class="qc-step"><span class="qc-step-num n5">5</span>Revisa el Inbox (🔔) para ver menciones y actualizaciones.</div>
+      </div>
+    </div>
+
+    <div class="quick-card">
+      <div class="qc-header c6">
+        <span class="qc-icon">🤝</span>
+        <div class="qc-header-text">
+          <h4>Colaborar con el equipo</h4>
+          <p>Trabajo asíncrono efectivo</p>
+        </div>
+      </div>
+      <div class="qc-body">
+        <div class="qc-step"><span class="qc-step-num n6">1</span>Usa @menciones en comentarios para notificar a alguien.</div>
+        <div class="qc-step"><span class="qc-step-num n6">2</span>Adjunta archivos de Drive, Figma o GitHub a las tareas.</div>
+        <div class="qc-step"><span class="qc-step-num n6">3</span>Establece dependencias entre tareas relacionadas.</div>
+        <div class="qc-step"><span class="qc-step-num n6">4</span>Comenta el avance diario en cada tarea activa.</div>
+        <div class="qc-step"><span class="qc-step-num n6">5</span>Usa la vista de carga de trabajo para balancear el equipo.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== MÓDULO 1: INTRO ===================== -->
+  <div id="intro" class="sec-head">
+    <div class="sec-icon red">🌐</div>
+    <div class="sec-label">
+      <span class="eyebrow">Módulo 01</span>
+      <h2>Introducción a Asana</h2>
+    </div>
+  </div>
+
+  <div class="callout blue">
+    <h3>¿Qué es Asana?</h3>
+    <p>Asana es una plataforma de gestión de trabajo en equipo que permite organizar proyectos, asignar responsabilidades, hacer seguimiento del progreso y colaborar de forma asíncrona. Es usada por equipos de software en empresas como Airbnb, Dropbox y Spotify.</p>
+    <p>Para nuestro proyecto <strong>ShopFlow</strong>, Asana será el centro de comando donde el equipo de desarrollo coordinará cada sprint, tarea y entregable del e-commerce.</p>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">1</div>
+    <div class="paso-body">
+      <h3>Crear tu cuenta y configurar el perfil</h3>
+      <p>El primer paso es tener tu espacio personal en Asana correctamente configurado.</p>
+      <div class="action-list">
+        <p class="al-title">Pasos a seguir</p>
+        <ol>
+          <li>Ve a <strong>asana.com</strong> → clic en "Empezar gratis" → ingresa tu correo y contraseña segura.</li>
+          <li>Abre el correo de verificación y confirma tu cuenta.</li>
+          <li>En el menú superior derecho → tu avatar → <strong>"Configuración del perfil"</strong>.</li>
+          <li>Completa: nombre completo, foto de perfil y zona horaria (<em>América/La_Paz</em>).</li>
+          <li>En "Notificaciones" activa: resumen diario por correo + notificaciones en la app.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">2</div>
+    <div class="paso-body">
+      <h3>Crear el Workspace "ShopFlow Dev"</h3>
+      <p>El workspace es el contenedor raíz de todo tu trabajo. Todos los proyectos y equipos viven dentro de él.</p>
+      <div class="action-list">
+        <p class="al-title">Pasos a seguir</p>
+        <ol>
+          <li>Clic en el logo de Asana (arriba a la izquierda) → <strong>"Crear nuevo workspace"</strong>.</li>
+          <li>Nombre: <strong>ShopFlow Dev</strong> | Tipo de uso: <em>Trabajo / Desarrollo de software</em>.</li>
+          <li>Invita al equipo: ingresa los correos de Frontend Dev, Backend Dev, QA y Product Owner.</li>
+          <li>Crea 3 equipos dentro del workspace: <strong>Frontend</strong>, <strong>Backend API</strong> y <strong>QA & Deploy</strong>.</li>
+        </ol>
+      </div>
+      <div class="tip yellow">
+        <span class="tip-icon">💡</span>
+        <p><strong>Tip:</strong> Si practicas solo, crea 2–3 cuentas con diferentes correos (puedes usar gmail+alias@gmail.com) para simular un equipo real y practicar la colaboración.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">3</div>
+    <div class="paso-body">
+      <h3>Conocer la interfaz de Asana</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Zona de la interfaz</th><th>Qué contiene</th><th>Atajo de teclado</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Barra lateral izquierda</strong></td><td>Proyectos, equipos, mensajes, Mis tareas</td><td>—</td></tr>
+            <tr><td><strong>Barra superior</strong></td><td>Buscador, notificaciones, tu perfil</td><td>Ctrl + K (buscar)</td></tr>
+            <tr><td><strong>Panel central</strong></td><td>Vista del proyecto activo (lista, tablero, etc.)</td><td>—</td></tr>
+            <tr><td><strong>Panel derecho</strong></td><td>Detalle de la tarea seleccionada</td><td>Tab + X (cerrar)</td></tr>
+            <tr><td><strong>Inbox (🔔)</strong></td><td>Notificaciones de menciones y actualizaciones</td><td>Ctrl + Shift + I</td></tr>
+            <tr><td><strong>Mis tareas</strong></td><td>Todas las tareas asignadas a ti</td><td>Ctrl + Shift + M</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== MÓDULO 2: CREAR PROYECTOS ===================== -->
+  <div id="crear" class="sec-head">
+    <div class="sec-icon orange">📁</div>
+    <div class="sec-label">
+      <span class="eyebrow">Módulo 02</span>
+      <h2>Crear proyectos y tareas</h2>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">4</div>
+    <div class="paso-body">
+      <h3>Crear el proyecto "MVP ShopFlow E-commerce"</h3>
+      <p>Este será el proyecto principal donde vivirán todas las funcionalidades del e-commerce.</p>
+      <div class="action-list">
+        <p class="al-title">Pasos a seguir</p>
+        <ol>
+          <li>En la barra lateral → <strong>"+ Nuevo proyecto"</strong>.</li>
+          <li>Nombre: <strong>MVP ShopFlow E-commerce</strong>.</li>
+          <li>Plantilla: selecciona <em>"Desarrollo de software"</em> o <em>"En blanco"</em>.</li>
+          <li>Vista inicial: elige <strong>Tablero (Board)</strong> para ver el flujo Kanban.</li>
+          <li>Privacidad: <strong>Equipo</strong> — visible para todos los miembros del workspace.</li>
+          <li>Añade una descripción clara: "Proyecto para desarrollar el MVP de la tienda ShopFlow. Incluye catálogo, carrito, autenticación y checkout."</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">5</div>
+    <div class="paso-body">
+      <h3>Configurar el tablero Kanban con columnas</h3>
+      <p>Las columnas representan el estado de cada tarea a lo largo del desarrollo:</p>
+      <div class="board">
+        <div class="col-board">
+          <div class="col-header backlog">📋 Backlog</div>
+          <div class="col-body">
+            <div class="kcard">Registro de usuarios<div class="kcard-meta"><div class="avatar av-b">LR</div><span class="kdate">Sem. 2</span></div></div>
+            <div class="kcard">Catálogo de productos<div class="kcard-meta"><div class="avatar av-r">MA</div><span class="kdate">Sem. 2</span></div></div>
+          </div>
+        </div>
+        <div class="col-board">
+          <div class="col-header progress">🔧 En progreso</div>
+          <div class="col-body">
+            <div class="kcard">Homepage UI<div class="kcard-meta"><div class="avatar av-t">JV</div><span class="kdate">Hoy</span></div></div>
+          </div>
+        </div>
+        <div class="col-board">
+          <div class="col-header review">🔍 En revisión</div>
+          <div class="col-body">
+            <div class="kcard">API de productos<div class="kcard-meta"><div class="avatar av-v">CP</div><span class="kdate">Ayer</span></div></div>
+          </div>
+        </div>
+        <div class="col-board">
+          <div class="col-header done">✅ Completado</div>
+          <div class="col-body">
+            <div class="kcard">Setup CI/CD<div class="kcard-meta"><div class="avatar av-o">DB</div><span class="kdate">Lun.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="tip green">
+        <span class="tip-icon">✅</span>
+        <p>Columnas recomendadas: <strong>Backlog → En progreso → En revisión (PR/Code Review) → En testing (QA) → Completado</strong>. Este flujo refleja el ciclo real de un equipo de software.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">6</div>
+    <div class="paso-body">
+      <h3>Crear las primeras tareas del backlog</h3>
+      <p>Dentro de cada sección del tablero, haz clic en <strong>"+ Añadir tarea"</strong> y crea estas tareas para comenzar:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Módulo / Épica</th><th>Tarea</th><th>Tipo</th><th>Prioridad</th></tr></thead>
+          <tbody>
+            <tr><td>🏠 Homepage</td><td>Diseñar hero section y banners</td><td><span class="chip blue">UI/UX</span></td><td><span class="chip red">Alta</span></td></tr>
+            <tr><td>👤 Auth</td><td>Implementar registro con email</td><td><span class="chip teal">Backend</span></td><td><span class="chip red">Alta</span></td></tr>
+            <tr><td>👤 Auth</td><td>Pantalla de login y recuperar contraseña</td><td><span class="chip blue">Frontend</span></td><td><span class="chip red">Alta</span></td></tr>
+            <tr><td>🛍️ Catálogo</td><td>Componente ProductCard reutilizable</td><td><span class="chip blue">Frontend</span></td><td><span class="chip red">Alta</span></td></tr>
+            <tr><td>🛍️ Catálogo</td><td>API REST GET /products con filtros</td><td><span class="chip teal">Backend</span></td><td><span class="chip red">Alta</span></td></tr>
+            <tr><td>🛒 Carrito</td><td>Lógica de agregar/quitar productos</td><td><span class="chip blue">Frontend</span></td><td><span class="chip orange">Media</span></td></tr>
+            <tr><td>💳 Checkout</td><td>Integración con Stripe (pagos)</td><td><span class="chip teal">Backend</span></td><td><span class="chip orange">Media</span></td></tr>
+            <tr><td>⚙️ Setup</td><td>Configurar repositorio GitHub + CI/CD</td><td><span class="chip violet">DevOps</span></td><td><span class="chip red">Alta</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== MÓDULO 3: PROYECTOS EFECTIVOS ===================== -->
+  <div id="efectivos" class="sec-head">
+    <div class="sec-icon teal">🎯</div>
+    <div class="sec-label">
+      <span class="eyebrow">Módulo 03</span>
+      <h2>Crear proyectos efectivos</h2>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">7</div>
+    <div class="paso-body">
+      <h3>Anatomía de un proyecto bien estructurado</h3>
+      <p>Un proyecto efectivo en Asana tiene estos elementos desde el inicio:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Elemento</th><th>Cómo configurarlo en ShopFlow</th><th>Por qué importa</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nombre claro</strong></td><td>MVP ShopFlow E-commerce – Sprint 1</td><td>Todos saben de qué se trata</td></tr>
+            <tr><td><strong>Descripción</strong></td><td>Objetivo, alcance, métricas de éxito del proyecto</td><td>Reduce malentendidos del equipo</td></tr>
+            <tr><td><strong>Fechas del proyecto</strong></td><td>Inicio: Semana 1 / Fin: Semana 8</td><td>Establece el horizonte temporal</td></tr>
+            <tr><td><strong>Project Owner</strong></td><td>Product Owner asignado</td><td>Una sola persona rinde cuentas</td></tr>
+            <tr><td><strong>Campos personalizados</strong></td><td>Prioridad, Sprint, Módulo, Tipo de tarea</td><td>Filtra y ordena con precisión</td></tr>
+            <tr><td><strong>Plantilla de tarea</strong></td><td>Criterios de aceptación + Pasos de testing</td><td>Estandariza la calidad</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">8</div>
+    <div class="paso-body">
+      <h3>Crear campos personalizados</h3>
+      <p>Los campos personalizados permiten añadir información específica a todas las tareas del proyecto:</p>
+      <div class="action-list">
+        <p class="al-title">Cómo crearlos</p>
+        <ol>
+          <li>En el proyecto → clic en ⚙️ <strong>"Personalizar"</strong> (esquina superior derecha).</li>
+          <li>Agrega campo <strong>"Prioridad"</strong> → tipo Lista → opciones: Alta 🔴, Media 🟡, Baja 🟢.</li>
+          <li>Agrega campo <strong>"Sprint"</strong> → tipo Lista → opciones: Sprint-1, Sprint-2, Sprint-3, Sprint-4.</li>
+          <li>Agrega campo <strong>"Módulo"</strong> → tipo Texto → para escribir: Auth, Catálogo, Carrito, etc.</li>
+          <li>Agrega campo <strong>"Estimación (días)"</strong> → tipo Número → para asignar esfuerzo en días.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">9</div>
+    <div class="paso-body">
+      <h3>Usar la vista de línea de tiempo (Gantt)</h3>
+      <p>La vista Timeline te permite ver la planificación global y detectar cuellos de botella:</p>
+      <div class="action-list">
+        <p class="al-title">Cómo usarla</p>
+        <ol>
+          <li>En la barra de vistas del proyecto → clic en <strong>"Línea de tiempo"</strong>.</li>
+          <li>Arrastra las barras para ajustar fechas de inicio y fin.</li>
+          <li>Conecta tareas dependientes arrastrando desde el borde de una barra hacia la otra.</li>
+          <li>Verifica que ningún miembro tenga tareas solapadas en la misma semana.</li>
+          <li>Comparte con stakeholders: clic en <strong>"Compartir"</strong> → enlace de solo lectura.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== MÓDULO 4: TAREAS CLARAS ===================== -->
+  <div id="tareas" class="sec-head">
+    <div class="sec-icon blue">✅</div>
+    <div class="sec-label">
+      <span class="eyebrow">Módulo 04</span>
+      <h2>Asignar tareas claras</h2>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">10</div>
+    <div class="paso-body">
+      <h3>Anatomía de una tarea perfecta</h3>
+      <p>Una tarea bien definida elimina la ambigüedad y permite que el desarrollador trabaje sin interrupciones. Así se ve una tarea completa en ShopFlow:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Campo</th><th>Ejemplo real (ProductCard)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nombre</strong></td><td>Desarrollar componente ProductCard (React)</td></tr>
+            <tr><td><strong>Responsable</strong></td><td>María Arce (1 sola persona — regla de oro)</td></tr>
+            <tr><td><strong>Seguidores</strong></td><td>Tech Lead, PM (reciben notificaciones)</td></tr>
+            <tr><td><strong>Fecha inicio</strong></td><td>Lunes, semana 2</td></tr>
+            <tr><td><strong>Fecha límite</strong></td><td>Miércoles, semana 2</td></tr>
+            <tr><td><strong>Prioridad</strong></td><td>🔴 Alta</td></tr>
+            <tr><td><strong>Sprint</strong></td><td>Sprint-1</td></tr>
+            <tr><td><strong>Módulo</strong></td><td>Catálogo</td></tr>
+            <tr><td><strong>Estimación</strong></td><td>2 días</td></tr>
+            <tr><td><strong>Descripción</strong></td><td>Crear componente reutilizable con: imagen del producto, nombre, precio con formato moneda, badge de descuento, botón "Añadir al carrito". Props: {id, name, price, originalPrice, imageUrl, onAddToCart}. Criterios de aceptación: se renderiza correctamente en mobile y desktop, el botón emite el evento onAddToCart.</td></tr>
+            <tr><td><strong>Dependencias</strong></td><td>Depende de: "API REST GET /products" (debe estar lista)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">11</div>
+    <div class="paso-body">
+      <h3>Crear subtareas para trabajos complejos</h3>
+      <p>Las subtareas permiten desglosar una tarea grande en pasos concretos y asignarlos a personas diferentes:</p>
+      <div class="action-list">
+        <p class="al-title">Subtareas de "Checkout completo"</p>
+        <ul>
+          <li>Formulario de datos de envío con validaciones (María A. — 1 día).</li>
+          <li>Resumen de pedido con desglose de precios (María A. — 0.5 días).</li>
+          <li>Integración frontend con API de pagos Stripe (María A. — 1 día).</li>
+          <li>Endpoint POST /orders en backend (Luis R. — 2 días).</li>
+          <li>Email de confirmación de pedido automático (Luis R. — 1 día).</li>
+          <li>Testing del flujo completo de compra (Carlos P. — 1 día).</li>
+        </ul>
+      </div>
+      <div class="tip blue">
+        <span class="tip-icon">💡</span>
+        <p><strong>Regla de oro:</strong> si una tarea toma más de 3 días, es señal de que debe dividirse en subtareas más pequeñas. Las tareas pequeñas son más fáciles de estimar, asignar y completar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">12</div>
+    <div class="paso-body">
+      <h3>Establecer dependencias entre tareas</h3>
+      <p>Las dependencias evitan que alguien empiece a trabajar en algo para lo que no están listos los prerequisitos.</p>
+      <div class="action-list">
+        <p class="al-title">Cómo establecerlas</p>
+        <ol>
+          <li>Abre la tarea dependiente (ej: "Página de listado de productos").</li>
+          <li>En el panel derecho → busca <strong>"Dependencias"</strong> → "Marcada como dependiente de..."</li>
+          <li>Busca y selecciona: <em>"API REST GET /products"</em>.</li>
+          <li>Repite para cada par: Testing → Login completo; Checkout → API de pagos.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== MÓDULO 5: NAVEGAR ===================== -->
+  <div id="navegar" class="sec-head">
+    <div class="sec-icon violet">🧭</div>
+    <div class="sec-label">
+      <span class="eyebrow">Módulo 05</span>
+      <h2>Navegar por Asana</h2>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">13</div>
+    <div class="paso-body">
+      <h3>Las 4 vistas principales y cuándo usarlas</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Vista</th><th>Mejor para</th><th>Cómo acceder</th></tr></thead>
+          <tbody>
+            <tr><td>📋 <strong>Lista</strong></td><td>Ver todas las tareas con todos sus campos. Ideal para el backlog completo.</td><td>Ícono de lista en la barra de vistas</td></tr>
+            <tr><td>🗂️ <strong>Tablero (Kanban)</strong></td><td>Ver el flujo de trabajo del sprint. Ver qué está en progreso vs. bloqueado.</td><td>Ícono de tablero en la barra de vistas</td></tr>
+            <tr><td>📅 <strong>Línea de tiempo</strong></td><td>Ver el Gantt, detectar solapamientos, compartir planificación con clientes.</td><td>Ícono de timeline en la barra de vistas</td></tr>
+            <tr><td>🗓️ <strong>Calendario</strong></td><td>Ver qué vence cada día/semana. Detectar semanas muy cargadas.</td><td>Ícono de calendario en la barra de vistas</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">14</div>
+    <div class="paso-body">
+      <h3>Atajos de teclado esenciales</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Acción</th><th>Atajo</th><th>Cuándo usarlo</th></tr></thead>
+          <tbody>
+            <tr><td>Búsqueda rápida</td><td><span class="chip blue">Ctrl + K</span></td><td>Encontrar cualquier tarea o proyecto</td></tr>
+            <tr><td>Nueva tarea</td><td><span class="chip blue">Tab + Q</span></td><td>Crear una tarea sin salir de donde estás</td></tr>
+            <tr><td>Mis tareas</td><td><span class="chip blue">Ctrl + Shift + M</span></td><td>Ver tus tareas asignadas del día</td></tr>
+            <tr><td>Inbox</td><td><span class="chip blue">Ctrl + Shift + I</span></td><td>Ver notificaciones y menciones</td></tr>
+            <tr><td>Marcar completa</td><td><span class="chip blue">Tab + C</span></td><td>Completar la tarea seleccionada</td></tr>
+            <tr><td>Asignar responsable</td><td><span class="chip blue">Tab + A</span></td><td>Asignar desde teclado en la lista</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">15</div>
+    <div class="paso-body">
+      <h3>Usar filtros y búsqueda avanzada</h3>
+      <div class="action-list">
+        <p class="al-title">Filtros útiles para el equipo ShopFlow</p>
+        <ul>
+          <li><strong>Ver solo tareas del Sprint-1:</strong> Filtro → Etiqueta → Sprint-1.</li>
+          <li><strong>Ver tareas retrasadas:</strong> Filtro → Fecha límite → Pasado.</li>
+          <li><strong>Ver tareas de un miembro:</strong> Filtro → Responsable → [Nombre].</li>
+          <li><strong>Ver tareas de un módulo:</strong> Filtro → Campo personalizado → Módulo = Catálogo.</li>
+          <li><strong>Búsqueda avanzada:</strong> Ctrl+K → escribe palabras clave del nombre de la tarea.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== MÓDULO 6: TRABAJO PERSONAL ===================== -->
+  <div id="personal" class="sec-head">
+    <div class="sec-icon green">🗂️</div>
+    <div class="sec-label">
+      <span class="eyebrow">Módulo 06</span>
+      <h2>Organizar tu trabajo personal</h2>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">16</div>
+    <div class="paso-body">
+      <h3>Usar "Mis tareas" como tu centro de control diario</h3>
+      <p>"Mis tareas" es la vista personal donde ves todo lo que está asignado a ti, organizado por prioridad y fecha.</p>
+      <div class="action-list">
+        <p class="al-title">Rutina diaria recomendada (10 min al inicio del día)</p>
+        <ol>
+          <li>Abre <strong>"Mis tareas"</strong> desde la barra lateral.</li>
+          <li>Ordena por <strong>Fecha límite</strong> → identifica las tareas más urgentes.</li>
+          <li>Asigna las 3 tareas más importantes a <em>"Hoy"</em> en la sección de prioridad.</li>
+          <li>Mueve las que no harás hoy a <em>"Próximamente"</em> o <em>"Más tarde"</em>.</li>
+          <li>Al finalizar cada tarea → márcala como completada con el círculo ✓ o Tab+C.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">17</div>
+    <div class="paso-body">
+      <h3>Crear tareas personales y recordatorios</h3>
+      <p>Además de las tareas del proyecto, puedes crear tareas personales solo visibles para ti:</p>
+      <div class="action-list">
+        <p class="al-title">Ejemplos de uso</p>
+        <ul>
+          <li>Recordatorio: "Revisar PR de María antes de las 16:00".</li>
+          <li>Seguimiento: "Confirmar credenciales de Stripe con el PM".</li>
+          <li>Aprendizaje: "Ver tutorial de Asana Timeline – Viernes".</li>
+          <li>Nota: "Pendiente documentar la API de productos al final del sprint".</li>
+        </ul>
+      </div>
+      <div class="tip yellow">
+        <span class="tip-icon">💡</span>
+        <p>Las tareas creadas directamente en "Mis tareas" sin asignarlas a un proyecto son <strong>privadas</strong>. Nadie más del equipo las verá. Úsalas como tu bloc de notas de acción.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">18</div>
+    <div class="paso-body">
+      <h3>Configurar el panel de inicio personalizado</h3>
+      <p>El Home de Asana puede configurarse para mostrar exactamente lo que necesitas ver cada día:</p>
+      <div class="action-list">
+        <p class="al-title">Widgets a activar</p>
+        <ul>
+          <li><strong>Mis tareas:</strong> las 5 tareas más urgentes de hoy.</li>
+          <li><strong>Proyectos recientes:</strong> acceso rápido al MVP ShopFlow.</li>
+          <li><strong>Colaboradores:</strong> ver en qué están trabajando tus compañeros.</li>
+          <li><strong>Reuniones:</strong> próximos standups o demos del sprint.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== MÓDULO 7: COLABORAR ===================== -->
+  <div id="equipo" class="sec-head">
+    <div class="sec-icon orange">🤝</div>
+    <div class="sec-label">
+      <span class="eyebrow">Módulo 07</span>
+      <h2>Colaborar con tu equipo</h2>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">19</div>
+    <div class="paso-body">
+      <h3>Comunicación asíncrona dentro de Asana</h3>
+      <p>El objetivo es que toda la comunicación del proyecto ocurra <strong>dentro de Asana</strong>, no en WhatsApp o correos dispersos.</p>
+      <div class="action-list">
+        <p class="al-title">Buenas prácticas</p>
+        <ul>
+          <li>Usa <strong>@nombre</strong> en comentarios para notificar a alguien específico: "@Luis, la API necesita manejar paginación, ¿puedes agregarla al endpoint?"</li>
+          <li>Escribe actualizaciones de avance diario en el comentario de la tarea activa.</li>
+          <li>Si hay un bloqueante, documéntalo en el comentario y menciona a quien puede desbloquearlo.</li>
+          <li>Usa el 👍 en comentarios para confirmar que leíste la actualización.</li>
+          <li>Adjunta capturas de pantalla, maquetas de Figma o enlaces de PR de GitHub directamente en la tarea.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">20</div>
+    <div class="paso-body">
+      <h3>Retrospectiva del sprint en Asana</h3>
+      <p>Al finalizar cada sprint, documenta aprendizajes directamente en el proyecto:</p>
+      <div class="action-list">
+        <p class="al-title">Proceso de retrospectiva</p>
+        <ol>
+          <li>Crea una sección nueva: <strong>"Retrospectivas"</strong> en el proyecto.</li>
+          <li>Crea tarea: <em>"Retro Sprint 1 – [Fecha]"</em>.</li>
+          <li>En la descripción usa esta plantilla:<br>
+            <em>✅ ¿Qué salió bien?<br>
+            ⚠️ ¿Qué mejorar?<br>
+            🚧 ¿Qué nos bloqueó?<br>
+            🎯 Acciones para el Sprint 2:</em>
+          </li>
+          <li>Crea subtareas con las acciones de mejora, asignadas a responsables con fecha límite.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso no-break">
+    <div class="paso-num filled">21</div>
+    <div class="paso-body">
+      <h3>Integraciones del equipo ShopFlow</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Herramienta</th><th>Para qué se usa</th><th>Cómo integrar</th></tr></thead>
+          <tbody>
+            <tr><td>🐙 <strong>GitHub</strong></td><td>Vincular commits y Pull Requests a tareas de Asana</td><td>Apps de Asana → GitHub Integration</td></tr>
+            <tr><td>💬 <strong>Slack</strong></td><td>Notificaciones de tareas completadas en #dev-updates</td><td>Apps de Asana → Slack Integration</td></tr>
+            <tr><td>📁 <strong>Google Drive</strong></td><td>Adjuntar wireframes, specs y documentos a tareas</td><td>Botón adjuntar → Google Drive</td></tr>
+            <tr><td>🎨 <strong>Figma</strong></td><td>Enlazar diseños y prototipos a tareas de UI</td><td>Pegar URL de Figma en descripción</td></tr>
+            <tr><td>📊 <strong>Google Sheets</strong></td><td>Conectar planillas de seguimiento o KPIs</td><td>Adjuntar enlace en descripción del proyecto</td></tr>
+            <tr><td>🔔 <strong>Zoom</strong></td><td>Agendar standups y demos directamente desde Asana</td><td>Apps de Asana → Zoom Integration</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===================== RÚBRICA ===================== -->
+  <div id="rubrica" class="sec-head">
+    <div class="sec-icon yellow">📊</div>
+    <div class="sec-label">
+      <span class="eyebrow">Evaluación</span>
+      <h2>Rúbrica de evaluación de la práctica</h2>
+    </div>
+  </div>
+
+  <div class="rubrica-intro">
+    <div>
+      <h3>Criterios de evaluación — Proyecto ShopFlow en Asana</h3>
+      <p>Esta rúbrica evalúa el dominio de Asana aplicado al proyecto de e-commerce. Cada criterio refleja un módulo de la guía. El estudiante debe demostrar evidencia en Asana (capturas de pantalla o enlace compartido al workspace).</p>
+    </div>
+    <div class="rubrica-score">
+      <div class="big">100</div>
+      <div class="lbl">Puntos totales</div>
+    </div>
+  </div>
+
+  <div class="rubrica-leyenda">
+    <div class="rub-badge"><div class="rub-dot d-exc"></div> Excelente (100%) — Supera los requisitos</div>
+    <div class="rub-badge"><div class="rub-dot d-bien"></div> Bien (75%) — Cumple todos los requisitos</div>
+    <div class="rub-badge"><div class="rub-dot d-suf"></div> Suficiente (50%) — Cumple parcialmente</div>
+    <div class="rub-badge"><div class="rub-dot d-ins"></div> Insuficiente (25%) — No cumple los requisitos</div>
+  </div>
+
+  <!-- CRITERIO 1 -->
+  <div class="rub-table-wrap no-break">
+    <table class="rub-table">
+      <thead>
+        <tr>
+          <th class="criteria">Criterio 1 — Configuración inicial</th>
+          <th style="width:180px">Descripción del nivel</th>
+          <th class="pts">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit-name" rowspan="4">
+            Workspace y equipos
+            <small>Módulo 01 · Introducción</small>
+          </td>
+          <td class="exc-cell"><span class="level-badge lb-exc">Excelente</span><br>Workspace creado con nombre correcto, 3 equipos configurados (Frontend, Backend, QA), al menos 4 miembros invitados, perfil completo con foto y zona horaria.</td>
+          <td class="pts-cell exc-cell">15</td>
+        </tr>
+        <tr>
+          <td class="bien-cell"><span class="level-badge lb-bien">Bien</span><br>Workspace creado, 2 equipos configurados, al menos 2 miembros invitados, perfil básico completado.</td>
+          <td class="pts-cell bien-cell">11</td>
+        </tr>
+        <tr>
+          <td class="suf-cell"><span class="level-badge lb-suf">Suficiente</span><br>Workspace creado, 1 equipo configurado. Perfil incompleto o sin foto.</td>
+          <td class="pts-cell suf-cell">7</td>
+        </tr>
+        <tr>
+          <td class="ins-cell"><span class="level-badge lb-ins">Insuficiente</span><br>Workspace no creado o configurado incorrectamente. Sin equipos ni miembros.</td>
+          <td class="pts-cell ins-cell">3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRITERIO 2 -->
+  <div class="rub-table-wrap no-break">
+    <table class="rub-table">
+      <thead>
+        <tr>
+          <th class="criteria">Criterio 2 — Proyecto y tablero</th>
+          <th style="width:180px">Descripción del nivel</th>
+          <th class="pts">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit-name" rowspan="4">
+            Creación de proyectos y Kanban
+            <small>Módulo 02 · Proyectos y tareas</small>
+          </td>
+          <td class="exc-cell"><span class="level-badge lb-exc">Excelente</span><br>Proyecto creado con nombre, descripción, fechas y Project Owner. Tablero con 5 columnas correctas. Al menos 20 tareas distribuidas en secciones/épicas lógicas.</td>
+          <td class="pts-cell exc-cell">20</td>
+        </tr>
+        <tr>
+          <td class="bien-cell"><span class="level-badge lb-bien">Bien</span><br>Proyecto creado con nombre y descripción. Tablero con 3–4 columnas. Al menos 15 tareas creadas.</td>
+          <td class="pts-cell bien-cell">15</td>
+        </tr>
+        <tr>
+          <td class="suf-cell"><span class="level-badge lb-suf">Suficiente</span><br>Proyecto creado sin descripción. Tablero con 2 columnas. Entre 8 y 14 tareas creadas.</td>
+          <td class="pts-cell suf-cell">10</td>
+        </tr>
+        <tr>
+          <td class="ins-cell"><span class="level-badge lb-ins">Insuficiente</span><br>Proyecto sin estructura clara. Menos de 8 tareas. Sin tablero configurado.</td>
+          <td class="pts-cell ins-cell">5</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRITERIO 3 -->
+  <div class="rub-table-wrap no-break">
+    <table class="rub-table">
+      <thead>
+        <tr>
+          <th class="criteria">Criterio 3 — Calidad de tareas</th>
+          <th style="width:180px">Descripción del nivel</th>
+          <th class="pts">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit-name" rowspan="4">
+            Tareas bien definidas
+            <small>Módulos 03 y 04 · Proyectos efectivos y asignación</small>
+          </td>
+          <td class="exc-cell"><span class="level-badge lb-exc">Excelente</span><br>Todas las tareas tienen: responsable único, fecha límite, prioridad, etiqueta de sprint, descripción con criterios de aceptación. Al menos 5 tareas con subtareas. Dependencias establecidas correctamente en al menos 3 pares.</td>
+          <td class="pts-cell exc-cell">25</td>
+        </tr>
+        <tr>
+          <td class="bien-cell"><span class="level-badge lb-bien">Bien</span><br>Al menos el 80% de las tareas tienen responsable, fecha y prioridad. Al menos 3 tareas con subtareas. Al menos 1 dependencia establecida.</td>
+          <td class="pts-cell bien-cell">18</td>
+        </tr>
+        <tr>
+          <td class="suf-cell"><span class="level-badge lb-suf">Suficiente</span><br>Al menos el 50% de las tareas tienen responsable y fecha. Sin subtareas o dependencias.</td>
+          <td class="pts-cell suf-cell">12</td>
+        </tr>
+        <tr>
+          <td class="ins-cell"><span class="level-badge lb-ins">Insuficiente</span><br>Tareas sin responsable, sin fecha ni descripción. Estructura incompleta.</td>
+          <td class="pts-cell ins-cell">6</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRITERIO 4 -->
+  <div class="rub-table-wrap no-break">
+    <table class="rub-table">
+      <thead>
+        <tr>
+          <th class="criteria">Criterio 4 — Navegación y vistas</th>
+          <th style="width:180px">Descripción del nivel</th>
+          <th class="pts">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit-name" rowspan="4">
+            Uso correcto de vistas y filtros
+            <small>Módulo 05 · Navegar por Asana</small>
+          </td>
+          <td class="exc-cell"><span class="level-badge lb-exc">Excelente</span><br>Captura de las 4 vistas (Lista, Tablero, Timeline, Calendario). Filtros aplicados correctamente (por sprint, responsable). Timeline sin solapamientos críticos. Campos personalizados visibles.</td>
+          <td class="pts-cell exc-cell">15</td>
+        </tr>
+        <tr>
+          <td class="bien-cell"><span class="level-badge lb-bien">Bien</span><br>Captura de al menos 3 vistas. Al menos 1 filtro aplicado. Timeline con fechas asignadas.</td>
+          <td class="pts-cell bien-cell">11</td>
+        </tr>
+        <tr>
+          <td class="suf-cell"><span class="level-badge lb-suf">Suficiente</span><br>Solo usa la vista de Lista o Tablero. Sin filtros aplicados.</td>
+          <td class="pts-cell suf-cell">7</td>
+        </tr>
+        <tr>
+          <td class="ins-cell"><span class="level-badge lb-ins">Insuficiente</span><br>No explora otras vistas. No usa filtros. Sin campos personalizados.</td>
+          <td class="pts-cell ins-cell">3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRITERIO 5 -->
+  <div class="rub-table-wrap no-break">
+    <table class="rub-table">
+      <thead>
+        <tr>
+          <th class="criteria">Criterio 5 — Trabajo personal</th>
+          <th style="width:180px">Descripción del nivel</th>
+          <th class="pts">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit-name" rowspan="4">
+            Mis tareas y organización personal
+            <small>Módulo 06 · Trabajo personal</small>
+          </td>
+          <td class="exc-cell"><span class="level-badge lb-exc">Excelente</span><br>"Mis tareas" organizado con secciones Hoy / Próximamente / Más tarde. Al menos 3 tareas personales creadas con descripción. Home de Asana personalizado con widgets relevantes.</td>
+          <td class="pts-cell exc-cell">10</td>
+        </tr>
+        <tr>
+          <td class="bien-cell"><span class="level-badge lb-bien">Bien</span><br>"Mis tareas" con tareas del proyecto visibles y ordenadas. Al menos 1 tarea personal creada.</td>
+          <td class="pts-cell bien-cell">7</td>
+        </tr>
+        <tr>
+          <td class="suf-cell"><span class="level-badge lb-suf">Suficiente</span><br>"Mis tareas" visible pero sin organización clara. Sin tareas personales.</td>
+          <td class="pts-cell suf-cell">5</td>
+        </tr>
+        <tr>
+          <td class="ins-cell"><span class="level-badge lb-ins">Insuficiente</span><br>No usa "Mis tareas". Gestión personal no evidenciada.</td>
+          <td class="pts-cell ins-cell">2</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRITERIO 6 -->
+  <div class="rub-table-wrap no-break">
+    <table class="rub-table">
+      <thead>
+        <tr>
+          <th class="criteria">Criterio 6 — Colaboración</th>
+          <th style="width:180px">Descripción del nivel</th>
+          <th class="pts">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit-name" rowspan="4">
+            Trabajo en equipo y comunicación
+            <small>Módulo 07 · Colaboración</small>
+          </td>
+          <td class="exc-cell"><span class="level-badge lb-exc">Excelente</span><br>Al menos 5 comentarios de avance en tareas (con @menciones). Retrospectiva documentada con acciones de mejora. Al menos 1 integración externa configurada (GitHub, Slack, Drive). Carga de trabajo balanceada en el equipo.</td>
+          <td class="pts-cell exc-cell">15</td>
+        </tr>
+        <tr>
+          <td class="bien-cell"><span class="level-badge lb-bien">Bien</span><br>Al menos 3 comentarios con @menciones en tareas. Retrospectiva documentada. Sin integraciones externas.</td>
+          <td class="pts-cell bien-cell">11</td>
+        </tr>
+        <tr>
+          <td class="suf-cell"><span class="level-badge lb-suf">Suficiente</span><br>Al menos 1 comentario en tareas. Sin retrospectiva documentada.</td>
+          <td class="pts-cell suf-cell">7</td>
+        </tr>
+        <tr>
+          <td class="ins-cell"><span class="level-badge lb-ins">Insuficiente</span><br>Sin comentarios ni comunicación en las tareas. Sin evidencia de colaboración.</td>
+          <td class="pts-cell ins-cell">3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="rub-total" style="margin-top:20px;">
+    <div class="rub-total-box">
+      <span>Puntaje máximo total</span>
+      <strong>100 pts</strong>
+    </div>
+  </div>
+
+  <!-- ESCALA -->
+  <div class="sec-head" style="margin-top:48px;">
+    <div class="sec-icon yellow">🏅</div>
+    <div class="sec-label">
+      <span class="eyebrow">Escala de calificación</span>
+      <h2>Conversión de puntaje a nota</h2>
+    </div>
+  </div>
+
+  <div class="escala-grid">
+    <div class="escala-item esc-exc">
+      <span class="grade">A</span>
+      <span class="pts">90 – 100 pts</span>
+      <span class="lbl">Excelente</span>
+    </div>
+    <div class="escala-item esc-bien">
+      <span class="grade">B</span>
+      <span class="pts">75 – 89 pts</span>
+      <span class="lbl">Bien</span>
+    </div>
+    <div class="escala-item esc-suf">
+      <span class="grade">C</span>
+      <span class="pts">60 – 74 pts</span>
+      <span class="lbl">Suficiente</span>
+    </div>
+    <div class="escala-item esc-ins">
+      <span class="grade">D</span>
+      <span class="pts">0 – 59 pts</span>
+      <span class="lbl">Insuficiente</span>
+    </div>
+  </div>
+
+  <div class="callout teal" style="margin-top:24px;">
+    <h3>📎 Entregables para la evaluación</h3>
+    <p>Para ser evaluado/a, debes entregar: <strong>(1)</strong> enlace de solo lectura al workspace de Asana con el proyecto completo, <strong>(2)</strong> carpeta con capturas de pantalla de cada módulo practicado (mínimo 10 capturas), y <strong>(3)</strong> documento PDF con reflexión de 1 párrafo por módulo indicando qué aprendiste y qué aplicarías en un proyecto real.</p>
+  </div>
+
+  <div class="callout red" style="margin-top:16px;">
+    <h3>⚠️ Condiciones de evaluación</h3>
+    <p>El proyecto debe mostrar actividad real (tareas movidas, comentarios escritos, fechas asignadas). Un proyecto con tareas vacías o sin interacción del equipo no será evaluado como completo aunque tenga la estructura correcta. La calidad de los comentarios y descripciones cuenta tanto como la cantidad.</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span>Guía práctica: <strong>Asana para E-commerce · ShopFlow MVP</strong></span>
+  <span>Versión 2.0 · Abril 2025 · 100 pts</span>
+</div>
+
+</body>
+</html>

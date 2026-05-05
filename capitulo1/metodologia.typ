@@ -20,7 +20,7 @@ El presente proyecto adopta un enfoque de investigación aplicada, orientado a l
 
 Este proyecto se clasifica como investigación aplicada y tecnológica, ya que se centra en la creación de una solución concreta utilizando tecnologías web modernas, bases de datos PostgreSQL con capacidades vectoriales, y técnicas de inteligencia artificial. El objetivo es generar un producto funcional que resuelva necesidades identificadas en la gestión operativa de restaurantes en el contexto boliviano.
 
-== 5.3 Diseño de la Investigación
+== 7.2. Diseño de la investigación
 
 El diseño de investigación adopta la metodología ágil *AUP (Agile Unified Process)*, un marco de trabajo iterativo e incremental que simplifica el Proceso Unificado, ideal para desarrollos ágiles e individuales. Asimismo, la ejecución técnica se guio por un enfoque *FDD (Feature-Driven Development)* o Desarrollo Basado en Funcionalidades, permitiendo construir, probar y entregar cada módulo del sistema de manera independiente.
 

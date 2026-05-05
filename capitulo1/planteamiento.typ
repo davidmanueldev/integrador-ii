@@ -90,7 +90,7 @@ La permanencia en el modelo tradicional sin adoptar soluciones digitales intelig
 - *Experiencia del cliente limitada*: Falta de personalización y conveniencia en el servicio
 - *Métodos de pago obsoletos*: En un mercado donde los pagos digitales y QR crecen rápidamente, no ofrecer estas opciones es una desventaja competitiva
 
-== Formulación del Problema
+== 4.2. Formulación del problema
 
 Con base en el análisis anterior, se formula la siguiente pregunta de investigación:
 
