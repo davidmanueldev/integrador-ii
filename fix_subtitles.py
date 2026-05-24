@@ -1,43 +1,23 @@
 import re
-import os
 
-def fix_subtitles(filepath, substitutions):
-    if not os.path.exists(filepath): return
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    for old, new in substitutions:
-        content = re.sub(r'^==\s+.*?' + re.escape(old) + r'.*$', f'== {new}', content, flags=re.MULTILINE|re.IGNORECASE)
-        
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
+def fix_file(path, replacements):
+    try:
+        with open(path, 'r') as f:
+            content = f.read()
+        for old, new in replacements:
+            content = re.sub(old, new, content)
+        with open(path, 'w') as f:
+            f.write(content)
+    except FileNotFoundError:
+        pass
 
-fix_subtitles('capitulo1/planteamiento.typ', [
-    ('Situación Problémica', '4.1. Identificación de la situación problémica'),
-    ('Formulación del Problema', '4.2. Formulación del problema')
-])
-
-fix_subtitles('capitulo1/objetivos.typ', [
-    ('Objetivo General', '5.1. Objetivo General'),
-    ('Objetivos Específicos', '5.2. Objetivos Específicos y Acciones de la investigación')
-])
-
-fix_subtitles('capitulo1/justificacion.typ', [
-    ('Justificación Técnica', '6.1. Justificación Técnica'),
-    ('Justificación Económica', '6.2. Justificación económica'),
-    ('Justificación Social', '6.3. Justificación social'),
-    ('Justificación Ambiental', '6.4. Justificación Ambiental')
-])
-
-fix_subtitles('capitulo1/metodologia.typ', [
-    ('Enfoque Metodológico', '7.1. Enfoque Metodológico'),
-    ('Diseño de la investigación', '7.2. Diseño de la investigación')
-])
-
-fix_subtitles('capitulo1/alcances.typ', [
-    ('Alcance Temático', '8.1. Alcance temático'),
-    ('Alcance Geográfico', '8.2. Alcance geográfico'),
-    ('Alcance Temporal', '8.3. Alcance temporal'),
-    ('Alcance Legal', '8.4. Alcance Legal')
+fix_file('capitulo1/alcances.typ', [
+    (r'== 8\. Alcances y aportes', '== 8. Alcances y aportes'),
+    (r'=== 8\.1\. Alcance temático', '=== 8.1. Alcance temático'),
+    (r'=== 8\.2\. Alcance geográfico', '=== 8.2. Alcance geográfico'),
+    (r'== 8\.3\. Alcance temporal', '=== 8.3. Alcance temporal'),
+    (r'== 8\.4\. Alcance Legal', '=== 8.4. Alcance Legal (Sólo si corresponde)'),
+    (r'== Limitaciones del Proyecto', '=== 8.3. Alcance temporal\n\nEl proyecto se desarrollará a lo largo de los hitos académicos establecidos por la universidad, culminando con la presentación y defensa final. El alcance temporal considera las fases de planificación, diseño, desarrollo, pruebas e implementación dentro del periodo lectivo correspondiente.\n'),
+    (r'== Consideraciones Finales de Alcance', '=== 8.4. Alcance Legal\n\nEl sistema considerará las regulaciones vigentes en Bolivia relacionadas con el comercio electrónico y el manejo de datos de usuarios (Ley de Telecomunicaciones y políticas de privacidad básicas). Además, la integración con pasarelas de pago se apegará a las normativas de la Autoridad de Supervisión del Sistema Financiero (ASFI).\n')
 ])
 

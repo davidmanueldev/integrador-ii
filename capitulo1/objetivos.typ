@@ -1,10 +1,10 @@
-== 1.4 Objetivos
+== 5. Objetivos
 
-=== 1.4.1 Objetivo General
+=== 5.1. Objetivo General
 
 Implementar un sistema web de gestión para el Restaurante Bambú que integre módulos de reservaciones, punto de venta y funcionalidades de inteligencia artificial, utilizando tecnologías modernas y la pasarela de pagos Red Enlace adaptada al contexto boliviano, con el fin de mejorar la experiencia del cliente, incrementar la eficiencia operativa y establecer una base tecnológica escalable para la toma de decisiones basada en datos.
 
-=== 1.4.2 Objetivos Específicos
+=== 5.2. Objetivos Específicos y Acciones de la investigación
 
 *OE1: Sistema de Reservaciones*
 

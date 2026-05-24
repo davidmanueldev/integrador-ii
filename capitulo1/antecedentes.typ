@@ -1,6 +1,6 @@
-== 1.2 Antecedentes
+== 2. Antecedentes
 
-=== 1.2.1 Antecedentes del Tema
+=== 2.1 Antecedentes del Tema
 
 Los sistemas de gestión para restaurantes han evolucionado significativamente en la última década. La pandemia de COVID-19 aceleró dramáticamente la adopción de soluciones digitales en el sector gastronómico, donde la automatización de procesos operativos se volvió esencial para la supervivencia de los negocios. En Bolivia, sin embargo, la mayoría de restaurantes medianos y pequeños aún operan con métodos tradicionales, representando una oportunidad significativa para la modernización tecnológica.
 
@@ -8,7 +8,7 @@ La inteligencia artificial aplicada al sector gastronómico ha demostrado benefi
 
 En el ámbito de pagos electrónicos, Bolivia ha experimentado un crecimiento significativo con la adopción de Red Enlace y QR Simple, regulados por la Autoridad de Supervisión del Sistema Financiero (ASFI). Estas modalidades de pago representan una oportunidad para que restaurantes locales modernicen sus operaciones de cobro.
 
-=== 1.2.2 Antecedentes Institucionales
+=== 2.2 Antecedentes Institucionales
 
 El Restaurante Bambú es un establecimiento gastronómico ubicado en El Alto, La Paz, Bolivia, que actualmente opera mediante métodos tradicionales de atención presencial y telefónica para reservaciones. Esta modalidad genera limitaciones en la eficiencia operativa, el seguimiento de clientes y la toma de decisiones basada en datos.
 
@@ -22,11 +22,11 @@ El Restaurante Bambú es un establecimiento gastronómico ubicado en El Alto, La
 
 El restaurante busca modernizar sus operaciones mediante un sistema integral que optimice la gestión de reservaciones, agilice la toma de pedidos presenciales, diversifique las opciones de pago y aproveche inteligencia artificial para mejorar la experiencia del cliente y la toma de decisiones.
 
-=== 1.2.3 Antecedentes de Trabajos Afines
+=== 2.3 Antecedentes de Trabajos Afines
 
 Se identificaron trabajos de investigación relacionados con sistemas de gestión para restaurantes a nivel internacional, nacional y local:
 
-==== Antecedentes Internacionales
+==== 2.3.1 Antecedentes Internacionales
 
 *Destinos Turísticos Inteligentes: Un Análisis de su Origen, Evolución y Potencial de Futuro (España, 2020)*
 
@@ -40,7 +40,7 @@ Peco Torres, F. (2021), en su investigación doctoral de la Universidad de Grana
 
 *Relevancia:* Proporciona evidencia empírica sobre el impacto positivo de la digitalización en el sector gastronómico post-pandemia.
 
-==== Antecedentes Nacionales
+==== 2.3.2 Antecedentes Nacionales
 
 *Diseño de un Sistema Productivo Digital para la Cadena de Restaurantes "Broaster California" (Bolivia, 2023)*
 
@@ -58,7 +58,7 @@ Flores Ibañez, R. (2016), en su proyecto de grado de la Universidad Mayor de Sa
 
 *Relevancia:* Demuestra la aceptación de tecnologías móviles y en la nube en el contexto gastronómico paceño.
 
-==== Antecedentes Locales (El Alto)
+==== 2.3.3 Antecedentes Locales (El Alto)
 
 A nivel local en El Alto, se identificó una brecha significativa en la implementación de sistemas tecnológicos para restaurantes. La mayoría de establecimientos gastronómicos de la ciudad operan con métodos tradicionales, lo que representa tanto una problemática como una oportunidad de innovación.
 
@@ -68,7 +68,7 @@ En el repositorio institucional de UNIFRANZ se identificaron proyectos relaciona
 
 *Relevancia:* Confirma la necesidad de soluciones más completas e integradas para el sector gastronómico de El Alto.
 
-=== 1.2.4 Diferenciación del Presente Proyecto
+=== 2.4 Diferenciación del Presente Proyecto
 
 El presente proyecto se diferencia de los antecedentes identificados al integrar en una solución unificada:
 

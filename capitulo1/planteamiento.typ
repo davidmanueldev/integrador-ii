@@ -1,6 +1,6 @@
-== 1.3 Planteamiento del Problema
+== 4. Planteamiento del problema
 
-=== 1.3.1 Identificación de la Situación Problemática
+=== 4.1. Identificación de la situación problémica
 
 El Restaurante Bambú, ubicado en El Alto, La Paz, Bolivia, enfrenta un desafío estratégico crítico: la ausencia de sistemas digitales de gestión limita su capacidad de crecimiento, eficiencia operativa y competitividad en un mercado cada vez más exigente. Esta carencia genera múltiples consecuencias negativas que afectan tanto la experiencia del cliente como la rentabilidad del negocio.
 
@@ -90,7 +90,7 @@ La permanencia en el modelo tradicional sin adoptar soluciones digitales intelig
 - *Experiencia del cliente limitada*: Falta de personalización y conveniencia en el servicio
 - *Métodos de pago obsoletos*: En un mercado donde los pagos digitales y QR crecen rápidamente, no ofrecer estas opciones es una desventaja competitiva
 
-== 4.2. Formulación del problema
+=== 4.2. Formulación del problema
 
 Con base en el análisis anterior, se formula la siguiente pregunta de investigación:
 

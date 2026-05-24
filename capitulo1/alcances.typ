@@ -1,6 +1,6 @@
-= 8. Alcances y aportes
+== 8. Alcances y aportes
 
-== Alcances del Proyecto
+=== 8.1. Alcance temático
 
 El presente proyecto contempla el desarrollo e implementación de las siguientes funcionalidades y componentes:
 
@@ -96,7 +96,7 @@ El presente proyecto contempla el desarrollo e implementación de las siguientes
   - Dashboard con métricas de satisfacción
   - Alertas para reseñas negativas
 
-=== 1.6.2 Alcance Tecnológico
+=== Alcance Tecnológico
 
 *Stack de Desarrollo*
 - Frontend: Next.js 14 con React 18, TypeScript, Tailwind CSS
@@ -113,7 +113,7 @@ El presente proyecto contempla el desarrollo e implementación de las siguientes
 - Email: Resend para correos transaccionales
 - Hosting: Vercel (frontend) + Supabase Cloud (backend)
 
-=== 1.6.3 Alcance Geográfico
+=== 8.2. Alcance geográfico
 
 - Implementación específica para el Restaurante Bambú en El Alto, La Paz, Bolivia
 - Integración con pasarela de pagos boliviana (Red Enlace)
@@ -156,7 +156,7 @@ El presente proyecto contempla el desarrollo e implementación de las siguientes
 - Manual de administrador (gestión de productos, reportes, configuración)
 - Código fuente comentado siguiendo estándares de la industria
 
-== Limitaciones del Proyecto
+=== 8.3. Alcance temporal
 
 === Limitaciones de Alcance Funcional
 
@@ -232,7 +232,7 @@ El presente proyecto contempla el desarrollo e implementación de las siguientes
 - Políticas de privacidad básicas
 - Sin certificación formal de estándares de seguridad adicionales
 
-== Consideraciones Finales de Alcance
+=== 8.4. Alcance Legal (Sólo si corresponde)
 
 A pesar de las limitaciones mencionadas, el alcance definido constituye un sistema completo que:
 

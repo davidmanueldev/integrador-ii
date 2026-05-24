@@ -1,10 +1,9 @@
 // Portada del Capítulo I
 #set page(numbering: none)
-#place(top, hide[= CAPÍTULO I: GENERALIDADES])
+#place(top, hide[= I. Capítulo I. Generalidades])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
-    CAPÍTULO I: \
-    GENERALIDADES
+    I. Capítulo I. Generalidades
   ]
 ]
 

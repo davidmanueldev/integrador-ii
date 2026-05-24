@@ -1,14 +1,8 @@
 // Archivo principal del proyecto
-// Sistema Web de Gestión para el Restaurante Bambú con Inteligencia Artificial
-// Formato APA 7ma Edición - Estructura Hito 3
+// Formato requerido
 
-// Importar configuración APA
 #import "config/apa-setup.typ": *
 #import "config/formato.typ": *
-
-// =====================================================
-// SECCIÓN PRELIMINAR (Numeración: números romanos i, ii, iii...)
-// =====================================================
 
 #set page(paper: "us-letter", numbering: none)
 
@@ -24,13 +18,8 @@
 
 #show: apa-config
 
-// Declaración Jurada, Dedicatoria y Agradecimientos (que estaban dentro de este archivo)
 #include "declaracionJurada.typ"
 #pagebreak()
-
-// RESUMEN Y ABSTRACT
-#include "preliminares/resumen.typ"
-#include "preliminares/abstract.typ"
 
 // ÍNDICE
 #outline(
@@ -38,10 +27,6 @@
   indent: auto,
 )
 #pagebreak()
-
-// =====================================================
-// CONTENIDO PRINCIPAL
-// =====================================================
 
 #set page(
   paper: "us-letter",

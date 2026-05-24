@@ -1,36 +1,15 @@
-// Portada del Capítulo IV
 #set page(numbering: none)
-#place(top, hide[= CAPÍTULO IV: MARCO TEÓRICO])
+#place(top, hide[= II. Capítulo II. Marco Teórico.])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
-    CAPÍTULO IV: \
-    MARCO TEÓRICO
+    II. Capítulo II. Marco Teórico.
   ]
 ]
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
-
-
-// 4.1 Tecnologías Web y Arquitectura
 #include "tecnologias_web.typ"
-
-#pagebreak()
-
-// 4.2 Inteligencia Artificial Aplicada
-#include "inteligencia_artificial.typ"
-
-#pagebreak()
-
-// 4.3 Chatbots y LLMs
-#include "chatbots_llms.typ"
-
-#pagebreak()
-
-// 4.4 Bases de Datos y APIs
 #include "bases_datos_apis.typ"
-
-#pagebreak()
-
-// 4.5 Pasarelas de Pago en Bolivia
+#include "inteligencia_artificial.typ"
+#include "chatbots_llms.typ"
 #include "pagos_bolivia.typ"

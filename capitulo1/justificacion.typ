@@ -1,6 +1,6 @@
-== 1.5 Justificación
+== 6. Justificación de la investigación
 
-=== 1.5.1 Justificación Técnica
+=== 6.1. Justificación Técnica
 
 *Modernización Tecnológica*
 
@@ -33,7 +33,7 @@ La separación clara de responsabilidades permite:
 2. *Testing aislado*: Cada módulo puede probarse de forma independiente
 3. *Mantenimiento simplificado*: Actualizar información del menú solo requiere modificar datos en la base de datos, reflejándose automáticamente en el chatbot y sistema de recomendaciones
 
-=== 1.5.2 Justificación Económica
+=== 6.2. Justificación económica
 
 === Reducción de Costos Operativos
 
@@ -68,7 +68,7 @@ El sistema automatiza procesos que actualmente requieren intervención manual co
 - Historial de clientes permite promociones dirigidas
 - Análisis de sentimiento identifica oportunidades de mejora
 
-=== 1.5.3 Justificación Social
+=== 6.3. Justificación social
 
 === Mejora en la Experiencia del Cliente
 
