@@ -18,7 +18,7 @@
 
 #show: apa-config
 
-#include "declaracionJurada.typ"
+#include "preliminares/declaracionJurada.typ"
 #pagebreak()
 
 // Páginas preliminares

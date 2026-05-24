@@ -12,7 +12,7 @@
       #v(1cm)
 
       // Logo
-      #image("../logounifranz.png", width: 5cm)
+      #image("../assets/images/logounifranz.png", width: 5cm)
 
       #v(1cm)
 
