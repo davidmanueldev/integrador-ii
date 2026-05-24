@@ -6,7 +6,7 @@ El presente proyecto adopta un enfoque de investigación aplicada, orientado a l
 == Tipo de Investigación
 
 #v(1em)
-[Especificar el tipo (ej.: descriptiva, exploratoria, aplicada, correlacional, etc.). Justificar.]
+El presente trabajo corresponde a una investigación de tipo *tecnológica aplicada* con alcance *descriptivo y correlacional*. Es tecnológica y aplicada porque su objetivo principal es la creación de un producto de software (Sistema Integral de Gestión) diseñado específicamente para resolver problemas operativos concretos en el Restaurante Bambú. Presenta un carácter descriptivo al documentar el comportamiento y la integración de herramientas tecnológicas modernas (Next.js, Supabase, Red Enlace, y Vercel AI SDK) en un entorno de producción, y correlacional porque evalúa cómo la implementación de estas herramientas impacta positivamente en la eficiencia operativa del personal y en la satisfacción de los clientes.
 
 == Diseño de la Investigación
 
@@ -23,7 +23,11 @@ El ciclo de vida del proyecto se estructuró en las cuatro fases de AUP:
 == Métodos de Investigación
 
 #v(1em)
-[Listar y describir los métodos utilizados (ej.: método analítico, sintético, inductivo, deductivo, histórico-lógico).]
+Para el desarrollo y análisis del sistema, se emplearon los siguientes métodos empíricos y teóricos:
+
+- *Método Analítico-Sintético:* Se utilizó en la fase de Incepción para descomponer el problema general de gestión del restaurante en módulos operativos específicos (reservaciones, punto de venta, procesamiento de pagos y asistencia por IA) y posteriormente sintetizarlos en una solución de arquitectura de software coherente.
+- *Método de Modelamiento de Sistemas:* Empleado en la fase de Elaboración para abstraer y representar la lógica del negocio mediante diagramas formales (diagramas de flujo, secuencia, clases y entidad-relación), facilitando su posterior codificación y escalabilidad.
+- *Método Experimental Simulado:* Aplicado durante las fases de Construcción y Transición para probar rigurosamente las funcionalidades del sistema, evaluando la precisión de las respuestas del modelo de embeddings (pgvector) y validando la seguridad de la integración con la pasarela de pagos Red Enlace a través de entornos de pruebas (sandbox).
 
 == Técnicas e Instrumentos de Investigación
 

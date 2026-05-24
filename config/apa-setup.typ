@@ -15,7 +15,7 @@
 
   // Configuración de texto según GUIA
   set text(
-    font: ("Arial", "Helvetica", "Liberation Sans"),
+    font: "Liberation Sans",
     size: 12pt,
     lang: "es", // Idioma español
   )

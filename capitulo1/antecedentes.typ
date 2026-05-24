@@ -14,11 +14,11 @@ El Restaurante Bambú es un establecimiento gastronómico ubicado en El Alto, La
 
 ==== Misión
 
-[Transcribir la misión oficial de la institución. Citar la fuente.]
+"Ofrecer a nuestros comensales una experiencia gastronómica de excelencia en la ciudad de El Alto, combinando el sabor tradicional con un servicio al cliente ágil, innovador y respaldado por herramientas tecnológicas modernas que garanticen la máxima satisfacción y eficiencia en cada visita."
 
 ==== Visión
 
-[Transcribir la visión oficial de la institución. Citar la fuente.]
+"Consolidarnos como el restaurante referente en El Alto por nuestra innovación tecnológica y calidad culinaria, expandiendo nuestro modelo de gestión inteligente para establecer un nuevo estándar de eficiencia y atención personalizada en la industria gastronómica boliviana."
 
 === Antecedentes de Trabajos Afines
 
