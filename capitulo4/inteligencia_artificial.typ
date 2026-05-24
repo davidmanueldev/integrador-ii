@@ -1,8 +1,8 @@
-== 4.2 Inteligencia Artificial Aplicada a Restaurantes
+== Inteligencia Artificial Aplicada a Restaurantes
 
 La inteligencia artificial (IA) ha experimentado avances significativos en los últimos años, especialmente con el desarrollo de Grandes Modelos de Lenguaje (LLMs) y técnicas de procesamiento de lenguaje natural. Este proyecto aprovecha cuatro aplicaciones específicas de IA que aportan valor al sector gastronómico.
 
-=== 4.2.1 Embeddings y Búsqueda Semántica
+=== Embeddings y Búsqueda Semántica
 
 ==== Concepto de Embeddings
 
@@ -50,7 +50,7 @@ LIMIT 5;
 - *Transacciones:* Se pueden actualizar datos y embeddings en una sola transacción
 - *Costo:* Incluido en Supabase sin cargos adicionales
 
-=== 4.2.2 Sistemas de Recomendación
+=== Sistemas de Recomendación
 
 ==== Tipos de Sistemas de Recomendación
 
@@ -91,7 +91,7 @@ function recomendarPlatillos(cliente: PreferenciasCliente): Producto[] {
 }
 ```
 
-=== 4.2.3 Predicción de Demanda
+=== Predicción de Demanda
 
 ==== Análisis de Series Temporales
 
@@ -129,7 +129,7 @@ function predecirDemanda(fecha: Date): PrediccionDemanda {
 - *Gestión de inventario:* Preparar más ingredientes para días pico
 - *Ofertas dinámicas:* Promociones en horarios de baja afluencia
 
-=== 4.2.4 Análisis de Sentimiento
+=== Análisis de Sentimiento
 
 ==== Procesamiento de Lenguaje Natural para Feedback
 
@@ -168,7 +168,7 @@ El sistema agrega los análisis individuales para mostrar:
 - Alertas para reseñas muy negativas
 - Palabras clave frecuentes en feedback positivo y negativo
 
-=== 4.2.5 Consideraciones Éticas y Prácticas
+=== Consideraciones Éticas y Prácticas
 
 ==== Privacidad de Datos
 

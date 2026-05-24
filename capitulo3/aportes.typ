@@ -1,7 +1,8 @@
-== 3.3 Aportes
+== Aportes
 
-=== 3.3.1 Aporte Social
+=== Aporte Social
 
+#v(1em)
 El proyecto aporta a la sociedad una herramienta tecnológica que facilita el acceso a servicios gastronómicos en El Alto, Bolivia:
 
 - *Inclusión digital:* Permite a clientes de diferentes perfiles acceder a información y realizar reservaciones de manera autónoma.
@@ -9,7 +10,7 @@ El proyecto aporta a la sociedad una herramienta tecnológica que facilita el ac
 - *Modelo de transformación:* Sirve como ejemplo de modernización digital para otras PYMES del sector gastronómico boliviano.
 - *Accesibilidad:* El chatbot con lenguaje natural facilita consultas para usuarios menos familiarizados con tecnología.
 
-=== 3.3.2 Aporte Académico
+=== Aporte Académico
 
 Académicamente, este trabajo contribuye con:
 
@@ -20,7 +21,7 @@ Académicamente, este trabajo contribuye con:
 
 Este trabajo sirve como referencia para futuros estudiantes e investigadores interesados en aplicaciones prácticas de inteligencia artificial en el sector de servicios.
 
-=== 3.3.3 Aporte Ingenieril
+=== Aporte Ingenieril
 
 Desde la ingeniería de software, el proyecto aporta:
 
@@ -29,7 +30,7 @@ Desde la ingeniería de software, el proyecto aporta:
 - *Stack adaptado a Bolivia:* Proporciona un template de desarrollo que integra tecnologías modernas con servicios locales (Red Enlace).
 - *Patrones reutilizables:* Establece patrones para sistemas de reservaciones, POS y funcionalidades de IA que pueden adaptarse a otros negocios del sector.
 
-=== 3.3.4 Aporte al Sector Gastronómico Boliviano
+=== Aporte al Sector Gastronómico Boliviano
 
 El proyecto contribuye específicamente al sector gastronómico de Bolivia:
 

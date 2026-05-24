@@ -1,6 +1,6 @@
-== 7.3 Modelado o Mapeo General del Proyecto
+== Modelado o Mapeo General del Proyecto
 
-=== 7.3.1 Arquitectura General del Sistema
+=== Arquitectura General del Sistema
 
 El proyecto implementa una arquitectura moderna basada en serverless y servicios cloud:
 
@@ -27,7 +27,7 @@ El proyecto implementa una arquitectura moderna basada en serverless y servicios
 - Almacenamiento: Supabase Storage para imágenes
 - Seguridad: Row Level Security (RLS)
 
-=== 7.3.2 Esquema de API REST
+=== Esquema de API REST
 
 La API del sistema expone los siguientes endpoints:
 
@@ -83,7 +83,7 @@ GET    /api/predictions         - Predicción de demanda
 POST   /api/reviews             - Crear reseña con análisis de sentimiento
 ```
 
-=== 7.3.3 Esquema de Base de Datos (Prisma)
+=== Esquema de Base de Datos (Prisma)
 
 *Modelo: User*
 ```prisma
@@ -234,7 +234,7 @@ enum PaymentStatus {
 }
 ```
 
-=== 7.3.4 Row Level Security (RLS)
+=== Row Level Security (RLS)
 
 Políticas de seguridad implementadas en Supabase:
 
@@ -258,7 +258,7 @@ CREATE POLICY "Admin manages products" ON products
   FOR ALL USING (auth.jwt() ->> 'role' = 'ADMIN');
 ```
 
-=== 7.3.5 Mapa de Navegación
+=== Mapa de Navegación
 
 *Rutas Públicas:*
 - `/` - Página de inicio

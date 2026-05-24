@@ -1,10 +1,10 @@
-== 7.5 Monitoreo y Evaluación del Proyecto
+== Monitoreo y Evaluación del Proyecto
 
-=== 7.5.1 Pruebas de Software
+=== Pruebas de Software
 
 El proyecto implementa una estrategia de testing multinivel para garantizar la calidad del software:
 
-==== 7.5.1.1 Pruebas Unitarias
+==== Pruebas Unitarias
 
 *Objetivo:* Verificar que cada componente individual funciona correctamente de manera aislada.
 
@@ -37,7 +37,7 @@ describe('calculateCartTotal', () => {
 
 *Resultados:* 16/21 casos pasados (76% de éxito)
 
-==== 7.5.1.2 Pruebas de Integración
+==== Pruebas de Integración
 
 *Objetivo:* Verificar la interacción entre módulos del sistema.
 
@@ -88,7 +88,7 @@ describe('POST /api/orders', () => {
 });
 ```
 
-==== 7.5.1.3 Pruebas End-to-End (E2E)
+==== Pruebas End-to-End (E2E)
 
 *Objetivo:* Validar flujos completos desde la perspectiva del usuario.
 
@@ -133,7 +133,7 @@ describe('Proceso de compra', () => {
   - Manejo de errores (credenciales inválidas)
   - Logout
 
-==== 7.5.1.4 Pruebas de Rendimiento
+==== Pruebas de Rendimiento
 
 *Objetivo:* Evaluar el comportamiento del sistema bajo carga.
 
@@ -161,7 +161,7 @@ describe('Proceso de compra', () => {
 - Tiempo de respuesta promedio: 320ms
 - Tasa de error bajo estrés (500 usuarios): 0.8%
 
-==== 7.5.1.5 Pruebas de Aceptación
+==== Pruebas de Aceptación
 
 *Objetivo:* Validar que el sistema cumple con los requisitos del cliente.
 
@@ -182,11 +182,11 @@ describe('Proceso de compra', () => {
 
 *Tasa de Aceptación:* 90% (9/10 casos aprobados)
 
-=== 7.5.2 Seguridad del Software
+=== Seguridad del Software
 
 *Evaluación de Seguridad:*
 
-==== 7.5.2.1 Análisis de Vulnerabilidades
+==== Análisis de Vulnerabilidades
 
 *Herramienta:* OWASP ZAP (Zed Attack Proxy)
 
@@ -219,7 +219,7 @@ describe('Proceso de compra', () => {
 
 *Resultado General:* Sistema cumple con estándares de seguridad básicos
 
-==== 7.5.2.2 Auditoría de Dependencias
+==== Auditoría de Dependencias
 
 ```bash
 npm audit
@@ -227,9 +227,9 @@ npm audit
 
 *Resultado:* 0 vulnerabilidades críticas, 2 warnings menores resueltos
 
-=== 7.5.3 Métricas de Calidad del Software
+=== Métricas de Calidad del Software
 
-==== 7.5.3.1 Calidad del Código
+==== Calidad del Código
 
 *Herramientas:* ESLint + Prettier + SonarQube (opcional)
 
@@ -240,7 +240,7 @@ npm audit
 - Cobertura de Código: 76%
 - Duplicación de Código: < 3%
 
-==== 7.5.3.2 Usabilidad
+==== Usabilidad
 
 *Evaluación WCAG 2.1 (Nivel AA):*
 
@@ -256,7 +256,7 @@ npm audit
 - Best Practices: 95/100
 - SEO: 100/100
 
-==== 7.5.3.3 Fiabilidad
+==== Fiabilidad
 
 *Tiempo de Actividad (Uptime):* 99.2% en últimos 30 días
 
@@ -264,7 +264,7 @@ npm audit
 
 *MTTR (Mean Time To Repair):* 45 minutos promedio
 
-==== 7.5.3.4 Mantenibilidad
+==== Mantenibilidad
 
 *Índice de Mantenibilidad:* 82/100 (Bueno)
 
@@ -279,7 +279,7 @@ npm audit
 - Mejorar documentación de componentes React
 - Implementar más tests unitarios (objetivo: 85% cobertura)
 
-=== 7.5.4 Conclusiones del Monitoreo
+=== Conclusiones del Monitoreo
 
 El sistema ha sido evaluado exhaustivamente mediante:
 - 21 casos de prueba unitarios e integración (76% exitosos)

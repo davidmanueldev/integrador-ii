@@ -1,11 +1,9 @@
 // Diagramas profesionales usando paquetes de Typst
-// Este archivo contiene diagramas visuales del desarrollo
-
 #import "../config/diagramas.typ": *
 
-== 7.2 Diagramas de Desarrollo
+== Diagramas de Desarrollo
 
-=== 7.2.1 Diagrama de Casos de Uso
+=== Diagrama de Casos de Uso
 
 El siguiente diagrama muestra los actores principales y sus interacciones con el sistema:
 
@@ -56,7 +54,7 @@ El siguiente diagrama muestra los actores principales y sus interacciones con el
 
 #pagebreak()
 
-=== 7.2.2 Diagrama de Secuencia - Proceso de Reservación
+=== Diagrama de Secuencia
 
 El siguiente diagrama muestra la secuencia de interacciones durante el proceso de reservación:
 
@@ -104,7 +102,7 @@ El siguiente diagrama muestra la secuencia de interacciones durante el proceso d
 
 #pagebreak()
 
-=== 7.2.3 Diagrama de Estados - Ciclo de Vida del Pedido Presencial
+=== Diagrama de Estado
 
 #figure(
   scaled-diagram(
@@ -139,7 +137,119 @@ El siguiente diagrama muestra la secuencia de interacciones durante el proceso d
 
 #pagebreak()
 
-=== 7.2.4 Diagrama Entidad-Relación (ER)
+=== Diagrama de Clases
+
+#figure(
+  scaled-diagram(
+    flow-diagram(
+      node-stroke: 1pt,
+      spacing: (28mm, 12mm),
+
+      // Clase User
+      node(
+        (0, 0),
+        align(left)[
+          *User* \
+          ──────── \
+          - id: UUID \
+          - email: String \
+          - nombre: String \
+          - rol: Enum \
+          ──────── \
+          + auth() \
+          + update()
+        ],
+        shape: rect,
+        fill: rgb("#e3f2fd"),
+      ),
+
+      // Clase Producto
+      node(
+        (1, 0),
+        align(left)[
+          *Producto* \
+          ──────── \
+          - id: UUID \
+          - nombre: String \
+          - precio: Decimal \
+          - embedding: Vector \
+          ──────── \
+          + toggle() \
+          + buscar()
+        ],
+        shape: rect,
+        fill: rgb("#e8f5e9"),
+      ),
+
+      // Clase Pedido
+      node(
+        (2, 0),
+        align(left)[
+          *Pedido* \
+          ──────── \
+          - id: UUID \
+          - mesa_id: UUID \
+          - items: Item[] \
+          - total, estado \
+          ──────── \
+          + calcTotal() \
+          + setEstado()
+        ],
+        shape: rect,
+        fill: rgb("#fff3e0"),
+      ),
+
+      // Clase Reservacion
+      node(
+        (0, 1),
+        align(left)[
+          *Reservacion* \
+          ──────── \
+          - id: UUID \
+          - fecha: Date \
+          - hora: Time \
+          - personas: Int \
+          ──────── \
+          + confirmar() \
+          + cancelar()
+        ],
+        shape: rect,
+        fill: rgb("#c8e6c9"),
+      ),
+
+      // Clase Mesa
+      node(
+        (1, 1),
+        align(left)[
+          *Mesa* \
+          ──────── \
+          - id: UUID \
+          - numero: Int \
+          - capacidad: Int \
+          - estado: Enum \
+          ──────── \
+          + ocupar() \
+          + liberar()
+        ],
+        shape: rect,
+        fill: rgb("#b2dfdb"),
+      ),
+
+      // Relaciones
+      edge((0, 0), (2, 0), "->", label: [1..n]),
+      edge((0, 0), (0, 1), "->", label: [1..n]),
+      edge((0, 1), (1, 1), "->", label: [n..1]),
+      edge((1, 0), (2, 0), "->", label: [n..n]),
+      edge((1, 1), (2, 0), "->", label: [1..n]),
+    ),
+    diagram-scale: 70%,
+  ),
+  caption: [Diagrama de Clases del Sistema],
+)
+
+#pagebreak()
+
+=== Diagrama Entidad-Relación (ER)
 
 El siguiente diagrama muestra las entidades principales y sus relaciones en la base de datos PostgreSQL:
 
@@ -256,7 +366,7 @@ El siguiente diagrama muestra las entidades principales y sus relaciones en la b
 
 #pagebreak()
 
-=== 7.2.5 Diagrama de Arquitectura del Sistema
+=== Diagrama de Arquitectura del Sistema
 
 #figure(
   scaled-diagram(
@@ -300,116 +410,4 @@ El siguiente diagrama muestra las entidades principales y sus relaciones en la b
     diagram-scale: 70%,
   ),
   caption: [Diagrama de Arquitectura de 3 Capas],
-)
-
-#pagebreak()
-
-=== 7.2.6 Diagrama de Clases (Simplificado)
-
-#figure(
-  scaled-diagram(
-    flow-diagram(
-      node-stroke: 1pt,
-      spacing: (28mm, 12mm),
-
-      // Clase User
-      node(
-        (0, 0),
-        align(left)[
-          *User* \
-          ──────── \
-          - id: UUID \
-          - email: String \
-          - nombre: String \
-          - rol: Enum \
-          ──────── \
-          + auth() \
-          + update()
-        ],
-        shape: rect,
-        fill: rgb("#e3f2fd"),
-      ),
-
-      // Clase Producto
-      node(
-        (1, 0),
-        align(left)[
-          *Producto* \
-          ──────── \
-          - id: UUID \
-          - nombre: String \
-          - precio: Decimal \
-          - embedding: Vector \
-          ──────── \
-          + toggle() \
-          + buscar()
-        ],
-        shape: rect,
-        fill: rgb("#e8f5e9"),
-      ),
-
-      // Clase Pedido
-      node(
-        (2, 0),
-        align(left)[
-          *Pedido* \
-          ──────── \
-          - id: UUID \
-          - mesa_id: UUID \
-          - items: Item[] \
-          - total, estado \
-          ──────── \
-          + calcTotal() \
-          + setEstado()
-        ],
-        shape: rect,
-        fill: rgb("#fff3e0"),
-      ),
-
-      // Clase Reservacion
-      node(
-        (0, 1),
-        align(left)[
-          *Reservacion* \
-          ──────── \
-          - id: UUID \
-          - fecha: Date \
-          - hora: Time \
-          - personas: Int \
-          ──────── \
-          + confirmar() \
-          + cancelar()
-        ],
-        shape: rect,
-        fill: rgb("#c8e6c9"),
-      ),
-
-      // Clase Mesa
-      node(
-        (1, 1),
-        align(left)[
-          *Mesa* \
-          ──────── \
-          - id: UUID \
-          - numero: Int \
-          - capacidad: Int \
-          - estado: Enum \
-          ──────── \
-          + ocupar() \
-          + liberar()
-        ],
-        shape: rect,
-        fill: rgb("#b2dfdb"),
-      ),
-
-      // Relaciones
-      edge((0, 0), (2, 0), "->", label: [1..n]),
-      edge((0, 0), (0, 1), "->", label: [1..n]),
-      edge((0, 1), (1, 1), "->", label: [n..1]),
-      edge((1, 0), (2, 0), "->", label: [n..n]),
-      edge((1, 1), (2, 0), "->", label: [1..n]),
-    ),
-    diagram-scale: 70%,
-  ),
-  caption: [Diagrama de Clases del Sistema],
 )

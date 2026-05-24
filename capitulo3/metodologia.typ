@@ -1,4 +1,4 @@
-== 3.1 Metodología de Desarrollo
+== Metodología de Desarrollo
 
 // TODO: Completar contenido de metodología
 

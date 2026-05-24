@@ -1,3 +1,3 @@
-== 3. Descripción del objeto de estudio
+== Descripción del objeto de estudio
 
 El objeto de estudio se centra en los procesos de gestión operativa, atención al cliente y administración de ventas del Restaurante Bambú, ubicado en la ciudad de El Alto, Bolivia. Se analiza específicamente la interacción entre el cliente y el restaurante durante el proceso de reservación y toma de pedidos, así como los mecanismos internos de control de caja y toma de decisiones basados en datos. La investigación abarca la evaluación de las herramientas tecnológicas necesarias para digitalizar y optimizar estos procesos, considerando las regulaciones locales para pagos electrónicos y la viabilidad de integrar soluciones de inteligencia artificial para mejorar la eficiencia y personalización del servicio.

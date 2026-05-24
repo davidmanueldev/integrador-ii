@@ -1,6 +1,6 @@
-== 4.4 Bases de Datos y APIs
+== Bases de Datos y APIs
 
-=== 4.4.1 PostgreSQL y Supabase
+=== PostgreSQL y Supabase
 
 PostgreSQL es un sistema de gestión de bases de datos relacional de código abierto, reconocido por su robustez, extensibilidad y cumplimiento con estándares SQL. A diferencia de bases de datos NoSQL como MongoDB, PostgreSQL ofrece transacciones ACID completas, integridad referencial y un sistema de tipos rico que garantiza la consistencia de los datos críticos del negocio.
 
@@ -12,7 +12,7 @@ Supabase proporciona una plataforma Backend-as-a-Service (BaaS) construida sobre
 - *Almacenamiento de archivos:* Sistema de storage para imágenes de platillos y otros assets.
 - *Extensiones PostgreSQL:* Soporte nativo para pgvector (búsqueda semántica), PostGIS (geolocalización) y otras extensiones.
 
-=== 4.4.2 Modelo de Datos Relacional
+=== Modelo de Datos Relacional
 
 El esquema de base de datos se diseña siguiendo principios de normalización para eliminar redundancias y garantizar integridad. Las entidades principales del sistema incluyen:
 
@@ -46,7 +46,7 @@ El esquema de base de datos se diseña siguiendo principios de normalización pa
 - `recommendations_log`: Historial de recomendaciones generadas para análisis de efectividad.
 - `demand_predictions`: Predicciones de demanda por día/hora generadas por el modelo.
 
-=== 4.4.3 Prisma ORM
+=== Prisma ORM
 
 Prisma es un ORM (Object-Relational Mapping) moderno para Node.js y TypeScript que proporciona una capa de abstracción type-safe sobre la base de datos. Sus componentes principales son:
 
@@ -77,7 +77,7 @@ Las ventajas de Prisma sobre queries SQL directas incluyen:
 - *Prevención de N+1:* APIs declarativas para eager loading de relaciones.
 - *Migraciones versionadas:* Control de cambios en el esquema con rollback.
 
-=== 4.4.4 Diseño de API con Next.js App Router
+=== Diseño de API con Next.js App Router
 
 Next.js 14 introduce el App Router con Route Handlers, un sistema moderno para construir APIs que aprovecha las capacidades de React Server Components. Los endpoints se definen como archivos en la estructura de carpetas:
 
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
 }
 ```
 
-=== 4.4.5 Seguridad y Validación
+=== Seguridad y Validación
 
 La API implementa múltiples capas de seguridad:
 
@@ -123,7 +123,7 @@ La API implementa múltiples capas de seguridad:
 - *Rate Limiting:* Limitación de requests por IP/usuario para prevenir abuso y ataques de denegación de servicio.
 - *Auditoría:* Registro de operaciones críticas (pagos, modificaciones de pedidos) para trazabilidad.
 
-=== 4.4.6 Row Level Security (RLS)
+=== Row Level Security (RLS)
 
 Supabase implementa Row Level Security de PostgreSQL, permitiendo definir políticas de acceso a nivel de fila directamente en la base de datos. Esto proporciona una capa adicional de seguridad que se aplica independientemente de cómo se acceda a los datos:
 

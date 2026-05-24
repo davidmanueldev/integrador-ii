@@ -3,33 +3,33 @@
   margin: (top: 3cm, bottom: 2.5cm, left: 3cm, right: 2.5cm),
   [
     #align(center)[
-      #text(weight: "bold", size: 14pt)[
-        UNIVERSIDAD PRIVADA FRANZ TAMAYO SEDE EL ALTO\
+      #text(weight: "bold", size: 20pt)[
+        UNIVERSIDAD PRIVADA "FRANZ TAMAYO"\
         FACULTAD DE INGENIERÍA\
-        CARRERA DE INGENIERÍA DE SISTEMAS
+        CARRERA INGENIERÍA DE SISTEMAS
       ]
 
-      #v(2cm)
+      #v(1cm)
 
       // Logo
       #image("../logounifranz.png", width: 5cm)
 
-      #v(2cm)
+      #v(1cm)
 
       #text(weight: "bold", size: 12pt)[
         PROYECTO INTEGRADOR INTERMEDIO II
       ]
 
-      #v(1.5cm)
+      #v(1cm)
 
-      #text(weight: "bold", size: 14pt)[
+      #text(weight: "bold", size: 18pt)[
         "SISTEMA WEB DE GESTIÓN PARA RESTAURANTE CON INTELIGENCIA ARTIFICIAL"
       ]
 
-      #v(1.5cm)
+      #v(1cm)
 
-      #text(weight: "bold", size: 12pt)[
-        CASO : Restaurante Bambú
+      #text(weight: "bold", size: 16pt)[
+        CASO: Restaurante Bambú
       ]
 
       #align(center)[

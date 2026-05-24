@@ -1,6 +1,6 @@
-== 2.2 Conceptos Fundamentales
+== Conceptos Fundamentales
 
-=== 2.2.1 Sistemas de Información
+=== Sistemas de Información
 
 Un sistema de información es un conjunto integrado de componentes para recopilar, almacenar, procesar y distribuir información con el propósito de facilitar la planificación, el control, la coordinación, el análisis y la toma de decisiones en una organización (Laudon & Laudon, 2012). Los sistemas de información modernos típicamente constan de:
 
@@ -12,7 +12,7 @@ Un sistema de información es un conjunto integrado de componentes para recopila
 
 En el contexto de este proyecto, el Sistema Integral de Gestión constituye un sistema de información que automatiza múltiples procesos operativos del restaurante: reservaciones, toma de pedidos, control de caja, pagos y análisis de datos.
 
-=== 2.2.2 Arquitectura Cliente-Servidor
+=== Arquitectura Cliente-Servidor
 
 La arquitectura cliente-servidor es un modelo de diseño de software distribuido donde las tareas se dividen entre proveedores de recursos o servicios (servidores) y solicitantes de servicios (clientes) (Pressman & Maxim, 2020).
 
@@ -40,7 +40,7 @@ El sistema implementa una arquitectura cliente-servidor moderna:
 - *Servidor*: API Routes de Next.js (serverless functions) y Supabase
 - *Base de datos*: PostgreSQL gestionado por Supabase con extensiones (pgvector)
 
-=== 2.2.3 Aplicaciones Web Modernas
+=== Aplicaciones Web Modernas
 
 Las aplicaciones web han evolucionado desde páginas estáticas renderizadas exclusivamente en el servidor hacia aplicaciones dinámicas e interactivas que combinan renderizado en servidor (SSR), generación estática (SSG) y renderizado en el cliente (CSR).
 
@@ -68,7 +68,7 @@ Next.js combina lo mejor de ambos mundos, permitiendo elegir la estrategia de re
 - SSR para contenido dinámico que requiere optimización SEO
 - Renderizado en cliente para interacciones altamente dinámicas
 
-=== 2.2.4 APIs RESTful
+=== APIs RESTful
 
 REST (Representational State Transfer) es un estilo arquitectónico para diseñar servicios web que utilizan HTTP como protocolo de comunicación. Una API RESTful expone recursos (datos u objetos) mediante URLs y permite operaciones sobre ellos usando métodos HTTP estándar.
 

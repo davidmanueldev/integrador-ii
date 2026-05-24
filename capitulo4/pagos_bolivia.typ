@@ -1,6 +1,6 @@
-== 4.5 Pasarelas de Pago en Bolivia
+== Pasarelas de Pago en Bolivia
 
-=== 4.5.1 Contexto del Comercio Electrónico en Bolivia
+=== Contexto del Comercio Electrónico en Bolivia
 
 El comercio electrónico en Bolivia ha experimentado un crecimiento significativo, especialmente después de la pandemia de COVID-19. Sin embargo, el mercado presenta características particulares:
 
@@ -9,7 +9,7 @@ El comercio electrónico en Bolivia ha experimentado un crecimiento significativ
 - *Limitada penetración de tarjetas de crédito:* Mayor uso de tarjetas de débito
 - *Regulación estricta:* ASFI supervisa todas las operaciones financieras
 
-=== 4.5.2 Red Enlace
+=== Red Enlace
 
 Red Enlace es la empresa líder en gestión de medios de pago electrónico en Bolivia, operando como procesador de pagos autorizado y supervisado por la Autoridad de Supervisión del Sistema Financiero (ASFI).
 
@@ -33,7 +33,7 @@ Red Enlace es la empresa líder en gestión de medios de pago electrónico en Bo
 - *Liquidación:* Depósito automático a cuenta bancaria boliviana
 - *Comisión:* Hasta 2.5% por transacción
 
-=== 4.5.3 CyberSource
+=== CyberSource
 
 CyberSource es la pasarela de pagos de Red Enlace para comercio electrónico, basada en la tecnología de Visa.
 
@@ -82,7 +82,7 @@ Usuario → Checkout del comercio → Redirect a CyberSource → Pago → Callba
 - Reduce fraudes y contracargos
 - Verificación mediante OTP o app del banco
 
-=== 4.5.4 QR Simple
+=== QR Simple
 
 El QR Simple de Red Enlace es un método de pago mediante código QR estandarizado.
 
@@ -116,7 +116,7 @@ El QR Simple de Red Enlace es un método de pago mediante código QR estandariza
 - Incluye monto específico
 - Mayor seguridad y trazabilidad
 
-=== 4.5.5 Requisitos de Afiliación
+=== Requisitos de Afiliación
 
 Para afiliarse a Red Enlace, el Restaurante Bambú debe cumplir:
 
@@ -133,7 +133,7 @@ Para afiliarse a Red Enlace, el Restaurante Bambú debe cumplir:
 5. Pruebas en ambiente de desarrollo
 6. Paso a producción
 
-=== 4.5.6 Integración Técnica
+=== Integración Técnica
 
 ==== Credenciales y Configuración
 
@@ -172,7 +172,7 @@ app.post('/api/webhooks/cybersource', async (req, res) => {
 });
 ```
 
-=== 4.5.7 Comparativa con Pasarelas Internacionales
+=== Comparativa con Pasarelas Internacionales
 
 | Aspecto | Red Enlace | Stripe | PayPal |
 |---------|------------|--------|--------|

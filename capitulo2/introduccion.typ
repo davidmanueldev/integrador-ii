@@ -1,4 +1,4 @@
-== 2.1 Introducción
+== Introducción
 
 El desarrollo de sistemas de información web ha experimentado una evolución acelerada en las últimas décadas, transformando radicalmente la forma en que las organizaciones interactúan con sus clientes y gestionan sus operaciones. En el contexto de la industria gastronómica, los sistemas de gestión integral representan una convergencia de múltiples disciplinas tecnológicas: arquitectura de software, bases de datos, interfaces de usuario, procesamiento de pagos, inteligencia artificial y análisis de datos.
 

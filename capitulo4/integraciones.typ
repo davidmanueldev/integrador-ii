@@ -1,4 +1,4 @@
-== 4.4 Integraciones
+== Integraciones
 
 // TODO: Completar contenido de integraciones
 

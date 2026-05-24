@@ -1,12 +1,12 @@
-== 4.3 Chatbots y Modelos de Lenguaje
+== Chatbots y Modelos de Lenguaje
 
-=== 4.3.1 Evolución de los Asistentes Virtuales
+=== Evolución de los Asistentes Virtuales
 
 Los chatbots han experimentado una transformación radical en la última década. Los sistemas tradicionales, basados en árboles de decisión y reglas predefinidas, ofrecían respuestas limitadas y frecuentemente frustraban a los usuarios al no comprender variaciones en el lenguaje natural. Estos sistemas requerían anticipar cada posible consulta del usuario, resultando en experiencias rígidas e insatisfactorias.
 
 La aparición de los Grandes Modelos de Lenguaje (LLMs) como GPT-4, Claude 3 y Gemini ha revolucionado este campo. Estos modelos, entrenados con billones de tokens de texto, demuestran una comprensión profunda del contexto, la intención y las sutilezas del lenguaje humano. Para el sector gastronómico, esto significa poder atender consultas complejas como "¿tienen algo vegetariano que no sea muy picante?" o "quiero algo similar al plato que pedí la semana pasada", interpretando correctamente las preferencias implícitas del cliente.
 
-=== 4.3.2 Generación Aumentada por Recuperación (RAG)
+=== Generación Aumentada por Recuperación (RAG)
 
 A pesar de sus capacidades, los LLMs presentan limitaciones importantes: su conocimiento está congelado en la fecha de entrenamiento y no tienen acceso a datos privados o específicos del negocio. La técnica de Generación Aumentada por Recuperación (RAG) resuelve estas limitaciones combinando la capacidad generativa del modelo con información actualizada recuperada de fuentes externas.
 
@@ -18,7 +18,7 @@ El proceso RAG consta de tres etapas fundamentales:
 
 3. *Generación:* Los documentos recuperados se incluyen como contexto en el prompt enviado al LLM, permitiéndole generar respuestas precisas y fundamentadas en información actualizada del restaurante.
 
-=== 4.3.3 Embeddings y Búsqueda Semántica
+=== Embeddings y Búsqueda Semántica
 
 Los embeddings son representaciones vectoriales densas que capturan relaciones semánticas entre palabras y frases. A diferencia de la búsqueda por palabras clave, la búsqueda semántica mediante embeddings comprende que "pollo a la parrilla" está relacionado con "aves asadas" aunque no compartan términos exactos.
 
@@ -28,7 +28,7 @@ Para este proyecto se utilizan embeddings de OpenAI (modelo `text-embedding-3-sm
 - *Recomendaciones personalizadas:* Identificar platillos similares a los preferidos históricamente por el cliente.
 - *Respuestas contextuales:* Proporcionar al chatbot información precisa sobre ingredientes, precios y disponibilidad.
 
-=== 4.3.4 Vercel AI SDK
+=== Vercel AI SDK
 
 El Vercel AI SDK proporciona una abstracción unificada para trabajar con múltiples proveedores de IA (OpenAI, Anthropic, Google) en aplicaciones React y Next.js. Sus características principales incluyen:
 
@@ -37,7 +37,7 @@ El Vercel AI SDK proporciona una abstracción unificada para trabajar con múlti
 - *Gestión de herramientas:* Soporte para function calling, permitiendo que el LLM ejecute acciones como consultar disponibilidad de mesas o agregar items al carrito.
 - *Middleware de IA:* Capacidad de interceptar y modificar requests/responses para logging, rate limiting o validación.
 
-=== 4.3.5 Implementación en el Contexto del Restaurante
+=== Implementación en el Contexto del Restaurante
 
 El chatbot del Restaurante Bambú se implementa como un asistente especializado con conocimiento profundo del menú, políticas de reservación y servicios disponibles. Su arquitectura combina:
 

@@ -1,35 +1,212 @@
-== 3.2 Alcances
+== Alcances
 
-=== 3.2.1 Alcance Temático
+=== Alcance Temático
 
-El proyecto abarca el desarrollo integral de un sistema de gestión para restaurante que incluye:
+#v(1em)
+El presente proyecto contempla el desarrollo e implementación de las siguientes funcionalidades y componentes:
 
-- *Módulo de Reservaciones:* Calendario interactivo, gestión de mesas, confirmaciones automáticas, lista de espera y panel administrativo de reservaciones.
-- *Módulo de Punto de Venta (POS):* Registro de pedidos por mesa, gestión de estados de orden, división de cuenta, generación de tickets y control de caja.
-- *Módulo de Pagos:* Integración con Red Enlace CyberSource para pagos con tarjeta de débito/crédito, código QR Simple y registro de pagos en efectivo.
-- *Módulo Administrativo:* Gestión de menú, mesas, usuarios, reportes de ventas y configuración del sistema.
-- *Funcionalidades de IA:*
-  - Chatbot inteligente con búsqueda semántica para consultas de menú y disponibilidad
-  - Sistema de recomendación de platillos basado en preferencias
-  - Predicción de demanda por día y hora
-  - Análisis de sentimiento sobre reseñas de clientes
+==== Alcance Funcional
 
-=== 3.2.2 Alcance Geográfico
+*Módulo de Reservaciones*
+- Calendario interactivo con visualización de disponibilidad de mesas en tiempo real
+- Configuración de mesas del restaurante (capacidad, ubicación, características especial)
+- Proceso de reservación por fecha, hora y número de personas
+- Confirmación automática de reservaciones mediante correo electrónico
+- Gestión de lista de espera para horarios de alta demanda
+- Funcionalidad de cancelación y modificación de reservaciones por parte del cliente
+- Recordatorios automáticos previos a la reservación
+- Panel administrativo para visualización y gestión de todas las reservaciones
 
-La implementación del sistema se circunscribe a las operaciones del Restaurante Bambú en su ubicación de El Alto, La Paz, Bolivia. El sistema está diseñado específicamente para el contexto boliviano:
+*Módulo de Punto de Venta (POS)*
+- Registro de pedidos asociados a mesas o clientes directos
+- Interfaz de menú digital optimizada para meseros y cajeros
+- Gestión de estados de orden (tomada, en preparación, servida, pagada)
+- Funcionalidad de división de cuenta entre comensales
+- Modificación de pedidos (agregar, quitar, cambiar productos)
+- Generación de tickets y comprobantes de pago
+- Control de caja con apertura, cierre y cuadre diario
+- Historial completo de transacciones
 
-- Integración con pasarela de pagos local (Red Enlace)
-- Moneda boliviana (BOB)
-- Cumplimiento de regulaciones ASFI
-- Idioma español
+*Módulo de Gestión de Menú*
+- Registro de productos con nombre, descripción, precio, categoría e imagen
+- Organización jerárquica mediante categorías y subcategorías
+- Control de disponibilidad de productos
+- Marcado de productos destacados o promocionales
+- Registro de ingredientes y alérgenos para cada producto
+- Carga de imágenes mediante drag-and-drop con almacenamiento en Supabase Storage
+- Interfaz administrativa intuitiva para gestión sin conocimientos técnicos
 
-=== 3.2.3 Límites
+*Módulo de Pagos - Integración Red Enlace*
+- Procesamiento de pagos con tarjeta de débito mediante Red Enlace CyberSource
+- Procesamiento de pagos con tarjeta de crédito (VISA, Mastercard, American Express)
+- Generación de códigos QR para pago mediante Red Enlace QR Simple
+- Registro manual de pagos en efectivo con control de caja
+- Cumplimiento de estándares de seguridad PCI DSS
+- Autenticación 3D Secure para transacciones con tarjeta
+- Liquidación automática a cuenta bancaria boliviana
+- Generación de comprobantes de pago
 
-El sistema no incluye:
+*Módulo de Autenticación y Autorización*
+- Registro e inicio de sesión de usuarios mediante Supabase Auth
+- Autenticación mediante credenciales (email/contraseña)
+- Gestión de sesiones seguras
+- Sistema de roles (Administrador, Cajero, Mesero, Cliente)
+- Protección de rutas según permisos de usuario
+- Recuperación de contraseña
 
-- *Delivery o pedidos para llevar:* El sistema se enfoca exclusivamente en servicio presencial en el restaurante (no hay personal disponible para delivery).
-- *Aplicaciones móviles nativas:* Se limita a una aplicación web responsiva, sin desarrollo de apps iOS/Android.
-- *Múltiples sucursales:* El sistema está diseñado para una única ubicación.
-- *Integración con sistemas contables externos:* No incluye conexión con SIAT o sistemas de facturación electrónica en esta fase.
-- *Integración con plataformas de delivery:* No incluye conexión con PedidosYa, Rappi u otros servicios similares.
-- *Rastreo GPS:* No aplica al no incluir funcionalidad de delivery.
+*Panel Administrativo*
+- Dashboard con métricas en tiempo real:
+  - Total de reservaciones (diarias, semanales, mensuales)
+  - Total de ventas e ingresos
+  - Ocupación de mesas
+  - Productos más vendidos
+  - Métricas de satisfacción del cliente
+- Gestión completa de productos y categorías
+- Administración de mesas y configuración del restaurante
+- Gestión de usuarios y asignación de roles
+- Reportes de ventas por período, producto y método de pago
+- Configuración general del sistema
+
+*Funcionalidades de Inteligencia Artificial*
+
+  *Chatbot Inteligente con Búsqueda Semántica*:
+  - Interfaz de chat integrada en la plataforma web
+  - Procesamiento de consultas en lenguaje natural
+  - Búsqueda semántica sobre el menú utilizando embeddings (pgvector)
+  - Respuestas sobre ingredientes, alérgenos y características de platillos
+  - Información sobre horarios, ubicación y políticas del restaurante
+  - Disponible para clientes y personal del restaurante
+
+  *Sistema de Recomendación de Platillos*:
+  - Registro de preferencias del cliente (alergias, restricciones, favoritos)
+  - Análisis de historial de pedidos
+  - Algoritmo de recomendación basado en similitud
+  - Sugerencias de platillos complementarios
+  - Integración con el chatbot
+
+  *Predicción de Demanda*:
+  - Análisis de datos históricos de reservaciones y ventas
+  - Modelo predictivo para estimar afluencia por día y hora
+  - Visualización de predicciones en dashboard
+  - Alertas para días de alta demanda
+
+  *Análisis de Sentimiento*:
+  - Formulario de reseñas post-visita para clientes
+  - Procesamiento de reseñas mediante análisis de sentimiento
+  - Clasificación automática (positivo, neutro, negativo)
+  - Dashboard con métricas de satisfacción
+  - Alertas para reseñas negativas
+
+==== Alcance Tecnológico
+
+*Stack de Desarrollo*
+- Frontend: Next.js 14 con React 18, TypeScript, Tailwind CSS
+- Componentes UI: shadcn/ui
+- Formularios: React Hook Form con validación Zod
+- Backend: API Routes de Next.js (serverless functions)
+- Base de datos: Supabase (PostgreSQL) con Prisma ORM
+- Autenticación: Supabase Auth
+- Almacenamiento: Supabase Storage para imágenes
+- Tiempo real: Supabase Realtime para notificaciones
+- Pagos: Red Enlace CyberSource API
+- IA/Embeddings: Supabase pgvector + LLM (OpenAI/Claude)
+- SDK de IA: Vercel AI SDK para streaming
+- Email: Resend para correos transaccionales
+- Hosting: Vercel (frontend) + Supabase Cloud (backend)
+
+=== Alcance Geográfico
+
+#v(1em)
+- Implementación específica para el Restaurante Bambú en El Alto, La Paz, Bolivia
+- Integración con pasarela de pagos boliviana (Red Enlace)
+- Cumplimiento de regulaciones de ASFI
+- Moneda: Bolivianos (BOB)
+- Idioma: Español
+
+== Límites
+
+#v(1em)
+=== Limitaciones de Alcance Funcional
+
+*Funcionalidades No Incluidas*
+- Sistema de delivery o pedidos para llevar (sin personal disponible)
+- Aplicación móvil nativa (iOS/Android)
+- Programa de lealtad y puntos
+- Sistema de cupones y descuentos promocionales
+- Integración con redes sociales para compartir
+- Chat en vivo con soporte humano
+- Múltiples sucursales (solo una ubicación)
+- Integración con sistemas POS físicos existentes
+- Integración con servicios de delivery externos (PedidosYa, etc.)
+
+*Limitaciones del Chatbot*
+- No procesa reservaciones directamente (solo proporciona información y redirige)
+- No reemplaza completamente el soporte humano para casos complejos
+- Limitado a idioma español
+- No incluye capacidad de procesamiento de imágenes
+- Calidad de respuestas depende del proveedor de LLM seleccionado
+
+*Limitaciones del Sistema de Recomendación*
+- Requiere acumulación de datos históricos para mejorar precisión
+- Funcionalidad limitada para usuarios nuevos (cold start)
+- No considera factores externos (clima, eventos especiales)
+
+*Limitaciones de Predicción de Demanda*
+- Precisión inicial limitada hasta acumular datos históricos suficientes
+- No considera factores externos impredecibles
+- Modelo simplificado (no machine learning avanzado en MVP)
+
+=== Limitaciones Técnicas
+
+*Infraestructura*
+- Diseñado para carga moderada (hasta 500 usuarios concurrentes)
+- Dependencia de servicios cloud (Supabase, Vercel)
+- Sin implementación de caché distribuido en versión inicial
+- Almacenamiento de imágenes limitado por plan de Supabase
+
+*Integraciones*
+- Red Enlace como única pasarela de pago
+- Sin integración con otros proveedores de pago (PayPal, etc.)
+- Email mediante Resend (límites según plan)
+- Dependencia de disponibilidad de APIs externas (Red Enlace, LLM)
+
+*Inteligencia Artificial*
+- Calidad de embeddings depende del modelo seleccionado
+- Costos variables según uso de API de LLM
+- Latencia en respuestas del chatbot depende de proveedor
+- Sin entrenamiento personalizado de modelos (usa APIs existentes)
+
+=== Limitaciones de Recursos
+
+*Temporales*
+- Desarrollo completado en período académico definido
+- Tiempo limitado para pruebas exhaustivas
+- Período de validación con usuarios reales acotado
+
+*Económicos*
+- Uso de planes gratuitos o de bajo costo de servicios cloud
+- Límites en llamadas a APIs de IA (costos por uso)
+- Sin presupuesto para herramientas de testing pagadas
+
+=== Limitaciones de Datos
+
+*Datos Históricos*
+- Sin datos históricos previos para predicción inicial
+- Modelos de recomendación requieren acumulación de datos
+- Métricas de desempeño basadas en período inicial limitado
+
+*Privacidad y Regulaciones*
+- Cumplimiento básico de protección de datos personales
+- Políticas de privacidad básicas
+- Sin certificación formal de estándares de seguridad adicionales
+
+#v(1em)
+A pesar de las limitaciones mencionadas, el alcance definido constituye un sistema completo que:
+
+1. *Resuelve los problemas centrales*: Proporciona gestión digital de reservaciones y punto de venta
+2. *Incorpora innovación*: Integra funcionalidades de IA prácticas y demostrables
+3. *Se adapta al contexto local*: Diseñado específicamente para Bolivia con Red Enlace
+4. *Permite validación*: Incluye suficientes funcionalidades para evaluar viabilidad
+5. *Establece base escalable*: Arquitectura permite expansión futura
+
+Las limitaciones identificadas no comprometen los objetivos del proyecto, sino que delimitan un alcance realista y ejecutable dentro de las restricciones existentes.

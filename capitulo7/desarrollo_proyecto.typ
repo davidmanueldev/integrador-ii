@@ -1,6 +1,6 @@
-== 7.4 Desarrollo del Proyecto
+== Desarrollo del Proyecto
 
-=== 7.4.1 Stack Tecnológico Implementado
+=== Stack Tecnológico Implementado
 
 *Frontend:*
 - *Next.js 14:* Framework de React con App Router para SSR y SSG
@@ -29,7 +29,7 @@
 - *Vercel:* Hosting fullstack (frontend + API routes)
 - *GitHub Actions:* CI/CD pipelines
 
-=== 7.4.2 Implementación de Características Principales
+=== Implementación de Características Principales
 
 *Sistema de Autenticación (Supabase Auth):*
 
@@ -82,7 +82,7 @@ Dashboard con funcionalidades:
 - Estadísticas y reportes (ventas, productos populares)
 - Gestión de usuarios y roles
 
-=== 7.4.3 Integración con Servicios Externos
+=== Integración con Servicios Externos
 
 *Red Enlace / CyberSource (Pagos con Tarjeta):*
 
@@ -207,7 +207,7 @@ export async function enviarConfirmacionReservacion(
 }
 ```
 
-=== 7.4.4 Funcionalidades de Inteligencia Artificial
+=== Funcionalidades de Inteligencia Artificial
 
 *Chatbot con RAG y pgvector:*
 
@@ -283,7 +283,7 @@ export async function obtenerRecomendaciones(userId: string) {
 }
 ```
 
-=== 7.4.5 Seguridad Implementada
+=== Seguridad Implementada
 
 *Medidas de Seguridad:*
 
@@ -315,7 +315,7 @@ export async function obtenerRecomendaciones(userId: string) {
   - Validación de montos antes de procesar
   - Registro de auditoría de transacciones
 
-=== 7.4.6 Optimizaciones de Rendimiento
+=== Optimizaciones de Rendimiento
 
 *Frontend:*
 - Server Components de Next.js 14 (reducción de JavaScript al cliente)

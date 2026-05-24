@@ -1,6 +1,6 @@
-== 4.1 Tecnologías Web y Arquitectura
+== Tecnologías Web y Arquitectura
 
-=== 4.1.1 Stack Tecnológico
+=== Stack Tecnológico
 
 El proyecto utiliza un stack tecnológico moderno optimizado para el desarrollo de aplicaciones web con funcionalidades de inteligencia artificial, seleccionado por su robustez, escalabilidad y compatibilidad con el ecosistema de servicios cloud.
 
@@ -33,7 +33,7 @@ Tailwind CSS es un framework de CSS utility-first que permite crear interfaces p
 - Accesibilidad (a11y) incorporada
 - Fácil personalización mediante variables CSS
 
-=== 4.1.2 Supabase como Backend-as-a-Service
+=== Supabase como Backend-as-a-Service
 
 Supabase es una alternativa open-source a Firebase que proporciona una suite completa de servicios backend sobre PostgreSQL.
 
@@ -74,7 +74,7 @@ Funcionalidades en tiempo real:
 - Presence para estado de usuarios
 - Ideal para notificaciones de nuevas reservaciones u órdenes
 
-=== 4.1.3 Prisma ORM
+=== Prisma ORM
 
 Prisma es un ORM (Object-Relational Mapping) moderno para Node.js y TypeScript:
 
@@ -99,7 +99,7 @@ model Producto {
 - *Query Builder:* API intuitiva para consultas complejas
 - *Prisma Studio:* Interfaz visual para explorar datos
 
-=== 4.1.4 Arquitectura del Sistema
+=== Arquitectura del Sistema
 
 La aplicación sigue una arquitectura moderna de tres capas con servicios especializados:
 
@@ -133,7 +133,7 @@ La aplicación sigue una arquitectura moderna de tres capas con servicios especi
 └─────────────────────────────────────────────────────────────┘
 ```
 
-=== 4.1.5 Vercel AI SDK
+=== Vercel AI SDK
 
 El Vercel AI SDK simplifica la integración de modelos de lenguaje en aplicaciones Next.js:
 
@@ -163,7 +163,7 @@ function ChatComponent() {
 - *Multi-provider:* Soporte para OpenAI, Anthropic, Google, y otros
 - *Edge Functions:* Compatibilidad con funciones serverless de Vercel
 
-=== 4.1.6 Infraestructura de Despliegue
+=== Infraestructura de Despliegue
 
 *Vercel*
 

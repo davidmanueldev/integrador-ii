@@ -1,44 +1,44 @@
-// Configuración APA 7ma Edición para Typst
-// Basado en American Psychological Association (7th ed.)
+// Configuración APA 7ma Edición para Typst (Modificado para cumplir Guía UNIFRANZ)
 
-// Función principal de configuración APA
+// Función principal de configuración
 #let apa-config(doc) = {
-  // Configuración de página según APA 7
-  // NOTA: La numeración se configura en index.typ para permitir
-  // números romanos en preliminares y arábigos en contenido
+  // Configuración de página según GUIA_PROYECTO_INTEGRADOR_UNIFRANZ.md
   set page(
-    paper: "us-letter", // Tamaño carta (APA estándar)
+    paper: "us-letter", // Tamaño carta
     margin: (
-      top: 2.54cm, // 1 pulgada
-      bottom: 2.54cm, // 1 pulgada
-      left: 2.54cm, // 1 pulgada
-      right: 2.54cm, // 1 pulgada
+      top: 2cm, 
+      bottom: 2cm, 
+      left: 2cm, 
+      right: 2cm, 
     ),
-    // numbering se configura en index.typ
   )
 
-
-  // Configuración de texto según APA 7
+  // Configuración de texto según GUIA
   set text(
-    font: ("Times New Roman", "Liberation Serif", "Georgia"),
+    font: ("Arial", "Helvetica", "Liberation Sans"),
     size: 12pt,
     lang: "es", // Idioma español
   )
 
-  // Interlineado doble (APA requirement)
-  // IMPORTANTE: Alineación a la IZQUIERDA (NO justificado según APA 7)
+  // Interlineado 1.0 (sencillo) y alineación justificada según GUIA
   set par(
-    leading: 1em, // Espacio entre líneas (doble)
-    justify: false, // SIN justificación (borde derecho irregular)
-    first-line-indent: 1.27cm, // Sangría de primera línea (0.5 pulgadas)
+    leading: 0.6em, // Espacio entre líneas aproximado a sencillo
+    justify: true, // Alineación Justificada
+    first-line-indent: 1.27cm, // Sangría de primera línea (para mantener algo de APA)
   )
 
-  // Configuración de encabezados según APA 7
-  // NOTA: Numeración manual en los archivos de contenido
-  // Se desactiva la numeración automática para evitar duplicidad
-  set heading(numbering: none)
+  // Configuración de encabezados según APA 7 / Guía Unifranz
+  set heading(numbering: (..nums) => {
+    let n = nums.pos()
+    if n.len() == 1 {
+      return none
+    } else {
+      return numbering("1.1", ..n)
+    }
+  })
 
-  // Estilo para nivel 1: Centrado, Negrita
+  // Estilo para nivel 1: Centrado, Negrita (según APA para nivel 1)
+  // Aunque la guía UNIFRANZ dice "Títulos de capítulo: Arial 12pt Negrita"
   show heading.where(level: 1): it => {
     set align(center)
     set text(weight: "bold", size: 12pt)

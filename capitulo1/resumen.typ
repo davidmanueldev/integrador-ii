@@ -1,3 +1,3 @@
-== 1. Resumen ejecutivo
+== Resumen ejecutivo
 
 El presente proyecto propone el desarrollo de un Sistema Integral de Gestión para el Restaurante Bambú, integrando Inteligencia Artificial para optimizar las operaciones diarias y mejorar la experiencia del cliente. Este sistema aborda los desafíos actuales del restaurante, como la gestión ineficiente de reservaciones y el control de ventas presenciales, mediante la implementación de módulos de reservaciones en línea, punto de venta (POS) y la integración de la pasarela de pagos Red Enlace. Además, introduce funcionalidades innovadoras como un chatbot con búsqueda semántica, un sistema de recomendación de platillos, predicción de demanda y análisis de sentimiento de reseñas, proporcionando una solución tecnológica completa y adaptada al contexto boliviano.

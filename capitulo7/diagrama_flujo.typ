@@ -1,11 +1,11 @@
 // Diagramas de flujo del sistema usando fletcher
 #import "../config/diagramas.typ": *
 
-== 7.1 Diagrama de Flujo
+== Diagrama de Flujo
 
 El Sistema Integral de Gestión para Restaurante Bambú sigue el siguiente flujo general:
 
-=== 7.1.1 Mapa Navegacional del Sistema
+=== Mapa Navegacional del Sistema
 
 #figure(
   scaled-diagram(
@@ -88,7 +88,7 @@ El Sistema Integral de Gestión para Restaurante Bambú sigue el siguiente flujo
 
 #pagebreak()
 
-=== 7.1.2 Flujo de Proceso de Reservación
+=== Flujo de Proceso de Reservación
 
 #figure(
   scaled-diagram(
@@ -147,7 +147,7 @@ El Sistema Integral de Gestión para Restaurante Bambú sigue el siguiente flujo
 
 #pagebreak()
 
-=== 7.1.3 Flujo del Punto de Venta (POS) - Pedido Presencial
+=== Flujo del Punto de Venta (POS) - Pedido Presencial
 
 #figure(
   scaled-diagram(
@@ -196,7 +196,7 @@ El Sistema Integral de Gestión para Restaurante Bambú sigue el siguiente flujo
 
 #pagebreak()
 
-=== 7.1.4 Flujo de Integración de Pagos
+=== Flujo de Integración de Pagos
 
 #figure(
   scaled-diagram(
@@ -247,7 +247,7 @@ El Sistema Integral de Gestión para Restaurante Bambú sigue el siguiente flujo
 
 #pagebreak()
 
-=== 7.1.5 Flujo de Datos del Sistema
+=== Flujo de Datos del Sistema
 
 #figure(
   scaled-diagram(

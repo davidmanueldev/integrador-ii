@@ -1,10 +1,15 @@
+// Portada del Capítulo VI
 #set page(numbering: none)
-#place(top, hide[= IV. Capítulo IV. Factibilidad Técnica, Económica y Social])
+#place(top, hide[= CAPÍTULO VI: ESTUDIO DE FACTIBILIDAD])
 #align(center + horizon)[
   #text(size: 24pt, weight: "bold")[
-    IV. Capítulo IV. Factibilidad Técnica, Económica y Social
+    CAPÍTULO VI: \
+    ESTUDIO DE FACTIBILIDAD
   ]
 ]
 
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
+
+// Incluir archivos de factibilidad
+#include "factibilidad.typ"

@@ -1,5 +1,5 @@
 // Archivo principal del proyecto
-// Formato requerido
+// Formato alineado a la GUIA_PROYECTO_INTEGRADOR_UNIFRANZ.md
 
 #import "config/apa-setup.typ": *
 #import "config/formato.typ": *
@@ -21,10 +21,45 @@
 #include "declaracionJurada.typ"
 #pagebreak()
 
-// ÍNDICE
+// Páginas preliminares
+#include "preliminares/dedicatoria.typ"
+#pagebreak()
+#include "preliminares/agradecimientos.typ"
+#pagebreak()
+#include "preliminares/resumen.typ"
+#pagebreak()
+#include "preliminares/palabras_clave.typ"
+#pagebreak()
+#include "preliminares/abstract.typ"
+#pagebreak()
+#include "preliminares/keywords.typ"
+#pagebreak()
+
+// ÍNDICE GENERAL
 #outline(
-  title: [Índice],
+  title: [Índice General],
   indent: auto,
+)
+#pagebreak()
+
+// ÍNDICE DE CUADROS
+#outline(
+  title: [Índice de Cuadros],
+  target: figure.where(kind: "cuadro"),
+)
+#pagebreak()
+
+// ÍNDICE DE FIGURAS
+#outline(
+  title: [Índice de Figuras],
+  target: figure.where(kind: image),
+)
+#pagebreak()
+
+// ÍNDICE DE TABLAS
+#outline(
+  title: [Índice de Tablas],
+  target: figure.where(kind: table),
 )
 #pagebreak()
 
@@ -34,33 +69,48 @@
   number-align: right + top,
 )
 #counter(page).update(1)
+#counter(heading).update(0)
 
-// I. Capítulo I. Generalidades
+// CAPÍTULO I: MARCO INTRODUCTORIO
 #include "capitulo1/capitulo1.typ"
 #pagebreak()
 
-// II. Capítulo II. Marco Teórico.
+// CAPÍTULO II: DISEÑO TEÓRICO DE LA INVESTIGACIÓN
+#include "capitulo2/capitulo2.typ"
+#pagebreak()
+
+// CAPÍTULO III: JUSTIFICACIÓN, ALCANCES Y APORTES
+#include "capitulo3/capitulo3.typ"
+#pagebreak()
+
+// CAPÍTULO IV: MARCO TEÓRICO
 #include "capitulo4/capitulo4.typ"
 #pagebreak()
 
-// III. Capítulo III. Marco Práctico.
-#include "capitulo7/capitulo7.typ"
+// CAPÍTULO V: DISEÑO METODOLÓGICO
+#include "capitulo5/capitulo5.typ"
 #pagebreak()
 
-// IV. Capítulo IV. Factibilidad Técnica, Económica y Social
+// CAPÍTULO VI: ESTUDIO DE FACTIBILIDAD
 #include "capitulo6/capitulo6.typ"
 #pagebreak()
 
-// V. Capítulo V. Conclusiones y Recomendaciones
+// CAPÍTULO VII: INGENIERÍA DEL PROYECTO
+#include "capitulo7/capitulo7.typ"
+#pagebreak()
+
+// CAPÍTULO VIII: CONCLUSIONES Y RECOMENDACIONES
 #include "capitulo8/capitulo8.typ"
 #pagebreak()
 
-// Anexos
-#include "anexos/anexos.typ"
-#include "anexos/codigo_fuente.typ"
-#include "anexos/seguridad_fisica.typ"
-#include "anexos/cronograma.typ"
+// BIBLIOGRAFÍA
+#include "referencias/bibliografia.typ"
 #pagebreak()
 
-// Bibliografía
-#include "referencias/bibliografia.typ"
+// ANEXOS
+#include "anexos/anexos.typ"
+#pagebreak()
+
+// CRONOGRAMA DE ACTIVIDADES
+#include "anexos/cronograma.typ"
+#pagebreak()

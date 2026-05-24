@@ -12,16 +12,11 @@
 #pagebreak()
 #set page(numbering: "1", number-align: right + top)
 
-
 // 3.1 Justificación
 #include "justificacion.typ"
 
-#pagebreak()
-
-// 3.2 Alcances
+// 3.2 Alcances y Límites
 #include "alcances.typ"
-
-#pagebreak()
 
 // 3.3 Aportes
 #include "aportes.typ"

@@ -1,4 +1,4 @@
-== 1.1 Introducción
+== Introducción
 
 La transformación digital ha revolucionado la industria de servicios alimentarios a nivel mundial. Los restaurantes enfrentan la creciente demanda de ofrecer experiencias de servicio eficientes, personalizadas y tecnológicamente avanzadas. En el contexto boliviano, particularmente en ciudades como El Alto, esta transformación representa tanto un desafío como una oportunidad para establecimientos que buscan modernizar sus operaciones y mejorar la experiencia del cliente (Laudon & Laudon, 2012).
 
